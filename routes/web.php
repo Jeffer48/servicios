@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\radio_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/radio', function () {
-    return view('reporte_radio');
+Route::controller(radio_controller::class)->group(function () {
+    Route::get('/radio', 'index')->name('epp');
 });
