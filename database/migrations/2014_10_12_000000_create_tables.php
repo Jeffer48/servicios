@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::dropIfExists('reporte_radio');
 
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('user');
             $table->string('email')->unique();
             $table->string('password');
@@ -27,7 +27,7 @@ return new class extends Migration
         });
 
         Schema::create('grupos', function(Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('grupo')->nullable(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -38,8 +38,8 @@ return new class extends Migration
         });
 
         Schema::create('catalogo', function(Blueprint $table) {
-            $table->id();
-            $table->integer('id_grupo')->nullable(false);
+            $table->increments('id');
+            $table->integer('id_grupo')->unsigned()->nullable(false);
             $table->string('descripcion',255)->nullable(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -52,12 +52,12 @@ return new class extends Migration
         });
 
         Schema::create('reporte_radio', function(Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->date('fecha')->nullable(false);
             $table->time('hora')->nullable(false);
-            $table->integer('id_area')->nullable(false);
-            $table->integer('id_unidad')->nullable(false);
-            $table->integer('id_tipo_incidente')->nullable(false);
+            $table->integer('id_area')->unsigned()->nullable(false);
+            $table->integer('id_unidad')->unsigned()->nullable(false);
+            $table->integer('id_tipo_incidente')->unsigned()->nullable(false);
             $table->string('ubicacion',255)->nullable(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
