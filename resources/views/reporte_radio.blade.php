@@ -1,38 +1,36 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+</head>
 
-<div class="container" style="height: 10rem;">
-    <div class="card bg-light">
+<div class="container">
+    <div class="card bg-secondary">
         <div class="card-body">
-        <form class="col-sm-10" >
+        <form class="col-sm-12" >
             <div class="form-group row">
                 <label for="inputPassword" class="col-sm-2 col-form-label">Fecha</label>
-                <div class="col-sm-10" style="height: 3rem">
-                    <input type="text" class="form-control" id="inputPassword" placeholder="Password">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="date" class="col-sm-2 col-form-label">Date</label>
-                <div class="col-sm-10" style="height: 3rem">
-                  <div class="input-group date" id="datepicker">
-                    <input type="text" class="form-control" id="date"/>
-                    <span class="input-group-append">
-                      <span class="input-group-text bg-light d-block">
-                        <i class="fa fa-calendar"></i>
-                      </span>
+                <div class="form-group row input-group date col-sm-10" id='datetimepicker'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
                     </span>
-                  </div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputPassword" class="col-sm-2 col-form-label">Área</label>
                 <div class="col-sm-10" style="height: 3rem">
                     <select class="form-select" aria-label="Default select example">
-                        <option selected>Selecciona el área de servicio</option>
-                        <option value="1">Bomberos</option>
-                        <option value="2">Paramédicos</option>
-                        <option value="3">Inspección</option>
-                        <option value="4">Administrativo</option>
+                        <option value="0" selected>Selecciona el área de servicio</option>
+                        @foreach ($areas as $area)
+                            <option value={{$area->id_area}}>{{$area->areas}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -41,24 +39,9 @@
                 <div class="col-sm-10" style="height: 3rem">
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Selecciona la Unidad</option>
-                        <option value="1">PCM 01</option>
-                        <option value="2">PCM 04</option>
-                        <option value="3">PCM 06</option>
-                        <option value="4">PCM 17</option>
-                        <option value="5">PCM 21</option>
-                        <option value="6">PCM 22</option>
-                        <option value="7">PCM 23</option>
-                        <option value="8">PCM 1077</option>
-                        <option value="9">SUMICH 1370</option>
-                        <option value="10">SUMICH 1614</option>
-                        <option value="12">BMT 01</option>
-                        <option value="13">BMT 02</option>
-                        <option value="14">BMT 03</option>
-                        <option value="15">BMT 04</option>
-                        <option value="16">BMT 05</option>
-                        <option value="17">BMT 06</option>
-                        <option value="18">BMT 07</option>
-                        <option value="19">BMT 08</option>
+                        @foreach ($unidades as $unidad)
+                            <option value={{$unidad->id_unidad}}>{{$unidad->unidades}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -67,16 +50,9 @@
                 <div class="col-sm-10" style="height: 3rem">
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Selecciona el tipo de incidente</option>
-                        <option value="1">Aborto o Amenaza de Aborto</option>
-                        <option value="2">Accidente Vehicular</option>
-                        <option value="3">Agresión Física sin Armas</option>
-                        <option value="4">Aplastamiento</option>
-                        <option value="5">Apoyo a bomberos </option>
-                        <option value="6">Apoyo a Municipios</option>
-                        <option value="7">Atropellado</option>
-                        <option value="8">Caída</option>
-                        <option value="9">Choque Vehicular</option>
-                        <option value="10">Cobertura de Evento</option>
+                        @foreach ($incidentes as $incidente)
+                            <option value={{$incidente->id_incidente}}>{{$incidente->incidentes}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -90,3 +66,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('#datetimepicker').datetimepicker();
+    });
+</script>
