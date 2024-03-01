@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::controller(radio_controller::class)->group(function () {
     Route::get('/radio', 'index')->name('epp');
 });
+
+Route::get('/layout', function () {
+    return view('layout');
+});
