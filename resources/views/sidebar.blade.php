@@ -11,16 +11,16 @@
 
 <body>
     <main class="d-flex flex-nowrap">
-        <h1 class="visually-hidden">Sidebars examples</h1>
+        <h1 class="visually-hidden">Sidebars</h1>
 
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px; background-color: #152733;">
             <a href="/" style="margin-left: 5rem; margin-top: 1rem;" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" class="bi bi-stack" viewBox="0 0 16 16">
                     <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z"/>
                     <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z"/>
                 </svg>
             </a>
-            <hr>
+            <hr class="hr_side">
             <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="#" class="nav-link active" aria-current="page">
@@ -28,6 +28,15 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-broadcast" viewBox="0 0 16 16">
                             <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707m2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708m5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708m2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0" fill="white" fill-opacity="0.77"/>
                         </svg> <h5 style="margin: 0rem 0.5rem; line-height: normal;">Servicio</h5>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white" style="padding-right: 0;">
+                    <div class="flex-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-fuel-pump-fill" viewBox="0 0 16 16">
+                            <path d="M1 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8a2 2 0 0 1 2 2v.5a.5.5 0 0 0 1 0V8h-.5a.5.5 0 0 1-.5-.5V4.375a.5.5 0 0 1 .5-.5h1.495c-.011-.476-.053-.894-.201-1.222a.97.97 0 0 0-.394-.458c-.184-.11-.464-.195-.9-.195a.5.5 0 0 1 0-1q.846-.002 1.412.336c.383.228.634.551.794.907.295.655.294 1.465.294 2.081V7.5a.5.5 0 0 1-.5.5H15v4.5a1.5 1.5 0 0 1-3 0V12a1 1 0 0 0-1-1v4h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1zm2.5 0a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5z" fill="white" fill-opacity="0.77"/>
+                        </svg> <h5 style="margin: 0rem 0.5rem; line-height: normal;">Carga de Gasolina</h5>
                     </div>
                 </a>
             </li>
@@ -59,10 +68,10 @@
                 </a>
             </li>
             </ul>
-            <hr>
-            <div>
+            <hr class="hr_side">
+            <div style="align-self: center;">
                 <a href="#" class="d-flex align-items-center text-white" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg width="45" height="45" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="40" height="40" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M45 10.5469L40.77 14.2646L48.51 21.0938H18V26.3672H48.51L40.77 33.1699L45 36.9141L60 23.7305L45 10.5469ZM6 5.27344H30V0H6C2.7 0 0 2.37305 0 5.27344V42.1875C0 45.0879 2.7 47.4609 6 47.4609H30V42.1875H6V5.27344Z" fill="white" fill-opacity="0.77"/>
                     </svg>                        
                     <h5 style="margin-left: 0.5rem;">Cerrar Sesión</h5>
@@ -70,7 +79,7 @@
             </div>
         </div>
 
-        <div class="b-example-divider b-example-vr"></div>
+        <div class="b-example-divider b-example-vr" style="width: 0.5rem"></div>
     </main>
     
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>

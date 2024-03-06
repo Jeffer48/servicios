@@ -23,5 +23,5 @@ Route::controller(radio_controller::class)->group(function () {
 });
 
 Route::get('/layout', function () {
-    return view('layout');
+    return view('sidebar');
 });
