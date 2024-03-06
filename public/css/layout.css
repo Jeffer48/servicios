@@ -19,6 +19,13 @@ body {
     color:white !important;
     opacity: 0.75 !important;
   }
+
+  .nav_container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 1rem;;
+  }
   
   .dropdown-toggle { outline: 0; }
   
