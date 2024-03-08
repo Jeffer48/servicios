@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-mx" class="smart-style-0">
     <head>
-        <title>SISTEMA JEFF</title>
+        <title>Sistema de Registro</title>
         <meta charset="utf-8">
         <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">

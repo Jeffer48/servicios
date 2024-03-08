@@ -21,8 +21,3 @@ Route::get('/', function () {
 Route::get('/radio', function () {
     return view('reporte_radio');
 });
-
-Route::get('/layout', function () {
-    #return view('sidebar');
-    return view('navbar');
-});
