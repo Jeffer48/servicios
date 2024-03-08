@@ -18,8 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::controller(radio_controller::class)->group(function () {
-    Route::get('/radio', 'index')->name('epp');
+Route::get('/radio', function () {
+    return view('reporte_radio');
 });
 
 Route::get('/layout', function () {
