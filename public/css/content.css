@@ -1,0 +1,19 @@
+#form_container{
+    background-color: #D7D7D7;
+    border-radius: 15px;
+}
+
+.title_form{
+    padding-top: 2rem;
+    text-align: center;
+    font-style: italic;
+}
+
+.principal_form{
+    padding: 3rem;
+}
+
+.input-label{
+    font-size: x-large;
+    font-weight: 600;
+}
