@@ -1,3 +1,7 @@
+#header{
+    width: -webkit-fill-available;
+}
+
 #form_container{
     background-color: #D7D7D7;
     border-radius: 15px;
@@ -5,9 +9,12 @@
 }
 
 .title_form{
+    margin: 0rem 3rem;
     padding-top: 2rem;
+    padding-bottom: 2rem;
     text-align: center;
     font-style: italic;
+    border-bottom-style: solid;
 }
 
 .principal_form{
@@ -17,14 +24,6 @@
 .input-label{
     font-size: x-large;
     font-weight: 600;
-}
-
-.separator{
-    background-color: black;
-    opacity: 0.77;
-    width: 86%;
-    height: 0.2rem;
-    margin: 2rem 0% 1rem 7%;
 }
 
 .active_services{
