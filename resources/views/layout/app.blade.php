@@ -102,8 +102,13 @@
                     </div>
                 </nav>
             </div>
-            <div style="margin: 1rem 3rem 0rem 3rem;">
+            <div style="display: flex;">
                 @yield('content')
+                <div class="active_services">
+                    <div class="target_services">
+    
+                    </div>
+                </div>
             </div>
         </section>
 
