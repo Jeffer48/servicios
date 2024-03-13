@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/radio', function () {
-    return view('reporte_radio');
+Route::controller(radio_controller::class)->group(function () {
+    Route::get('/radio', 'index')->name('reporte');
+    Route::get('/etapa_uno', 'etapa_uno')->name('etapa_uno');
 });
