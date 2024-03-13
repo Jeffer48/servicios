@@ -5,7 +5,7 @@
 #form_container{
     background-color: #D7D7D7;
     border-radius: 15px;
-    margin: 2rem 0rem 0rem 2rem;
+    margin: 2rem 0rem 1rem 2rem;
 }
 
 .title_form{
@@ -18,7 +18,7 @@
 }
 
 .principal_form{
-    padding: 1rem 3rem 3rem 3rem;
+    padding: 1rem 3rem 0rem 3rem;
 }
 
 .input-label{

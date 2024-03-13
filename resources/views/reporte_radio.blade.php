@@ -64,7 +64,7 @@
             <input type="text" class="form-control" id="input_location">
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center" style="margin: 2rem;">
             <button type="submit" class="btn btn-success">Registrar</button>
         </div>
     </form>
