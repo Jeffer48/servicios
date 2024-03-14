@@ -34,24 +34,6 @@ return new class extends Migration
             $table->foreign('id_grupo')->references('id')->on('adm_grupos');
         });
 
-        Schema::create('adm_user', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('id_tipo')->unsigned()->nullable(false);
-            $table->string('nombre',50)->nullable(false);
-            $table->string('apellido_p',50)->nullable(true);
-            $table->string('apellido_m',50)->nullable(true);
-            $table->string('correo')->unique()->nullable(false);
-            $table->string('password')->nullable(false);
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->softDeletes();
-            $table->integer('created_user')->unsigned()->nullable(true);
-            $table->integer('updated_user')->unsigned()->nullable(true);
-            $table->integer('deleted_user')->unsigned()->nullable(true);
-
-            $table->foreign('id_tipo')->references('id')->on('adm_catalogos');
-        });
-
         Schema::create('grupos', function(Blueprint $table) {
             $table->increments('id');
             $table->string('grupo',100)->nullable(false);
@@ -76,6 +58,41 @@ return new class extends Migration
             $table->integer('deleted_user')->unsigned()->nullable(true);
             
             $table->foreign('id_grupo')->references('id')->on('grupos');
+        });
+
+        Schema::create('personal', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_tipo')->unsigned()->nullable(false);
+            $table->integer('id_tipo_2')->unsigned()->nullable(true);
+            $table->integer('id_turno')->unsigned()->nullable(true);
+            $table->string('nombre',50)->nullable(false);
+            $table->string('apellido_p',50)->nullable(true);
+            $table->string('apellido_m',50)->nullable(true);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->softDeletes();
+            $table->integer('created_user')->unsigned()->nullable(true);
+            $table->integer('updated_user')->unsigned()->nullable(true);
+            $table->integer('deleted_user')->unsigned()->nullable(true);
+
+            $table->foreign('id_tipo')->references('id')->on('catalogos');
+        });
+
+        Schema::create('adm_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_tipo')->unsigned()->nullable(false);
+            $table->integer('id_personal')->unsigned()->nullable(false);
+            $table->string('correo')->unique()->nullable(false);
+            $table->string('password')->nullable(false);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->softDeletes();
+            $table->integer('created_user')->unsigned()->nullable(true);
+            $table->integer('updated_user')->unsigned()->nullable(true);
+            $table->integer('deleted_user')->unsigned()->nullable(true);
+
+            $table->foreign('id_tipo')->references('id')->on('adm_catalogos');
+            $table->foreign('id_personal')->references('id')->on('personal');
         });
 
         Schema::create('reporte_radio', function(Blueprint $table) {
@@ -106,5 +123,6 @@ return new class extends Migration
         Schema::dropIfExists('reporte_radio');
         Schema::dropIfExists('grupos');
         Schema::dropIfExists('catalogos');
+        Schema::dropIfExists('personal');
     }
 };
