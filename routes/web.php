@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
 Route::controller(radio_controller::class)->group(function () {
     Route::get('/radio', 'index')->name('reporte');
     Route::get('/etapa_uno', 'etapa_uno')->name('etapa_uno');

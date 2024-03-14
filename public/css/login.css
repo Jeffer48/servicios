@@ -1,0 +1,31 @@
+.login_container{
+    background-color: #152733;
+    border-radius: 15px;
+    height: 30rem;
+    width: 30rem;
+    margin-top: 3%;
+}
+
+.form_login{
+    margin: 2rem;
+}
+
+input{
+    width: 100%;
+    height: 2.5rem;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    background-color: #152733;
+    margin-bottom: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    padding-left: 0.5rem;
+    color: white;
+    opacity: 0.7;
+}
+
+button{
+    margin: 2rem;
+}
