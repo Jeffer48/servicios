@@ -38,7 +38,7 @@ class CatalogoSeeder extends Seeder
 
         DB::unprepared("INSERT INTO catalogos(id,id_grupo,clave,descripcion,created_at,updated_at,deleted_at,created_user,updated_user,deleted_user) VALUES
         (1,1,null,'Bomberos',now(),now(),null,null,null,null),
-        (2,1,null,'Paramedicos',now(),now(),null,null,null,null),
+        (2,1,null,'Paramédicos',now(),now(),null,null,null,null),
         (3,1,null,'Inspección',now(),now(),null,null,null,null),
         (4,1,null,'Administrativo',now(),now(),null,null,null,null),
         (5,2,null,'PCM 01',now(),now(),null,null,null,null),
