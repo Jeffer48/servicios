@@ -11,12 +11,13 @@ class select extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($type,$text,$options,$id)
+    public function __construct($type,$text,$options,$id,$size)
     {
         $this->type = $type;
         $this->options = $options;
         $this->text = $text;
         $this->id = $id;
+        $this->size = $size;
     }
 
     /**
@@ -28,7 +29,8 @@ class select extends Component
             'label' => $this->type,
             'options' => $this->options,
             'text' => $this->text,
-            'id' => $this->id
+            'id' => $this->id,
+            'size' => $this->size
         ]);
     }
 }

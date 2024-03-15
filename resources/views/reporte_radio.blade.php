@@ -7,42 +7,16 @@
         <div class="row mb-3">
             <label class="col-sm-3 input-label">Fecha</label>
             <div class="col-sm-9">
-            <input type="datetime-local" disabled class="form-control" id="input_fecha">
+            <input type="datetime-local" disabled class="form-control" id="input-fecha">
             </div>
         </div>
-        <x-select type="Área" text="Seleccione un área" :options="$areas" id="input-area"></x-select>
-        <div class="row mb-3">
-            <label class="col-sm-3 input-label">Unidad</label>
-            <div class="col-sm-9">
-                <select class="form-select" aria-label="Default select example" id="input_unidad" required>
-                    <option value="" disabled selected>Seleccione una unidad</option>
-                    @foreach ($unidades as $unidad)
-                        <option value={{$unidad->id}}>{{$unidad->descripcion}}</option>
-                    @endforeach
-                </select>
-                <div class="invalid-feedback">
-                    Seleccione alguna opción
-                </div>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label class="col-sm-3 input-label">Incidente</label>
-            <div class="col-sm-9">
-                <select class="form-select" aria-label="Default select example" id="input_incidente" required>
-                    <option disabled value="" selected>Seleccione un tipo de incidente</option>
-                    @foreach ($incidentes as $incidente)
-                        <option value={{$incidente->id}}>{{$incidente->descripcion}}</option>
-                    @endforeach
-                </select>
-                <div class="invalid-feedback">
-                    Seleccione alguna opción
-                </div>
-            </div>
-        </div>
+        <x-select type="Área" text="Seleccione un área" :options="$areas" id="input-area" size="3"></x-select>
+        <x-select type="Unidad" text="Seleccione una unidad" :options="$unidades" id="input-unidad" size="3"></x-select>
+        <x-select type="Incidente" text="Seleccione un tipo de incidente" :options="$incidentes" id="input-incidente" size="3"></x-select>
         <div class="row mb-3">
             <label class="col-sm-3 input-label">Ubicación</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="input_ubicacion" required>
+                <input type="text" class="form-control" id="input-ubicacion" required>
                 <div class="invalid-feedback">
                     Ingrese una ubicación
                 </div>
@@ -58,15 +32,15 @@
     $(document).ready(function() {
         var now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('input_fecha').value = now.toISOString().slice(0,16);
+        document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
     });
 
     function envioReporte(){
-        let fecha = document.getElementById("input_fecha");
+        let fecha = document.getElementById("input-fecha");
         let area = document.getElementById("input-area");
-        let unidad = document.getElementById("input_unidad");
-        let incidente = document.getElementById("input_incidente");
-        let ubicacion = document.getElementById("input_ubicacion");
+        let unidad = document.getElementById("input-unidad");
+        let incidente = document.getElementById("input-incidente");
+        let ubicacion = document.getElementById("input-ubicacion");
 
         if(area.value == "") area.setAttribute("class","form-select is-invalid");
         else area.setAttribute("class","form-select");
