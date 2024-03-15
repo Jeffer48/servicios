@@ -3,18 +3,18 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Contracts\View\View;
 
-class select extends Component
+class input extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct($label,$text,$options,$id,$size)
+    public function __construct($label,$text,$type,$id,$size)
     {
         $this->label = $label;
-        $this->options = $options;
+        $this->type = $type;
         $this->text = $text;
         $this->id = $id;
         $this->size = $size;
@@ -25,9 +25,9 @@ class select extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.select',[
+        return view('components.input',[
             'label' => $this->label,
-            'options' => $this->options,
+            'type' => $this->type,
             'text' => $this->text,
             'id' => $this->id,
             'size' => $this->size

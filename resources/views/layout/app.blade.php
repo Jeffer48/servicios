@@ -83,8 +83,8 @@
         </div>
 
         <div class="layout-content" style="margin-left: 18rem;">
-            <div id="header" style="position: fixed;">
-                <nav class="navbar" style="background-color: #6A0F49; height: 3.5rem">
+            <div id="header" style="position: fixed; height: 5rem;">
+                <nav class="navbar" style="background-color: #6A0F49; height: 100%;">
                     <div class="nav_container">
                         <div style="align-self: center;">
                             <h2 style="color: white; opacity: 0.75;">Sistema de registro</h2>
@@ -101,7 +101,7 @@
                     </div>
                 </nav>
             </div>
-            <div style="padding-top: 4%;">
+            <div style="padding-top: 6rem;">
                 @yield('content')
             </div>
         </div>
