@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('deleted_user',45)->nullable(true);
         });
 
-        Schema::create('catalogo', function(Blueprint $table) {
+        Schema::create('catalogos', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('id_grupo')->unsigned()->nullable(false);
             $table->string('descripcion',255)->nullable(false);
