@@ -5,7 +5,7 @@
 #form_container{
     background-color: #D7D7D7;
     border-radius: 15px;
-    margin: 2rem 0rem 1rem 2rem;
+    margin: 2rem 0rem 2rem 2rem;
 }
 
 .title_form{
@@ -27,9 +27,8 @@
 }
 
 .active_services{
-    width: 20rem;
     height: 15rem;
-    margin: 2rem 1rem 1rem 2rem;
+    margin: 2rem;
 }
 
 .target_services{

@@ -101,13 +101,8 @@
                     </div>
                 </nav>
             </div>
-            <div style="display: flex; padding-top: 4%;">
+            <div style="padding-top: 4%;">
                 @yield('content')
-                <div class="active_services">
-                    <div class="target_services">
-    
-                    </div>
-                </div>
             </div>
         </div>
     </body>
