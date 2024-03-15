@@ -10,7 +10,7 @@
             <input type="datetime-local" disabled class="form-control" id="input_fecha">
             </div>
         </div>
-        <x-select type="Área" :options="$areas"></x-select>
+        <x-select type="Área" text="Seleccione un área" :options="$areas" id="input-area"></x-select>
         <div class="row mb-3">
             <label class="col-sm-3 input-label">Unidad</label>
             <div class="col-sm-9">
@@ -63,7 +63,7 @@
 
     function envioReporte(){
         let fecha = document.getElementById("input_fecha");
-        let area = document.getElementById("input_area");
+        let area = document.getElementById("input-area");
         let unidad = document.getElementById("input_unidad");
         let incidente = document.getElementById("input_incidente");
         let ubicacion = document.getElementById("input_ubicacion");
