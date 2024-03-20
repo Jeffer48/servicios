@@ -31,6 +31,10 @@ class radio_controller extends Controller
         ]);
     }
 
+    public function registrar(Request $request){
+        dd($request->all());
+    }
+
     public function etapa_uno(){
         return view('etapa_uno');
     }

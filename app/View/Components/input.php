@@ -11,9 +11,10 @@ class input extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($label,$text,$type,$id,$size)
+    public function __construct($label,$name,$text,$type,$id,$size)
     {
         $this->label = $label;
+        $this->name = $name;
         $this->type = $type;
         $this->text = $text;
         $this->id = $id;
@@ -27,6 +28,7 @@ class input extends Component
     {
         return view('components.input',[
             'label' => $this->label,
+            'name' => $this->name,
             'type' => $this->type,
             'text' => $this->text,
             'id' => $this->id,

@@ -11,9 +11,10 @@ class select extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($label,$text,$options,$id,$size)
+    public function __construct($label,$name,$text,$options,$id,$size)
     {
         $this->label = $label;
+        $this->name = $name;
         $this->options = $options;
         $this->text = $text;
         $this->id = $id;
@@ -27,6 +28,7 @@ class select extends Component
     {
         return view('components.select',[
             'label' => $this->label,
+            'name' => $this->name,
             'options' => $this->options,
             'text' => $this->text,
             'id' => $this->id,
