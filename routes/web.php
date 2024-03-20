@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\radio_controller;
+use App\Http\Controllers\login_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +17,18 @@ use App\Http\Controllers\radio_controller;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('radio');
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::controller(login_controller::class)->group(function () {
+    Route::get('/login', 'index')->name('login');
+    Route::post('/login/data', 'getData')->name('getData');
 });
 
-Route::controller(radio_controller::class)->group(function () {
-    Route::get('/radio', 'index')->name('reporte');
-    Route::post('/radio/registrar', 'registrar')->name('registrar');
-    Route::get('/etapa_uno', 'etapa_uno')->name('etapa_uno');
+Route::middleware(['auth'])->group(function () {
+    Route::controller(radio_controller::class)->group(function () {
+        Route::get('/radio', 'index')->name('reporte');
+        Route::post('/radio/registrar', 'registrar')->name('registrar');
+        Route::get('/etapa_uno', 'etapa_uno')->name('etapa_uno');
+    });
 });

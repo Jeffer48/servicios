@@ -81,9 +81,14 @@ return new class extends Migration
         Schema::create('adm_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_tipo')->unsigned()->nullable(false);
-            $table->integer('id_personal')->unsigned()->nullable(false);
-            $table->string('correo')->unique()->nullable(false);
+            $table->integer('id_personal')->unsigned()->nullable(true);
+            $table->string('nombre',50)->nullable(true);
+            $table->string('apellido_p',50)->nullable(true);
+            $table->string('apellido_m',50)->nullable(true);
+            $table->string('email')->unique()->nullable(false);
             $table->string('password')->nullable(false);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -92,7 +97,6 @@ return new class extends Migration
             $table->integer('deleted_user')->unsigned()->nullable(true);
 
             $table->foreign('id_tipo')->references('id')->on('adm_catalogos');
-            $table->foreign('id_personal')->references('id')->on('personal');
         });
 
         Schema::create('reporte_radio', function(Blueprint $table) {
