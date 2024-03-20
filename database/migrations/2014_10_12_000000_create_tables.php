@@ -63,7 +63,6 @@ return new class extends Migration
         Schema::create('personal', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_tipo')->unsigned()->nullable(false);
-            $table->integer('id_tipo_2')->unsigned()->nullable(true);
             $table->integer('id_turno')->unsigned()->nullable(true);
             $table->string('nombre',50)->nullable(false);
             $table->string('apellido_p',50)->nullable(true);
@@ -105,7 +104,7 @@ return new class extends Migration
             $table->integer('id_area')->unsigned()->nullable(false);
             $table->integer('id_unidad')->unsigned()->nullable(false);
             $table->integer('id_incidente')->unsigned()->nullable(false);
-            $table->string('ubicación',255)->nullable(true);
+            $table->string('ubicacion',255)->nullable(true);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();

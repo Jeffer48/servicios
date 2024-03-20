@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\radio_controller;
 use App\Http\Controllers\login_controller;
+use App\Http\Controllers\etapas_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,19 @@ Route::controller(login_controller::class)->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {return view('dashboard');})->name('dashboard');
+
     Route::controller(radio_controller::class)->group(function () {
         Route::get('/radio', 'index')->name('reporte');
         Route::post('/radio/registrar', 'registrar')->name('registrar');
-        Route::get('/etapa_uno', 'etapa_uno')->name('etapa_uno');
+        Route::get('/etapas', 'etapa_uno')->name('etapa_uno');
+    });
+
+    Route::controller(etapas_controller::class)->group(function () {
+        Route::get('/etapas', 'index')->name('etapas');
+    });
+
+    Route::controller(login_controller::class)->group(function () {
+        Route::get('/logout', 'logout')->name('logout');
     });
 });

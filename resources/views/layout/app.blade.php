@@ -24,7 +24,7 @@
                     <hr class="hr_side">
                     <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active" aria-current="page">
+                        <a href="{{route('reporte')}}" class="nav-link {{request()->route()->uri == 'radio' ? 'active' : 'text-white'}}">
                             <div class="flex-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-broadcast" viewBox="0 0 16 16">
                                     <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707m2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708m5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708m2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0" fill="white" fill-opacity="0.77"/>
@@ -71,7 +71,7 @@
                     </ul>
                     <hr class="hr_side">
                     <div style="align-self: center;">
-                        <a href="#" class="d-flex align-items-center text-white" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="{{'logout'}}" class="d-flex align-items-center text-white" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg width="40" height="40" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M45 10.5469L40.77 14.2646L48.51 21.0938H18V26.3672H48.51L40.77 33.1699L45 36.9141L60 23.7305L45 10.5469ZM6 5.27344H30V0H6C2.7 0 0 2.37305 0 5.27344V42.1875C0 45.0879 2.7 47.4609 6 47.4609H30V42.1875H6V5.27344Z" fill="white" fill-opacity="0.77"/>
                             </svg>                        
@@ -102,8 +102,34 @@
                 </nav>
             </div>
             <div style="padding-top: 6rem;">
+                @if ($errors->any())
+                    <div>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>
+                                    <div id="alert-message" style="width: 90%; margin: 0% 5%;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>{{ $error }}</strong>
+                                        <button type="button" onclick="closeAlert()" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if(session()->has('message'))
+                    <div id="alert-message" style="width: 90%; margin: 0% 5%;" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ session()->get('message') }}</strong>
+                        <button type="button" onclick="closeAlert()" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </div>
     </body>
 </html>
+
+<script>
+    function closeAlert(){
+        document.getElementById("alert-message").style.display = 'none';
+    }
+</script>

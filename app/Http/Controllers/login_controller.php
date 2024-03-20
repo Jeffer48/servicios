@@ -28,7 +28,8 @@ class login_controller extends Controller
         return redirect('login')->withErrors(['email' => 'Datos de sesión invalidos!'])->withInput();
     }
 
-    public function logout(){
-
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('login');
     }
 }

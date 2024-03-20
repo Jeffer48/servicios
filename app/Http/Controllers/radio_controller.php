@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class radio_controller extends Controller
 {
@@ -32,10 +33,29 @@ class radio_controller extends Controller
     }
 
     public function registrar(Request $request){
-        dd($request->all());
-    }
+        
+        $result = DB::table('reporte_radio')->insert([
+            'fecha' => $request->fecha,
+            'id_area' => $request->area,
+            'id_unidad' => $request->unidad,
+            'id_incidente' => $request->incidente,
+            'ubicacion' => $request->ubicacion,
+            'created_user' => Auth::id()
+        ]);
 
-    public function etapa_uno(){
-        return view('etapa_uno');
+        if($request->incidente == 35){
+            if($result) return redirect('/')->with(['message' => 'Los datos se guardaron exitosamente'])->withInput();
+            else return redirect('/')->withErrors(['message' => 'Ocurrio un error al guardar'])->withInput();
+        }else{
+            if($result) return redirect()->route('etapas', [
+                    'fecha' => $request->fecha,
+                    'id_area' => $request->area,
+                    'id_unidad' => $request->unidad,
+                    'id_incidente' => $request->incidente,
+                    'ubicacion' => $request->ubicacion
+                ])
+                ->with(['message' => 'Los datos se guardaron exitosamente'])->withInput();
+            else return redirect('/')->withErrors(['message' => 'Ocurrio un error al guardar'])->withInput();
+        }
     }
 }
