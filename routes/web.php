@@ -24,6 +24,6 @@ Route::get('/login', function () {
 
 Route::controller(radio_controller::class)->group(function () {
     Route::get('/radio', 'index')->name('reporte');
-    Route::get('/radio/registrar', 'registrar')->name('registrar');
+    Route::post('/radio/registrar', 'registrar')->name('registrar');
     Route::get('/etapa_uno', 'etapa_uno')->name('etapa_uno');
 });

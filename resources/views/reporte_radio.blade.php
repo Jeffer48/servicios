@@ -4,7 +4,8 @@
 <div style="display: grid; grid-template-columns: 70% 30%;">
     <div style="grid-column: 1;" id="form_container">
         <h1 class="title_form">Reporte de Radio</h1>
-        <form class="principal_form" action="{{route('registrar')}}" method="GET">
+        <form class="principal_form" action="{{route('registrar')}}" method="POST">
+            @csrf
             <div class="row mb-3">
                 <label class="col-sm-3 input-label">Fecha</label>
                 <div class="col-sm-9">
