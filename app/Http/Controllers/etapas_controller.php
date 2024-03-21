@@ -32,6 +32,11 @@ class etapas_controller extends Controller
             ->where('id',$request->id_unidad)
             ->get();
 
+        $jefe = DB::table('personal')
+            ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
+            ->where('id_tipo',75)
+            ->get();
+
         return view('etapas',[
             'operador' => $operador,
             'fecha' => $request->fecha,
@@ -39,7 +44,8 @@ class etapas_controller extends Controller
             'area' => $area[0]->descripcion,
             'folio_interno' => 'B0001',
             'turno' => $turno,
-            'unidad' => $unidad[0]->descripcion
+            'unidad' => $unidad[0]->descripcion,
+            'jefe' => $jefe
         ]);
     }
 }

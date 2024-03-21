@@ -13,6 +13,7 @@
         let reportante = document.getElementById("input-reportante");
         let turno = document.getElementById("input-turno");
         let operador = document.getElementById("input-operador");
+        let jefe = document.getElementById("input-jefe");
 
         if(fechaCap.value > fecha.value) fecha.setAttribute("class","form-control is-invalid");
         else fecha.setAttribute("class","form-control");
@@ -32,5 +33,7 @@
                 operador.setAttribute("class","form-select is-invalid");
             }else operador.setAttribute("class","form-select");
         }
+        if(jefe.value == "") jefe.setAttribute("class","form-select is-invalid");
+        else jefe.setAttribute("class","form-select");
     }
 </script>

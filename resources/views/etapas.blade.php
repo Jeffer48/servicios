@@ -14,12 +14,7 @@
         <x-input label="Fecha" name="fecha" type="datetime-local" text="La fecha no puede ser menor que la de captura" id="input-fecha" size="3"></x-input>
         <x-input-disabled label="Unidad" name="unidad" value="{{$unidad}}" type="text" text="Ingrese una unidad" id="input-unidad" size="3"></x-input-disabled>
         <x-select label="Operador" name="operador" text="Seleccione un Operador" :options="$operador" id="input-operador" size="3"></x-select>
-        <div class="row mb-3">
-            <label class="col-sm-4 input-label">Jefe de servicio</label>
-            <div class="col-sm-8">
-            <input type="text" class="form-control" id="input_jefe">
-            </div>
-        </div>
+        <x-select label="Jefe de Servicio" name="jefe" text="Seleccione un Jefe de Servicio" :options="$jefe" id="input-jefe" size="3"></x-select>
         <div class="row mb-3">
             <label class="col-sm-4 input-label">Personal 1</label>
             <div class="col-sm-8">
