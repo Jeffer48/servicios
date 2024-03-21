@@ -101,7 +101,7 @@
                     </div>
                 </nav>
             </div>
-            <div style="padding-top: 6rem;">
+            <div style="padding-top: 6rem; padding-bottom: 1rem;">
                 @if ($errors->any())
                     <div>
                         <ul>

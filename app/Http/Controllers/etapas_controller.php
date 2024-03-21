@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class etapas_controller extends Controller
 {
     public function index(Request $request){
-        $operador = DB::table('personal')
+        $personal = DB::table('personal')
             ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
             ->get();
 
@@ -37,15 +37,33 @@ class etapas_controller extends Controller
             ->where('id_tipo',75)
             ->get();
 
+        $servicio = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',5)
+            ->get();
+
+        $localidad = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',6)
+            ->get();
+
+        $lugares = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',7)
+            ->get();
+
         return view('etapas',[
-            'operador' => $operador,
+            'personal' => $personal,
             'fecha' => $request->fecha,
             'reportante' => $reportante,
             'area' => $area[0]->descripcion,
             'folio_interno' => 'B0001',
             'turno' => $turno,
             'unidad' => $unidad[0]->descripcion,
-            'jefe' => $jefe
+            'jefe' => $jefe,
+            'servicio' => $servicio,
+            'localidad' => $localidad,
+            'lugares' => $lugares
         ]);
     }
 }
