@@ -4,24 +4,15 @@
 <div class="container" id="form_container">
     <h1 class="title_form">Primera Etapa</h1>
     <form class="principal_form">
+        @csrf
+        <x-select label="Radio Operador" name="operador" text="Seleccione un Operador" :options="$operador" id="input-operador" size="3"></x-select>
         <div class="row mb-3">
-            <label class="col-sm-4 input-label">Radio Operador</label>
+            <label class="col-sm-4 input-label">Fecha de Captura</label>
             <div class="col-sm-8">
-            <input type="text" class="form-control" id="input_operador">
+            <input type="datetime-local" value="{{$fecha}}" readonly="true" class="form-control" id="input-fecha">
             </div>
         </div>
-        <div class="row mb-3">
-            <label class="col-sm-4 input-label">Área</label>
-            <div class="col-sm-8">
-            <input type="text" class="form-control" id="input_area">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label class="col-sm-4 input-label">Reportante</label>
-            <div class="col-sm-8">
-            <input type="text" class="form-control" id="input_reportante">
-            </div>
-        </div>
+        <x-select label="Reportante" name="reportante" text="Seleccione un Reportante" :options="$reportante" id="input-reportante" size="3"></x-select>
         <div class="row mb-3">
             <label class="col-sm-4 input-label">Folio Interno</label>
             <div class="col-sm-8">

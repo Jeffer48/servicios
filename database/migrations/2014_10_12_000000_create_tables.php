@@ -75,6 +75,7 @@ return new class extends Migration
             $table->integer('deleted_user')->unsigned()->nullable(true);
 
             $table->foreign('id_tipo')->references('id')->on('catalogos');
+            $table->foreign('id_turno')->references('id')->on('catalogos');
         });
 
         Schema::create('adm_user', function (Blueprint $table) {

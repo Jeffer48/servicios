@@ -1,6 +1,6 @@
 <div class="row mb-{{$size}}">
-    <label class="col-sm-3 input-label">{{$label}}</label>
-    <div class="col-sm-9">
+    <label class="col-sm-4 input-label">{{$label}}</label>
+    <div class="col-sm-8">
         <select class="form-select" name="{{$name}}" aria-label="Default select example" id="{{$id}}" required>
             <option value="" disabled selected>{{$text}}</option>
             @foreach ($options as $option)

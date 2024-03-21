@@ -7,8 +7,8 @@
         <form class="principal_form" action="{{route('registrar')}}" method="POST">
             @csrf
             <div class="row mb-3">
-                <label class="col-sm-3 input-label">Fecha</label>
-                <div class="col-sm-9">
+                <label class="col-sm-4 input-label">Fecha</label>
+                <div class="col-sm-8">
                 <input type="datetime-local" readonly="true"  name="fecha" class="form-control" id="input-fecha">
                 </div>
             </div>
