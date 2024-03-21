@@ -17,10 +17,29 @@ class etapas_controller extends Controller
             ->where('id_grupo',14)
             ->get();
 
+        $turno = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',4)
+            ->get();
+
+        $area = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id',$request->id_area)
+            ->get();
+
+        $unidad = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id',$request->id_unidad)
+            ->get();
+
         return view('etapas',[
             'operador' => $operador,
             'fecha' => $request->fecha,
-            'reportante' => $reportante
+            'reportante' => $reportante,
+            'area' => $area[0]->descripcion,
+            'folio_interno' => 'B0001',
+            'turno' => $turno,
+            'unidad' => $unidad[0]->descripcion
         ]);
     }
 }

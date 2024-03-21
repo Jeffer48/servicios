@@ -8,7 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class radio_controller extends Controller
 {
+    private $date = '';
+
     public function index(){
+        date_default_timezone_set('America/Mexico_City');
+        $date = date('Y-m-d h:i', time());
+
         $area = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',1)
@@ -28,12 +33,12 @@ class radio_controller extends Controller
         return view('reporte_radio',[
             'areas' => $area,
             'unidades' => $unidad,
-            'incidentes' => $incidente
+            'incidentes' => $incidente,
+            'fecha' => $date
         ]);
     }
 
     public function registrar(Request $request){
-        
         $result = DB::table('reporte_radio')->insert([
             'fecha' => $request->fecha,
             'id_area' => $request->area,

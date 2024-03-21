@@ -6,12 +6,7 @@
         <h1 class="title_form">Reporte de Radio</h1>
         <form class="principal_form" action="{{route('registrar')}}" method="POST">
             @csrf
-            <div class="row mb-3">
-                <label class="col-sm-4 input-label">Fecha</label>
-                <div class="col-sm-8">
-                <input type="datetime-local" readonly="true"  name="fecha" class="form-control" id="input-fecha">
-                </div>
-            </div>
+            <x-input-disabled label="Fecha" name="fecha" value="{{$fecha}}" type="datetime-local" text="Ingrese una fecha" id="input-fecha" size="3"></x-input-disabled>
             <x-select label="Área" name="area" text="Seleccione un área" :options="$areas" id="input-area" size="3"></x-select>
             <x-select label="Unidad" name="unidad" text="Seleccione una unidad" :options="$unidades" id="input-unidad" size="3"></x-select>
             <x-select label="Incidente" name="incidente" text="Seleccione un tipo de incidente" :options="$incidentes" id="input-incidente" size="3"></x-select>
@@ -35,14 +30,7 @@
     $(document).ready(function() {
         now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
     });
-
-    function setDate(){
-        now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
-    }
 
     function envioReporte(){
         document.getElementById('input-fecha').value = now.toISOString().slice(0,16);

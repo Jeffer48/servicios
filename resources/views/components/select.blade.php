@@ -7,7 +7,7 @@
                 <option value={{$option->id}}>{{$option->descripcion}}</option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
+        <div id="alert-{{$name}}" class="invalid-feedback">
             Seleccione alguna opción
         </div>
     </div>
