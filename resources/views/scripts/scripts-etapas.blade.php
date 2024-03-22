@@ -38,35 +38,41 @@
         else localidad.setAttribute("class","form-select");
         if(lugar.value == "") lugar.setAttribute("class","form-select is-invalid");
         else lugar.setAttribute("class","form-select");
-        if(ubicacion.value == "") ubicacion.setAttribute("class","form-select is-invalid");
-        else ubicacion.setAttribute("class","form-select");
+        if(ubicacion.value == "") ubicacion.setAttribute("class","form-control is-invalid");
+        else ubicacion.setAttribute("class","form-control");
 
         //Validaciones de Operadores
-        if(operador.value == ""){
-            document.getElementById("alert-operador").innerHTML = "Seleccione alguna opción";
-            operador.setAttribute("class","form-select is-invalid");
-        } 
-        else{
-            if(operador.value == r_operador.value){
-                document.getElementById("alert-operador").innerHTML = "El operador no puede ser el mismo que el Radio Operador";
-                operador.setAttribute("class","form-select is-invalid");
-            }else operador.setAttribute("class","form-select");
-        }
-
+        let alertRO = document.getElementById("alert-Roperador");
+        let alertOP = document.getElementById("alert-operador");
         let alertO1 = document.getElementById("alert-personalUno");
         let alertO2 = document.getElementById("alert-personalDos");
         let alertO3 = document.getElementById("alert-personalTres");
-        if(personal1.value == ""){
-            alertO1.innerHTML = "Seleccione alguna opción"
-            personal1.setAttribute("class","form-select is-invalid");
-        }
-        if(personal2.value == ""){
-            alertO2.innerHTML = "Seleccione alguna opción"
-            personal1.setAttribute("class","form-select is-invalid");
-        }
-        if(personal3.value == ""){
-            alertO3.innerHTML = "Seleccione alguna opción"
-            personal1.setAttribute("class","form-select is-invalid");
-        }
+
+        if(r_operador.value == "") personalVacio(r_operador,alertRO); 
+        else personalRepetido(r_operador,operador,personal1,personal2,personal3,alertRO);
+
+        if(operador.value == "") personalVacio(operador,alertOP); 
+        else personalRepetido(operador,r_operador,personal1,personal2,personal3,alertOP);
+
+        if(personal1.value == "") personalVacio(personal1,alertO1); 
+        else personalRepetido(personal1,operador,r_operador,personal2,personal3,alertO1);
+
+        if(personal2.value == "") personalVacio(personal2,alertO2);
+        else personalRepetido(personal2,operador,personal1,r_operador,personal3,alertO2);
+
+        if(personal3.value == "") personalVacio(personal3,alertO3);
+        else personalRepetido(personal3,operador,personal1,personal2,r_operador,alertO3);
+    }
+
+    function personalVacio(personal,alert){
+        alert.innerHTML = "Seleccione alguna opción";
+        personal.setAttribute("class","form-select is-invalid");
+    }
+
+    function personalRepetido(p,p2,p3,p4,p5,alert){
+        if(p.value==p2.value||p.value==p3.value||p.value==p4.value||p.value==p5.value){
+            alert.innerHTML = "Personal repetido";
+            p.setAttribute("class","form-select is-invalid");
+        }else p.setAttribute("class","form-select");
     }
 </script>

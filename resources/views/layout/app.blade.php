@@ -9,6 +9,7 @@
         <link href="css/layout.css" rel="stylesheet">
         <link href="css/content.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <body>
@@ -102,34 +103,26 @@
                 </nav>
             </div>
             <div style="padding-top: 6rem; padding-bottom: 1rem;">
-                @if ($errors->any())
-                    <div>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>
-                                    <div id="alert-message" style="width: 90%; margin: 0% 5%;" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>{{ $error }}</strong>
-                                        <button type="button" onclick="closeAlert()" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                @if(session()->has('success'))
+                    <script>
+                        Swal.fire({
+                            title: "Datos guardados correctamente!",
+                            text: "Haz click para cerrar",
+                            icon: "success"
+                        });
+                    </script>
                 @endif
-                @if(session()->has('message'))
-                    <div id="alert-message" style="width: 90%; margin: 0% 5%;" class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>{{ session()->get('message') }}</strong>
-                        <button type="button" onclick="closeAlert()" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                @if(session()->has('error'))
+                    <script>
+                        Swal.fire({
+                            title: "Ha ocurrido un error",
+                            text: "Haz click para cerrar",
+                            icon: "error"
+                        });
+                    </script>
                 @endif
                 @yield('content')
             </div>
         </div>
     </body>
 </html>
-
-<script>
-    function closeAlert(){
-        document.getElementById("alert-message").style.display = 'none';
-    }
-</script>
