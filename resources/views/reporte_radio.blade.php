@@ -10,7 +10,7 @@
             <x-select label="Área" name="area" text="Seleccione un área" :options="$areas" id="input-area" size="3"></x-select>
             <x-select label="Unidad" name="unidad" text="Seleccione una unidad" :options="$unidades" id="input-unidad" size="3"></x-select>
             <x-select label="Incidente" name="incidente" text="Seleccione un tipo de incidente" :options="$incidentes" id="input-incidente" size="3"></x-select>
-            <x-input label="Ubicación" name="ubicacion" type="text" text="Ingrese una ubicación" id="input-ubicacion" size="3"></x-input>
+            <x-input label="Ubicación" name="ubicacion" type="text" text="Ingrese una ubicación" id="input-ubicacion" size="3" placeh=""></x-input>
             <div class="text-center" style="margin: 2rem;">
                 <button onclick="envioReporte()" class="btn btn-success" type="submit">Registrar</button>
             </div>

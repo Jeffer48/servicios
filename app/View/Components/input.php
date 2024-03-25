@@ -11,7 +11,7 @@ class input extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($label,$name,$text,$type,$id,$size)
+    public function __construct($label,$name,$text,$type,$id,$size,$placeh)
     {
         $this->label = $label;
         $this->name = $name;
@@ -19,6 +19,7 @@ class input extends Component
         $this->text = $text;
         $this->id = $id;
         $this->size = $size;
+        $this->placeh =$placeh;
     }
 
     /**
@@ -32,7 +33,8 @@ class input extends Component
             'type' => $this->type,
             'text' => $this->text,
             'id' => $this->id,
-            'size' => $this->size
+            'size' => $this->size,
+            'placeh' => $this->placeh
         ]);
     }
 }

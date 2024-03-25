@@ -19,6 +19,13 @@
     border-bottom-style: solid;
 }
 
+.subtitle_form{
+    margin: 1rem;
+    text-align: center;
+    font-weight: 400;
+    font-style: italic;
+}
+
 .principal_form{
     padding: 1rem 3rem 0rem 3rem;
 }

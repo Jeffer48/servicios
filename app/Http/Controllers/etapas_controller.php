@@ -52,6 +52,31 @@ class etapas_controller extends Controller
             ->where('id_grupo',7)
             ->get();
 
+        $prioridad = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',8)
+            ->get();
+
+        $sexo = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',9)
+            ->get();
+
+        $apoyo = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',10)
+            ->get();
+
+        $destino = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',11)
+            ->get();
+
+        $hospital = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo',12)
+            ->get();
+
         return view('etapas',[
             'personal' => $personal,
             'fecha' => $request->fecha,
@@ -63,7 +88,12 @@ class etapas_controller extends Controller
             'jefe' => $jefe,
             'servicio' => $servicio,
             'localidad' => $localidad,
-            'lugares' => $lugares
+            'lugares' => $lugares,
+            'prioridad' => $prioridad,
+            'sexo' => $sexo,
+            'apoyo' => $apoyo,
+            'destino' => $destino,
+            'hospital' => $hospital
         ]);
     }
 }
