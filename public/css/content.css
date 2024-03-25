@@ -6,7 +6,7 @@
     background-color: #D7D7D7;
     border-radius: 15px;
     margin: 2rem 10%;
-    width: 80%;
+    width: 90%;
     padding-bottom: 0.5rem;
 }
 
@@ -62,4 +62,27 @@
     font-family: "Marcellus", serif;
     font-size: xxx-large;
     font-weight: bold;
+}
+
+.estatus_etapas{
+    align-items: self-end;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.estatus_etapas button{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 2rem;
+    margin: 0.4rem 1rem;
+    border-style: solid;
+    font-weight: 700;
+    border-color: red;
+    border-width: 0.3rem;
+    background-color: white;
+}
+
+#E2{
+    border-color: green;
 }

@@ -14,8 +14,8 @@
             <div class="text-center" style="margin: 2rem;">
                 <button onclick="envioReporte()" class="btn btn-success" type="submit">Registrar</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
     <div style="grid-column: 2;" id="services_container">
         <div class="active_services">
             <div class="target_services" style="grid-column: 2;">
