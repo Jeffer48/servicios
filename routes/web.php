@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(etapas_controller::class)->group(function () {
         Route::get('/etapas', 'index')->name('etapas');
+        Route::post('/etapas/registrar', 'guardar')->name('guardarEtapas');
     });
 
     Route::controller(login_controller::class)->group(function () {

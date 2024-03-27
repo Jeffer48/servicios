@@ -117,6 +117,36 @@ return new class extends Migration
             $table->foreign('id_unidad')->references('id')->on('catalogos');
             $table->foreign('id_incidente')->references('id')->on('catalogos');
         });
+
+        Schema::create('etapas', function(Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_reporte_radio')->unsigned()->nullable(false);
+            $table->integer('id_radio_operador')->unsigned()->nullable(false);
+            $table->integer('id_reportante')->unsigned()->nullable(false);
+            $table->integer('id_turno')->unsigned()->nullable(false);
+            $table->timestamp('fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->integer('id_operador')->unsigned()->nullable(false);
+            $table->integer('id_jefe')->unsigned()->nullable(false);
+            $table->integer('id_personal_1')->unsigned()->nullable(false);
+            $table->integer('id_personal_2')->unsigned()->nullable(false);
+            $table->integer('id_personal_3')->unsigned()->nullable(false);
+            $table->integer('id_tipo_servicio')->unsigned()->nullable(false);
+            $table->integer('id_localidad')->unsigned()->nullable(false);
+            $table->integer('id_lugar')->unsigned()->nullable(false);
+            $table->string('ubicacion',255)->nullable(true);
+
+            $table->foreign('id_reporte_radio')->references('id')->on('personal');
+            $table->foreign('id_jefe')->references('id')->on('personal');
+            $table->foreign('id_operador')->references('id')->on('personal');
+            $table->foreign('id_personal_1')->references('id')->on('personal');
+            $table->foreign('id_personal_2')->references('id')->on('personal');
+            $table->foreign('id_personal_3')->references('id')->on('personal');
+            $table->foreign('id_reportante')->references('id')->on('catalogos');
+            $table->foreign('id_turno')->references('id')->on('catalogos');
+            $table->foreign('id_tipo_servicio')->references('id')->on('catalogos');
+            $table->foreign('id_localidad')->references('id')->on('catalogos');
+            $table->foreign('id_lugar')->references('id')->on('catalogos');
+        });
     }
 
     public function down(): void

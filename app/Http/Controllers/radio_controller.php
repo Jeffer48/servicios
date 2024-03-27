@@ -41,7 +41,7 @@ class radio_controller extends Controller
 
     public function registrar(Request $request){
         try{
-            $result = DB::table('reporte_radio')->insert([
+            $id = DB::table('reporte_radio')->insertGetId([
                 'fecha' => $request->fecha,
                 'id_area' => $request->area,
                 'id_unidad' => $request->unidad,
@@ -58,7 +58,8 @@ class radio_controller extends Controller
                     'id_area' => $request->area,
                     'id_unidad' => $request->unidad,
                     'id_incidente' => $request->incidente,
-                    'ubicacion' => $request->ubicacion
+                    'ubicacion' => $request->ubicacion,
+                    'id_reporte_radio' => $id
                 ])
                 ->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
             }

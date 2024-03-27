@@ -7,6 +7,9 @@
         document.getElementById('input-horaI').value = now.toISOString().slice(0,16);
     });
 
+    //ID reporte de radio
+    let id = {{$id_reporte_radio}}
+
     //Estatus de las etapas
     let terminadoE1 = 0;
     let terminadoE2 = 2;
@@ -139,9 +142,32 @@
         else terminadoE5 = 1;
     }
 
+    $('#btn-guardar-etapas').click(function(e) {
+        e.preventDefault();
+        var ejemplo = "ejemplo";
+        var data = {ejemplo:ejemplo};
+        $.ajax({
+            url: "{{ route('guardarEtapas') }}",
+            type: 'POST',
+            data: data,
+            success: function (msg) {
+                alert("Se ha realizado el POST con exito "+msg);
+            }
+        });
+    });
+
     function guardar(){
         validarE5();
-        console.log(terminadoE5);
+
+        $.ajax({
+            url: "{{ route('guardarEtapas') }}",
+            type: 'POST',
+            data: {
+                reporte_radio: id,
+                radio_operador: r_operador.value
+            }
+        });
+        
         if(terminadoE1 != 2||terminadoE2 != 2||terminadoE3 != 2||terminadoE4 != 2){
             Swal.fire({
                 title: "Hay etapas sin terminar!",
@@ -149,7 +175,9 @@
                 icon: "error"
             });
         }
-        else if(terminadoE5 == 2) console.log("Todo terminado");
+        else if(terminadoE5 == 2){
+            console.log("Terminado");
+        }
     }
 
     function siguiente(sigEtapa){

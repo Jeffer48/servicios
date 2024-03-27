@@ -69,7 +69,7 @@
                 <x-input label="Folio CRUM" name="crum" type="text" text="Ingrese el folio CRUM" id="input-crum" size="3" placeh=""></x-input>
                 <x-input label="Folio C5i" name="C5i" type="text" text="Ingrese el folio C5i" id="input-c5i" size="3" placeh=""></x-input>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" onclick="guardar()" class="btn btn-success">Guardar</button>
+                    <button type="submit" id="btn-guardar-etapas" class="btn btn-success">Guardar</button>
                 </div>
             </div>
         </div>

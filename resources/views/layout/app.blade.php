@@ -3,6 +3,7 @@
     <head>
         <title>Sistema de Registro</title>
         <meta charset="utf-8">
+        <meta name="csrf-token" content="{{{ csrf_token() }}}">
         <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -125,4 +126,6 @@
             </div>
         </div>
     </body>
+
+   <script src="js/utilerias.js"></script>
 </html>

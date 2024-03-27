@@ -93,7 +93,12 @@ class etapas_controller extends Controller
             'sexo' => $sexo,
             'apoyo' => $apoyo,
             'destino' => $destino,
-            'hospital' => $hospital
+            'hospital' => $hospital,
+            'id_reporte_radio' => $request->id_reporte_radio
         ]);
+    }
+
+    public function guardar(Request $request){
+        dd($request);
     }
 }
