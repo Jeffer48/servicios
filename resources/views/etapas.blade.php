@@ -24,7 +24,7 @@
                 <x-select label="Lugar del incidente" name="lugar" text="Seleccione el Lugar del Incidente" :options="$lugares" id="input-lugar" size="3"></x-select>
                 <x-input label="Ubicacion" name="ubicacion" type="text" text="Ingrese una ubicación" id="input-ubicacion" size="3" placeh=""></x-input>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" onclick="validarE1(true)" class="btn btn-success">Siguiente</button>
+                    <button type="submit" onclick="siguiente(2)" class="btn btn-success">Siguiente</button>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="principal_form">
                 <x-input-disabled label="Folio Interno" name="folio_interno_e2" value="{{$folio_interno}}" type="text" text="Ingrese el folio" id="input-folio_e2" size="3"></x-input-disabled>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" onclick="validarE2(true)" class="btn btn-success">Siguiente</button>
+                    <button type="submit" onclick="siguiente(3)" class="btn btn-success">Siguiente</button>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <x-select label="Destino" name="destino" text="Seleccione el destino" :options="$destino" id="input-destino" size="3"></x-select>
                 <x-select label="Hospital" name="hospital" text="Seleccione el hospital" :options="$hospital" id="input-hospital" size="3"></x-select>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" onclick="validarE3(true)" class="btn btn-success">Siguiente</button>
+                    <button type="submit" onclick="siguiente(4)" class="btn btn-success">Siguiente</button>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                 <x-input label="Descripción" name="descripcion" type="text" text="Ingrese una descripción del evento" id="input-descripcion" size="3" placeh="Describa el evento"></x-input>
                 <x-input label="Incorporación" name="horaI" type="datetime-local" text="No puede ser menor que la fecha de captura" id="input-horaI" size="3" placeh=""></x-input>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" onclick="validarE4(true)" class="btn btn-success">Siguiente</button>
+                    <button type="submit" onclick="siguiente(5)" class="btn btn-success">Siguiente</button>
                 </div>
             </div>
         </div>
@@ -75,11 +75,11 @@
         </div>
     </div>
     <div class="estatus_etapas" style="grid-column: 2;">
-        <button onclick="etapasBotones('primera_etapa')" id="E1">E1</button>
-        <button onclick="etapasBotones('segunda_etapa')" id="E2">E2</button>
-        <button onclick="etapasBotones('tercera_etapa')" id="E3">E3</button>
-        <button onclick="etapasBotones('cuarta_etapa')" id="E4">E4</button>
-        <button onclick="etapasBotones('quinta_etapa')" id="E5">E5</button>
+        <button onclick="siguiente(1)" id="E1">E1</button>
+        <button onclick="siguiente(2)" id="E2">E2</button>
+        <button onclick="siguiente(3)" id="E3">E3</button>
+        <button onclick="siguiente(4)" id="E4">E4</button>
+        <button onclick="siguiente(5)" id="E5">E5</button>
     </div>
 </div>
 

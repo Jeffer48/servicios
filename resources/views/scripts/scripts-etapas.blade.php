@@ -12,6 +12,7 @@
     let terminadoE2 = 2;
     let terminadoE3 = 0;
     let terminadoE4 = 0;
+    let terminadoE5 = 0;
 
     //Formulario de etapas
     let formE1 = document.getElementById("primera_etapa");
@@ -57,8 +58,10 @@
     let bE3 = document.getElementById("E3");
     let bE4 = document.getElementById("E4");
     let bE5 = document.getElementById("E5");
+    let btnActual = bE1;
+    let actual = 1;
 
-    function validarE1(sig){
+    function validarE1(){
         let terminado = true;
 
         if(fechaCap.value > fecha.value) fecha.setAttribute("class","form-control is-invalid");
@@ -96,15 +99,9 @@
         
         if(terminado) terminadoE1 = 2;
         else terminadoE1 = 1;
-
-        if(sig) siguiente(1,formE1,terminadoE1);
     }
 
-    function validarE2(sig){
-        if(sig) siguiente(2,formE2,2);
-    }
-
-    function validarE3(sig){
+    function validarE3(){
         let terminado = true;
         terminado = vacio(terminado,prioridad,"select");
         terminado = vacio(terminado,nombreP,"control");
@@ -116,16 +113,9 @@
 
         if(terminado) terminadoE3 = 2;
         else terminadoE3 = 1;
-
-        if(sig){
-            let horaV = new Date();
-            horaV.setMinutes(horaV.getMinutes() - horaV.getTimezoneOffset());
-            document.getElementById('input-horaI').value = horaV.toISOString().slice(0,16);
-            siguiente(3,formE3,terminadoE3);
-        }
     }
 
-    function validarE4(sig){
+    function validarE4(){
         let terminado = true;
 
         terminado = vacio(terminado,descripcion,"control");
@@ -137,47 +127,90 @@
         
         if(terminado) terminadoE4 = 2;
         else terminadoE4 = 1;
+    }
 
-        if(sig) siguiente(4,formE4,terminadoE4);
+    function validarE5(){
+        let terminado = true;
+
+        terminado = vacio(terminado,crum,"control");
+        terminado = vacio(terminado,c5i,"control");
+
+        if(terminado) terminadoE5 = 2;
+        else terminadoE5 = 1;
     }
 
     function guardar(){
-        let terminado = false;
+        validarE5();
+        console.log(terminadoE5);
+        if(terminadoE1 != 2||terminadoE2 != 2||terminadoE3 != 2||terminadoE4 != 2){
+            Swal.fire({
+                title: "Hay etapas sin terminar!",
+                text: "Haz click para cerrar",
+                icon: "error"
+            });
+        }
+        else if(terminadoE5 == 2) console.log("Todo terminado");
     }
 
-    function siguiente(an,actual,terminado){
-        switch(an){
-            case 1: 
-                etapasBotones('segunda_etapa');
-                colorearBotones(bE1,terminado);
+    function siguiente(sigEtapa){
+        etapaActual.style.display = "none";
+
+        switch(actual){
+            case 1:
+                validarE1();
+                colorearBotones(btnActual,terminadoE1);
                 break;
-            case 2: 
-                etapasBotones('tercera_etapa');
+            case 2: break;
+            case 3:
+                validarE3();
+                colorearBotones(btnActual,terminadoE3);
                 break;
-            case 3: 
-                etapasBotones('cuarta_etapa');
-                colorearBotones(bE3,terminado);
+            case 4:
+                validarE4();
+                colorearBotones(btnActual,terminadoE4);
                 break;
-            case 4: 
-                etapasBotones('quinta_etapa');
-                colorearBotones(bE4,terminado);
+            case 5:
+                colorearBotones(btnActual,1);
                 break;
         }
+
+        switch(sigEtapa){
+            case 1: 
+                etapaActual = formE1;
+                btnActual = bE1;
+                actual = 1;
+                break;
+            case 2: 
+                etapaActual = formE2;
+                btnActual = bE2;
+                actual = 2;
+                break;
+            case 3: 
+                etapaActual = formE3;
+                btnActual = bE3;
+                actual = 3;
+                break;
+            case 4: 
+                etapaActual = formE4;
+                btnActual = bE4;
+                actual = 4;
+                break;
+            case 5: 
+                etapaActual = formE5;
+                btnActual = bE5;
+                actual = 5;
+                break;
+        }
+
+        etapaActual.style.display = "block";
     }
 
     function colorearBotones(boton,terminado){
-        console.log(boton,terminado);
         switch(terminado){
             case 0: boton.style.borderColor = "red"; break;
             case 1: boton.style.borderColor = "red green green red"; break;
             case 2: boton.style.borderColor = "green"; break;
         }
-    }
-
-    function etapasBotones(sigEtapa){
-        etapaActual.style.display = "none";
-        etapaActual = document.getElementById(sigEtapa);
-        document.getElementById(sigEtapa).style.display = "block";
     }
 
     function vacio(terminado,inputV,tipo){
@@ -203,6 +236,7 @@
         if(p.value==p2.value||p.value==p3.value||p.value==p4.value||p.value==p5.value){
             alert.innerHTML = "Personal repetido";
             p.setAttribute("class","form-select is-invalid");
+            terminado = false;
             return terminado;
         }else{
             p.setAttribute("class","form-select");
