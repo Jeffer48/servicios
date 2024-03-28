@@ -118,6 +118,18 @@ return new class extends Migration
             $table->foreign('id_incidente')->references('id')->on('catalogos');
         });
 
+        Schema::create('folios', function(Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_area')->unsigned()->nullable(false);
+            $table->integer('actual_num')->nullable(false);
+            $table->string('folio',255)->nullable(false);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->softDeletes();
+
+            $table->foreign('id_area')->references('id')->on('catalogos');
+        });
+
         Schema::create('etapas', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('id_reporte_radio')->unsigned()->nullable(false);
@@ -134,8 +146,26 @@ return new class extends Migration
             $table->integer('id_localidad')->unsigned()->nullable(false);
             $table->integer('id_lugar')->unsigned()->nullable(false);
             $table->string('ubicacion',255)->nullable(true);
+            $table->integer('id_folio')->unsigned()->nullable(false);
+            $table->integer('id_prioridad')->unsigned()->nullable(false);
+            $table->string('nombre',255)->nullable(false);
+            $table->integer('id_sexo')->unsigned()->nullable(false);
+            $table->integer('edad')->unsigned()->nullable(false);
+            $table->integer('id_apoyo')->unsigned()->nullable(false);
+            $table->integer('id_destino')->unsigned()->nullable(false);
+            $table->integer('id_hospital')->unsigned()->nullable(false);
+            $table->string('desc_evento',255)->nullable(false);
+            $table->timestamp('incorporacion')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('folio_crum',255)->nullable(false);
+            $table->string('folio_c5i',255)->nullable(false);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->softDeletes();
+            $table->integer('created_user')->unsigned()->nullable(true);
+            $table->integer('updated_user')->unsigned()->nullable(true);
+            $table->integer('deleted_user')->unsigned()->nullable(true);
 
-            $table->foreign('id_reporte_radio')->references('id')->on('personal');
+            $table->foreign('id_reporte_radio')->references('id')->on('reporte_radio');
             $table->foreign('id_jefe')->references('id')->on('personal');
             $table->foreign('id_operador')->references('id')->on('personal');
             $table->foreign('id_personal_1')->references('id')->on('personal');
@@ -146,6 +176,12 @@ return new class extends Migration
             $table->foreign('id_tipo_servicio')->references('id')->on('catalogos');
             $table->foreign('id_localidad')->references('id')->on('catalogos');
             $table->foreign('id_lugar')->references('id')->on('catalogos');
+            $table->foreign('id_prioridad')->references('id')->on('catalogos');
+            $table->foreign('id_sexo')->references('id')->on('catalogos');
+            $table->foreign('id_apoyo')->references('id')->on('catalogos');
+            $table->foreign('id_destino')->references('id')->on('catalogos');
+            $table->foreign('id_hospital')->references('id')->on('catalogos');
+            $table->foreign('id_folio')->references('id')->on('folios');
         });
     }
 

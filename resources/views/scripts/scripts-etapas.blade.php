@@ -7,9 +7,6 @@
         document.getElementById('input-horaI').value = now.toISOString().slice(0,16);
     });
 
-    //ID reporte de radio
-    let id = {{$id_reporte_radio}}
-
     //Estatus de las etapas
     let terminadoE1 = 0;
     let terminadoE2 = 2;
@@ -109,10 +106,15 @@
         terminado = vacio(terminado,prioridad,"select");
         terminado = vacio(terminado,nombreP,"control");
         terminado = vacio(terminado,sexoP,"select");
-        terminado = vacio(terminado,edadP,"control");
         terminado = vacio(terminado,apoyo,"select");
         terminado = vacio(terminado,destino,"select");
         terminado = vacio(terminado,hospital,"select");
+        let edadEntero = edadP.value % 1;
+        if(edadP.value >= 0 && edadP.value <= 130 && edadEntero == 0 && edadP.value != '')edadP.setAttribute("class","form-control");
+        else{
+            edadP.setAttribute("class","form-control is-invalid");
+            terminado = false;
+        }
 
         if(terminado) terminadoE3 = 2;
         else terminadoE3 = 1;
@@ -142,32 +144,39 @@
         else terminadoE5 = 1;
     }
 
-    $('#btn-guardar-etapas').click(function(e) {
-        e.preventDefault();
-        var ejemplo = "ejemplo";
-        var data = {ejemplo:ejemplo};
-        $.ajax({
-            url: "{{ route('guardarEtapas') }}",
-            type: 'POST',
-            data: data,
-            success: function (msg) {
-                alert("Se ha realizado el POST con exito "+msg);
-            }
-        });
-    });
-
-    function guardar(){
+    function validarTodo(){
         validarE5();
+        let package = {
+            id_reporte_radio: {{$id_reporte_radio}},
+            id_tipo: {{$id_area}},
+            folio_num: {{$folio_num}},
+            folio: '{{$folio}}',
+            id_radio_operador: r_operador.value,
+            id_reportante: reportante.value,
+            id_turno: turno.value,
+            fecha: fecha.value,
+            id_operador: operador.value,
+            id_jefe: jefe.value,
+            id_personal_1: personal1.value,
+            id_personal_2: personal2.value,
+            id_personal_3: personal3.value,
+            id_tipo_servicio: servicio.value,
+            id_localidad: localidad.value,
+            id_lugar: lugar.value,
+            ubicacion: ubicacion.value,
+            id_prioridad: prioridad.value,
+            nombre: nombreP.value,
+            id_sexo: sexoP.value,
+            edad: edadP.value,
+            id_apoyo: apoyo.value,
+            id_destino: destino.value,
+            id_hospital: hospital.value,
+            desc_evento: descripcion.value,
+            incorporacion: horaIB.value,
+            folio_crum: crum.value,
+            folio_c5i: c5i.value
+        };
 
-        $.ajax({
-            url: "{{ route('guardarEtapas') }}",
-            type: 'POST',
-            data: {
-                reporte_radio: id,
-                radio_operador: r_operador.value
-            }
-        });
-        
         if(terminadoE1 != 2||terminadoE2 != 2||terminadoE3 != 2||terminadoE4 != 2){
             Swal.fire({
                 title: "Hay etapas sin terminar!",
@@ -176,7 +185,14 @@
             });
         }
         else if(terminadoE5 == 2){
-            console.log("Terminado");
+            $.ajax({
+                url: "{{route('guardarEtapas')}}",
+                type: 'POST',
+                data: package,
+                success: function(response){
+                    window.location.href = "/";
+                }
+            });
         }
     }
 

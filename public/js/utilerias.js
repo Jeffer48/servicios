@@ -12,10 +12,6 @@ $.ajaxSetup({
                 4
             );
         else if (error.status == 500)
-            _gen.notificacion_min(
-                'Error del servidor',
-                'Ha ocurrido un error interno. Intentelo más tarde o contacte a soporte técnico',
-                4
-            );
+            console.log("Ha ocurrido un error");
     },
 });

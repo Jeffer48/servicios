@@ -10,7 +10,7 @@
                 <x-input-disabled label="Fecha de Captura" name="fechaC" value="{{$fecha}}" type="datetime-local" text="Ingrese una fecha" id="input-fechaC" size="3"></x-input-disabled>
                 <x-input-disabled label="Área" name="area" value="{{$area}}" type="text" text="Ingrese un área" id="input-area" size="3"></x-input-disabled>
                 <x-select label="Reportante" name="reportante" text="Seleccione un Reportante" :options="$reportante" id="input-reportante" size="3"></x-select>
-                <x-input-disabled label="Folio Interno" name="folio_interno" value="{{$folio_interno}}" type="text" text="Ingrese un área" id="input-folioI" size="3"></x-input-disabled>
+                <x-input-disabled label="Folio Interno" name="folio_interno" value="{{$folio}}" type="text" text="Ingrese un área" id="input-folioI" size="3"></x-input-disabled>
                 <x-select label="Turno" name="turno" text="Seleccione un Turno" :options="$turno" id="input-turno" size="3"></x-select>
                 <x-input label="Fecha" name="fecha" type="datetime-local" text="La fecha no puede ser menor que la de captura" id="input-fecha" size="3" placeh=""></x-input>
                 <x-input-disabled label="Unidad" name="unidad" value="{{$unidad}}" type="text" text="Ingrese una unidad" id="input-unidad" size="3"></x-input-disabled>
@@ -31,7 +31,7 @@
         <div id="segunda_etapa" style="display: none;">
             <h1 class="title_form">Segunda Etapa</h1>
             <div class="principal_form">
-                <x-input-disabled label="Folio Interno" name="folio_interno_e2" value="{{$folio_interno}}" type="text" text="Ingrese el folio" id="input-folio_e2" size="3"></x-input-disabled>
+                <x-input-disabled label="Folio Interno" name="folio_interno_e2" value="{{$folio}}" type="text" text="Ingrese el folio" id="input-folio_e2" size="3"></x-input-disabled>
                 <div class="text-center" style="margin: 2rem;">
                     <button type="submit" onclick="siguiente(3)" class="btn btn-success">Siguiente</button>
                 </div>
@@ -44,7 +44,7 @@
                 <x-select label="Prioridad" name="prioridad" text="Seleccione la Prioridad" :options="$prioridad" id="input-prioridad" size="3"></x-select>
                 <x-input label="Nombre" name="nombreP" type="text" text="Ingrese el nombre del paciente" id="input-nombreP" size="3" placeh=""></x-input>
                 <x-select label="Sexo" name="sexoP" text="Seleccione el sexo del paciente" :options="$sexo" id="input-sexoP" size="3"></x-select>
-                <x-input label="Edad" name="edadP" type="number" text="Ingrese la edad del paciente" id="input-edadP" size="3" placeh=""></x-input>
+                <x-input label="Edad" name="edadP" type="number" text="Ingrese una edad valida" id="input-edadP" size="3" placeh=""></x-input>
                 <x-select label="Apoyo Brindado" name="apoyo" text="Seleccione el tipo de apoyo brindado" :options="$apoyo" id="input-apoyo" size="3"></x-select>
                 <x-select label="Destino" name="destino" text="Seleccione el destino" :options="$destino" id="input-destino" size="3"></x-select>
                 <x-select label="Hospital" name="hospital" text="Seleccione el hospital" :options="$hospital" id="input-hospital" size="3"></x-select>
@@ -69,7 +69,7 @@
                 <x-input label="Folio CRUM" name="crum" type="text" text="Ingrese el folio CRUM" id="input-crum" size="3" placeh=""></x-input>
                 <x-input label="Folio C5i" name="C5i" type="text" text="Ingrese el folio C5i" id="input-c5i" size="3" placeh=""></x-input>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" id="btn-guardar-etapas" class="btn btn-success">Guardar</button>
+                    <button type="submit" id="btn-guardar-etapas" onclick="validarTodo()" class="btn btn-success">Guardar</button>
                 </div>
             </div>
         </div>
