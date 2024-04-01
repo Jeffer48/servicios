@@ -1,8 +1,8 @@
 @extends('layout.app')
 
 @section('content')
-<div style="display: grid; grid-template-columns: 70% 30%;">
-    <div style="grid-column: 1;" id="form_container">
+<div>
+    <div style="width: 80% !important;" id="form_container">
         <h1 class="title_form">Reporte de Radio</h1>
         <form class="principal_form" action="{{route('registrar')}}" method="POST" id="form-radio-create">
             @csrf
@@ -15,13 +15,6 @@
                 <button id="btn-registar-radio" onclick="envioReporte()" class="btn btn-success" type="button">Registrar</button>
             </div>
         </form>
-    </div>
-    <div style="grid-column: 2;" id="services_container">
-        <div class="active_services">
-            <div class="target_services" style="grid-column: 2;">
-        
-            </div>
-        </div>
     </div>
 </div>
 

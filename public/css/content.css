@@ -86,3 +86,25 @@
 #E2{
     border-color: green;
 }
+
+.service-target{
+    margin-left: 3%;
+    margin-bottom: 0.5rem;
+    width: 94%;
+    height: 4rem;
+    border-style: solid;
+    display: flex;
+    border-radius: 0.5rem;
+    border-width: thin;
+}
+
+.maquina-target{
+    align-self: center;
+    margin: 0rem 1rem;
+    font-weight: 600;
+}
+
+.info-target{
+    align-self: center;
+    text-align: left;
+}

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\radio_controller;
 use App\Http\Controllers\login_controller;
 use App\Http\Controllers\etapas_controller;
+use App\Http\Controllers\datos_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,13 +33,15 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(radio_controller::class)->group(function () {
         Route::get('/radio', 'index')->name('reporte');
         Route::post('/radio/registrar', 'registrar')->name('registrar');
-        Route::get('/etapas', 'etapa_uno')->name('etapa_uno');
     });
 
     Route::controller(etapas_controller::class)->group(function () {
         Route::get('/etapas', 'index')->name('etapas');
         Route::post('/etapas/registrar', 'guardar')->name('guardarEtapas');
+        Route::get('/sinTerminar', 'sinTerminar')->name('sinTerminar');
     });
+
+    Route::get('/datos', [datos_controller::class, 'index']);
 
     Route::controller(login_controller::class)->group(function () {
         Route::get('/logout', 'logout')->name('logout');
