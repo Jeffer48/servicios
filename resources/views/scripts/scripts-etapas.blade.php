@@ -190,7 +190,17 @@
                 type: 'POST',
                 data: package,
                 success: function(response){
-                    window.location.href = "/";
+                    Swal.fire({
+                        title: "Datos guardados correctamente!",
+                        text: "Haz click para cerrar",
+                        icon: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Continuar"
+                    }).then((result) => {
+                        window.location.href = "/";
+                    });
                 }
             });
         }
