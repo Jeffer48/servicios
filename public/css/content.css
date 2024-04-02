@@ -108,3 +108,10 @@
     align-self: center;
     text-align: left;
 }
+
+/* Style para tablas de catalogos */
+
+.table-container{
+    width: 80%;
+    margin: 2rem 10%;
+}

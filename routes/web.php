@@ -6,6 +6,7 @@ use App\Http\Controllers\radio_controller;
 use App\Http\Controllers\login_controller;
 use App\Http\Controllers\etapas_controller;
 use App\Http\Controllers\datos_controller;
+use App\Http\Controllers\catalogos_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/etapas', 'index')->name('etapas');
         Route::post('/etapas/registrar', 'guardar')->name('guardarEtapas');
         Route::get('/sinTerminar', 'sinTerminar')->name('sinTerminar');
+    });
+
+    Route::controller(catalogos_controller::class)->group(function () {
+        Route::get('/catalogos', 'index')->name('catalogos');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);
