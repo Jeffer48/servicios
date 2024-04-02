@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/catalogos/editar', 'editar')->name('editar');
         Route::post('/catalogos/eliminar', 'eliminar')->name('eliminar');
         Route::post('/catalogos/activar', 'activar')->name('activar');
+        Route::post('/catalogos/guardar', 'guardar')->name('guardar');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);

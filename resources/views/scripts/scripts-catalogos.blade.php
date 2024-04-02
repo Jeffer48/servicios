@@ -55,7 +55,7 @@
                 type: 'POST',
                 data: {id: id},
                 success: function(response){
-                    successMsg(response);
+                    successMsg(response,"Datos actualizados correctamente!");
                 }
             });
         });
@@ -77,16 +77,16 @@
                 type: 'POST',
                 data: {id: id},
                 success: function(response){
-                    successMsg(response);
+                    successMsg(response,"Datos actualizados correctamente!");
                 }
             });
         });
     }
 
-    function successMsg(response){
+    function successMsg(response,$respuesta){
         if(response == 1){
             Swal.fire({
-                title: "Datos actualizados correctamente!",
+                title: $respuesta,
                 text: "Haz click para cerrar",
                 icon: "success",
                 showCancelButton: false,
@@ -102,6 +102,45 @@
                 title: "Ha ocurrido un error",
                 text: "Haz click para cerrar",
                 icon: "error"
+            });
+        }
+    }
+
+    function guardarCatalogo(){
+        let nuevo = document.getElementById("input-nuevoCatalogo").value;
+        let alerta = document.getElementById("catalogoAlert");
+        let grupo = document.getElementById("id_grupo").value;
+
+        if(nuevo.value == ""){
+            alerta.style.display = "block";
+        }else{
+            alerta.style.display = "none";
+            $.ajax({
+                url: "{{route('guardar')}}",
+                type: 'POST',
+                data: {id_grupo: grupo, nuevo: nuevo},
+                success: function(response){
+                    successMsg(response,"Datos guardados correctamente!");
+                }
+            });
+        }
+    }
+
+    function guardarGrupo(){
+        let nuevo = document.getElementById("input-nuevoGrupo").value;
+        let alerta = document.getElementById("grupoAlert");
+
+        if(nuevo.value == ""){
+            alerta.style.display = "block";
+        }else{
+            alerta.style.display = "none";
+            $.ajax({
+                url: "{{route('guardar')}}",
+                type: 'POST',
+                data: {id_grupo: 0, nuevo: nuevo},
+                success: function(response){
+                    successMsg(response,"Datos guardados correctamente!");
+                }
             });
         }
     }

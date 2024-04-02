@@ -2,14 +2,24 @@
 
 @section('content')
 <div class="table-container">
-    <form action="{{route('catalogos')}}" method="get">
-        <select class="form-select" name="id_grupo" onchange="this.form.submit()" aria-label="Default select example" id="grupos" style="width: 50%; margin-bottom: 2rem;">
-            <option id="opt-0" value="0">Todos</option>
-            @foreach ($grupos as $option)
-                <option id="opt-{{$option->id}}" value={{$option->id}}>{{$option->grupo}}</option>
-            @endforeach
-        </select>
-    </form>
+    <div class="row" style="margin-bottom: 1rem;">
+        <div class="col col-sm-6">
+            <form action="{{route('catalogos')}}" method="get">
+                <select class="form-select" name="id_grupo" onchange="this.form.submit()" aria-label="Default select example" id="grupos">
+                    <option id="opt-0" value="0">Todos</option>
+                    @foreach ($grupos as $option)
+                        <option id="opt-{{$option->id}}" value={{$option->id}}>{{$option->grupo}}</option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
+        <div class="col text-end">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#NuevoCatalogo">Nuevo Catálogo</button>
+        </div>
+        <div class="col text-end">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#NuevoGrupo">Nuevo Grupo</button>
+        </div>
+    </div>
     <table id="catalogo" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -55,6 +65,61 @@
             @endforeach
         </tbody>
     </table>
+</div>
+
+<!-- Modal Catalogo -->
+<div class="modal fade" id="NuevoCatalogo" tabindex="-1" aria-labelledby="NuevoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="NuevoModalLabel">Agregar Catálogo</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger" id="catalogoAlert" role="alert" style="display: none;">
+                El campo no puede ir vacio
+            </div>
+            <div class="row">
+                <div class="col col-sm-4">
+                    <select class="col form-select" id="id_grupo" aria-label="Default select example" id="grupos">
+                        @foreach ($grupos as $option)
+                            <option id="opt-{{$option->id}}" value={{$option->id}}>{{$option->grupo}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" id="input-nuevoCatalogo" placeholder="Ingrese un valor" required>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" onclick="guardarCatalogo()" id="btn-catalogo" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Grupo -->
+<div class="modal fade" id="NuevoGrupo" tabindex="-1" aria-labelledby="NuevoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="NuevoModalLabel">Agregar Grupo</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger" id="grupoAlert" role="alert" style="display: none;">
+                El campo no puede ir vacio
+            </div>
+            <input type="text" class="form-control" id="input-nuevoGrupo" placeholder="Ingrese un valor" required>
+        </div>
+        <div class="modal-footer">
+            <button type="button" onclick="guardarGrupo()" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
 </div>
 
 @include('scripts.scripts-catalogos')

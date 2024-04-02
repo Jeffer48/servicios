@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class catalogos_controller extends Controller
 {
@@ -73,6 +74,33 @@ class catalogos_controller extends Controller
             return 1;
         }catch(QueryException $e){
             return 0;
+        }
+    }
+
+    public function guardar(Request $request){
+        if($request->id_grupo == 0){
+            try{
+                DB::table('grupos')->insert([
+                    'grupo' => $request->nuevo,
+                    'created_user' => Auth::id()
+                ]);
+
+                return 1;
+            }catch(QueryException $e){
+                return 0;
+            }
+        }else{
+            try{
+                DB::table('catalogos')->insert([
+                    'descripcion' => $request->nuevo,
+                    'created_user' => Auth::id(),
+                    'id_grupo' => $request->id_grupo
+                ]);
+
+                return 1;
+            }catch(QueryException $e){
+                return 0;
+            }
         }
     }
 }
