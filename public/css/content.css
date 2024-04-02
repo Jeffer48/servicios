@@ -109,6 +109,11 @@
     text-align: left;
 }
 
+.btn-no-style{
+    border: unset;
+    background-color: unset;
+}
+
 /* Style para tablas de catalogos */
 
 .table-container{

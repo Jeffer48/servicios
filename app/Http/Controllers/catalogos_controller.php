@@ -39,4 +39,40 @@ class catalogos_controller extends Controller
             'opt' => $opt
         ]);
     }
+
+    public function editar(Request $request){
+        try{
+            DB::table('catalogos')
+                ->where('id', $request->id)
+                ->update(['descripcion' => $request->nuevo]);
+
+            return 1;
+        }catch(QueryException $e){
+            return 0;
+        }
+    }
+
+    public function eliminar(Request $request){
+        try{
+            DB::table('catalogos')
+                ->where('id', $request->id)
+                ->update(['deleted_at' => now()]);
+
+            return 1;
+        }catch(QueryException $e){
+            return 0;
+        }
+    }
+
+    public function activar(Request $request){
+        try{
+            DB::table('catalogos')
+                ->where('id', $request->id)
+                ->update(['deleted_at' => null]);
+
+            return 1;
+        }catch(QueryException $e){
+            return 0;
+        }
+    }
 }

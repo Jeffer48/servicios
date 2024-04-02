@@ -44,6 +44,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(catalogos_controller::class)->group(function () {
         Route::get('/catalogos', 'index')->name('catalogos');
+        Route::post('/catalogos/editar', 'editar')->name('editar');
+        Route::post('/catalogos/eliminar', 'eliminar')->name('eliminar');
+        Route::post('/catalogos/activar', 'activar')->name('activar');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);

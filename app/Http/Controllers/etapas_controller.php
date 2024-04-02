@@ -11,71 +11,85 @@ class etapas_controller extends Controller
     public function index(Request $request){
         $personal = DB::table('personal')
             ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
+            ->where('deleted_at', null)
             ->get();
 
         $reportante = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',14)
+            ->where('deleted_at', null)
             ->get();
 
         $turno = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',4)
+            ->where('deleted_at', null)
             ->get();
 
         $area = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id',$request->id_area)
+            ->where('deleted_at', null)
             ->get();
 
         $unidad = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id',$request->id_unidad)
+            ->where('deleted_at', null)
             ->get();
 
         $jefe = DB::table('personal')
             ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
             ->where('id_tipo',75)
+            ->where('deleted_at', null)
             ->get();
 
         $servicio = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',5)
+            ->where('deleted_at', null)
             ->get();
 
         $localidad = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',6)
+            ->where('deleted_at', null)
             ->get();
 
         $lugares = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',7)
+            ->where('deleted_at', null)
             ->get();
 
         $prioridad = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',8)
+            ->where('deleted_at', null)
             ->get();
 
         $sexo = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',9)
+            ->where('deleted_at', null)
             ->get();
 
         $apoyo = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',10)
+            ->where('deleted_at', null)
             ->get();
 
         $destino = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',11)
+            ->where('deleted_at', null)
             ->get();
 
         $hospital = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',12)
+            ->where('deleted_at', null)
             ->get();
 
         $folio_num = DB::table('folios')

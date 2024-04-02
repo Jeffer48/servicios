@@ -18,16 +18,19 @@ class radio_controller extends Controller
         $area = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',1)
+            ->where('deleted_at', null)
             ->get();
 
         $unidad = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',2)
+            ->where('deleted_at', null)
             ->get();
 
         $incidente = DB::table('catalogos')
             ->select('id','descripcion')
             ->where('id_grupo',3)
+            ->where('deleted_at', null)
             ->orderBy('descripcion')
             ->get();
 
