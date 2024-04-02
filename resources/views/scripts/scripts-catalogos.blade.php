@@ -10,7 +10,9 @@
             "language":{
                 "lengthMenu": "_MENU_ Filas por página",
                 "info": "Mostrando la página _PAGE_ de _PAGES_",
-                "search": "Buscar"
+                "search": "Buscar",
+                "infoEmpty": "Sin datos",
+                "emptyTable": "Este grupo no tiene nada asignado aún"
             }
         });
     });
