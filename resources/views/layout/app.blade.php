@@ -26,7 +26,7 @@
 
         <div class="layout-content" style="margin-left: 18rem;">
             <!-- Inicio de NavBar -->
-            <div id="header" style="position: fixed; height: 5rem;">
+            <div id="header" style="position: fixed; height: 5rem; z-index: 1;">
                 @include('layout.navbar')
             </div>
             <!-- Fin de NavBar -->

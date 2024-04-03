@@ -11,6 +11,7 @@ $(document).ready(function() {
             $.each(response, function(i, item){
                 let tarjeta = document.createElement("button");
                 tarjeta.setAttribute('class','service-target');
+                tarjeta.setAttribute('id','btn-service-target-'+item.id);
                 tarjeta.setAttribute('onClick',"continuarEtapas("+item.id+")");
 
                 contenedor.appendChild(tarjeta);

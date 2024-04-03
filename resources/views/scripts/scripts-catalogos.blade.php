@@ -3,10 +3,17 @@
     let opt = "opt-"+{{$opt}};
 
     $(document).ready(function() {
-        let optSel = document.getElementById(opt);
-        optSel.selected = "true";
+        $('#catalogoTable').DataTable({
+            "language":{
+                "lengthMenu": "_MENU_ Filas por página",
+                "info": "Mostrando la página _PAGE_ de _PAGES_",
+                "search": "Buscar",
+                "infoEmpty": "Sin datos",
+                "emptyTable": "Este grupo no tiene nada asignado aún"
+            }
+        });
 
-        $('#catalogo').DataTable({
+        $('#gruposTable').DataTable({
             "language":{
                 "lengthMenu": "_MENU_ Filas por página",
                 "info": "Mostrando la página _PAGE_ de _PAGES_",
@@ -17,7 +24,7 @@
         });
     });
 
-    function btnEditar(id){
+    function btnEditar(id,tabla){
         Swal.fire({
             title: "Ingresa la nueva descripción",
             input: "text",
@@ -32,7 +39,7 @@
                 $.ajax({
                     url: "{{route('editar')}}",
                     type: 'POST',
-                    data: {id: id, nuevo: descripcion},
+                    data: {id: id, nuevo: descripcion, tabla: tabla},
                     success: function(response){
                         successMsg(response);
                     }
@@ -41,7 +48,7 @@
         });
     }
 
-    function btnBorrar(id){
+    function btnBorrar(id,tabla){
         Swal.fire({
             title: "¿Esta seguro de eliminar?",
             text: "Esta acción es reversible",
@@ -55,15 +62,22 @@
             $.ajax({
                 url: "{{route('eliminar')}}",
                 type: 'POST',
-                data: {id: id},
+                data: {id: id, tabla: tabla},
                 success: function(response){
-                    successMsg(response,"Datos actualizados correctamente!");
+                    if(response == 2){
+                        Swal.fire({
+                            title: "No se pueden eliminar grupos con catalogos activos",
+                            text: "Haz click para cerrar",
+                            icon: "error"
+                        });
+                    }
+                    else successMsg(response,"Datos actualizados correctamente!");
                 }
             });
         });
     }
 
-    function btnActivar(id){
+    function btnActivar(id,tabla){
         Swal.fire({
             title: "¿Esta seguro de reactivar?",
             text: "Esta acción es reversible",
@@ -77,7 +91,7 @@
             $.ajax({
                 url: "{{route('activar')}}",
                 type: 'POST',
-                data: {id: id},
+                data: {id: id,tabla: tabla},
                 success: function(response){
                     successMsg(response,"Datos actualizados correctamente!");
                 }

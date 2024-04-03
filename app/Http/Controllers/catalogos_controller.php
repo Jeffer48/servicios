@@ -34,18 +34,31 @@ class catalogos_controller extends Controller
             ->orderBy('grupo')
             ->get();
 
+        $gruposAll = DB::table('grupos')
+            ->select('id','grupo','deleted_at')
+            ->orderBy('grupo')
+            ->get();
+
         return view('catalogos',[
             'catalogos' => $catalogo,
             'grupos' => $grupos,
+            'gruposAll' => $gruposAll,
             'opt' => $opt
         ]);
     }
 
     public function editar(Request $request){
         try{
-            DB::table('catalogos')
-                ->where('id', $request->id)
-                ->update(['descripcion' => $request->nuevo]);
+            if($request->tabla == 'catalogos'){
+                DB::table('catalogos')
+                    ->where('id', $request->id)
+                    ->update(['descripcion' => $request->nuevo]);
+            }
+            if($request->tabla == 'grupos'){
+                DB::table('grupos')
+                    ->where('id', $request->id)
+                    ->update(['grupo' => $request->nuevo]);
+            }
 
             return 1;
         }catch(QueryException $e){
@@ -55,11 +68,29 @@ class catalogos_controller extends Controller
 
     public function eliminar(Request $request){
         try{
-            DB::table('catalogos')
-                ->where('id', $request->id)
-                ->update(['deleted_at' => now()]);
+            if($request->tabla == 'catalogos'){
+                DB::table('catalogos')
+                    ->where('id', $request->id)
+                    ->update(['deleted_at' => now()]);
 
-            return 1;
+                return 1;
+            }
+            if($request->tabla == 'grupos'){
+                $cantidad = DB::table('catalogos')
+                    ->select('id')
+                    ->where('id_grupo', $request->id)
+                    ->get();
+
+                if(count($cantidad) > 0) return 2; //REVISAR!!!!
+                else {
+                    DB::table('grupos')
+                        ->where('id', $request->id)
+                        ->update(['deleted_at' => now()]);
+
+                    return 1;
+                }
+            }
+
         }catch(QueryException $e){
             return 0;
         }
@@ -67,9 +98,16 @@ class catalogos_controller extends Controller
 
     public function activar(Request $request){
         try{
-            DB::table('catalogos')
-                ->where('id', $request->id)
-                ->update(['deleted_at' => null]);
+            if($request->tabla == 'catalogos'){
+                DB::table('catalogos')
+                    ->where('id', $request->id)
+                    ->update(['deleted_at' => null]);
+            }
+            if($request->tabla == 'grupos'){
+                DB::table('grupos')
+                    ->where('id', $request->id)
+                    ->update(['deleted_at' => null]);
+            }
 
             return 1;
         }catch(QueryException $e){

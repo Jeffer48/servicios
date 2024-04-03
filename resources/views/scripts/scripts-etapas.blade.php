@@ -1,5 +1,7 @@
 <script>
     var now = 0;
+    let id_reporte = {{$id_reporte_radio}};
+
     $(document).ready(function() {
         now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -147,7 +149,7 @@
     function validarTodo(){
         validarE5();
         let package = {
-            id_reporte_radio: {{$id_reporte_radio}},
+            id_reporte_radio: id_reporte,
             id_tipo: {{$id_area}},
             folio_num: {{$folio_num}},
             folio: '{{$folio}}',
