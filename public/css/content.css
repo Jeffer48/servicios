@@ -124,6 +124,10 @@
     text-decoration: unset;
 }
 
+.modal-input{
+    margin-bottom: 0.5rem;
+}
+
 /* Style para tablas de catalogos */
 
 .table-container{

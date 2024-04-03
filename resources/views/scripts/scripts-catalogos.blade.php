@@ -22,6 +22,16 @@
                 "emptyTable": "Este grupo no tiene nada asignado aún"
             }
         });
+
+        $('#personalTable').DataTable({
+            "language":{
+                "lengthMenu": "_MENU_ Filas por página",
+                "info": "Mostrando la página _PAGE_ de _PAGES_",
+                "search": "Buscar",
+                "infoEmpty": "Sin datos",
+                "emptyTable": "Este grupo no tiene nada asignado aún"
+            }
+        });
     });
 
     function btnEditar(id,tabla){
@@ -72,7 +82,7 @@
                                 icon: "error"
                             });
                         }
-                        else successMsg(response,"Datos actualizados correctamente!");
+                        else successMsg(response,"Datos actualizados correctamente!",tabla);
                     }
                 });
             }
@@ -96,14 +106,14 @@
                     type: 'POST',
                     data: {id: id,tabla: tabla},
                     success: function(response){
-                        successMsg(response,"Datos actualizados correctamente!");
+                        successMsg(response,"Datos actualizados correctamente!",tabla);
                     }
                 });
             }
         });
     }
 
-    function successMsg(response,$respuesta){
+    function successMsg(response,$respuesta,nDir){
         if(response == 1){
             Swal.fire({
                 title: $respuesta,
@@ -114,7 +124,9 @@
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Continuar"
             }).then((result) => {
-                window.location.href = "/catalogos";
+                let dir = "/"+nDir;
+                console.log(dir);
+                window.location.href = dir;
             });
         }
         else{
@@ -159,9 +171,53 @@
                 type: 'POST',
                 data: {id_grupo: 0, nuevo: nuevo},
                 success: function(response){
-                    successMsg(response,"Datos guardados correctamente!");
+                    successMsg(response,"Datos guardados correctamente!",'grupos');
                 }
             });
         }
+    }
+
+    //---------------------------------------- PERSONAL -----------------------------------------------
+    let personal_id = 0;
+    function btnEditPersonal(id,nombre,apellido_m,apellido_p,id_tipo,id_turno){
+        let nombreInput = document.getElementById("nombre_edit");
+        let apellido_pInput = document.getElementById("apellido_p_edit");
+        let apellido_mInput = document.getElementById("apellido_m_edit");
+        let puestoInput = document.getElementById("puesto-"+id_tipo);
+        let turnoInput = document.getElementById("turno-"+id_turno);
+        let btnGuardar =  document.getElementById("btn-editarP");
+        personal_id = id;
+
+        nombreInput.value = nombre;
+        apellido_pInput.value = apellido_p;
+        apellido_mInput.value = apellido_m;
+        puestoInput.selected = true;
+        turnoInput.selected = true;
+        btnGuardar.setAttribute('onclick','editarPersonal('+id+')');
+    }
+
+    function editarPersonal(id){
+        let nombre = document.getElementById("nombre_edit").value;
+        let apellido_p = document.getElementById("apellido_p_edit").value;
+        let apellido_m = document.getElementById("apellido_m_edit").value;
+        let puesto_id = document.getElementById("id_puesto_edit").value;
+        let turno_id = document.getElementById("id_turno_edit").value;
+
+        $.ajax({
+            url: "{{route('editar')}}",
+            type: 'POST',
+            data: {
+                id: id,
+                nombre: nombre,
+                apellido_p: apellido_p,
+                apellido_m: apellido_m,
+                id_tipo: puesto_id,
+                id_turno: turno_id,
+                tabla: 'personal'
+            },
+            success: function(response){
+                successMsg(response,"Datos actualizados correctamente!",'personal');
+            }
+        });
     }
 </script>

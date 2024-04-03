@@ -38,7 +38,11 @@
         <li>
             @php
                 $active = '';
-                if(request()->route()->uri == 'catalogos' || request()->route()->uri == 'grupos') $active = 'active';
+                if(
+                    request()->route()->uri == 'catalogos' || 
+                    request()->route()->uri == 'grupos' ||
+                    request()->route()->uri == 'personal'
+                ) $active = 'active';
                 else $active = 'text-white';
             @endphp
             <button class="nav-link {{$active}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">
@@ -55,6 +59,9 @@
                     </li>
                     <li class="sub-menu">
                         <a href="{{route('grupos')}}">Tabla de Grupos</a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="{{route('personal')}}">Tabla de Personal</a>
                     </li>
                 </ul>
             </div>

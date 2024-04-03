@@ -41,6 +41,42 @@ class catalogos_controller extends Controller
         ]);
     }
 
+    public function grupos(){
+        $gruposAll = DB::table('grupos')
+            ->select('id','grupo','deleted_at')
+            ->orderBy('grupo')
+            ->get();
+
+        return view('catalogos.grupos', [
+            'gruposAll' => $gruposAll,
+            'opt' => 0
+        ]);
+    }
+
+    public function personal(){
+        $personal = DB::table('vw_personal')
+            ->select('id','nombre','apellido_p','apellido_m','id_tipo','puesto','id_turno','turno','deleted_at')
+            ->orderBy('nombre')
+            ->get();
+
+        $puesto = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo', 13)
+            ->get();
+
+        $turno = DB::table('catalogos')
+            ->select('id','descripcion')
+            ->where('id_grupo', 4)
+            ->get();
+
+        return view('catalogos.personal', [
+            'personal' => $personal,
+            'puesto' => $puesto,
+            'turno' => $turno,
+            'opt' => 0
+        ]);
+    }
+
     public function editar(Request $request){
         try{
             if($request->tabla == 'catalogos'){
@@ -53,6 +89,17 @@ class catalogos_controller extends Controller
                     ->where('id', $request->id)
                     ->update(['grupo' => $request->nuevo]);
             }
+            if($request->tabla == 'personal'){
+                DB::table('personal')
+                    ->where('id', $request->id)
+                    ->update([
+                        'nombre' => $request->nombre,
+                        'apellido_p' => $request->apellido_p,
+                        'apellido_m' => $request->apellido_m,
+                        'id_tipo' => $request->id_tipo,
+                        'id_turno' => $request->id_turno,
+                    ]);
+            }
 
             return 1;
         }catch(QueryException $e){
@@ -60,22 +107,17 @@ class catalogos_controller extends Controller
         }
     }
 
-    public function grupos(){
-        $gruposAll = DB::table('grupos')
-        ->select('id','grupo','deleted_at')
-        ->orderBy('grupo')
-        ->get();
-
-        return view('catalogos.grupos', [
-            'gruposAll' => $gruposAll,
-            'opt' => 0
-        ]);
-    }
-
     public function eliminar(Request $request){
         try{
             if($request->tabla == 'catalogos'){
                 DB::table('catalogos')
+                    ->where('id', $request->id)
+                    ->update(['deleted_at' => now()]);
+
+                return 1;
+            }
+            if($request->tabla == 'personal'){
+                DB::table('personal')
                     ->where('id', $request->id)
                     ->update(['deleted_at' => now()]);
 
@@ -106,6 +148,11 @@ class catalogos_controller extends Controller
         try{
             if($request->tabla == 'catalogos'){
                 DB::table('catalogos')
+                    ->where('id', $request->id)
+                    ->update(['deleted_at' => null]);
+            }
+            if($request->tabla == 'personal'){
+                DB::table('personal')
                     ->where('id', $request->id)
                     ->update(['deleted_at' => null]);
             }
@@ -146,5 +193,9 @@ class catalogos_controller extends Controller
                 return 0;
             }
         }
+    }
+
+    public function guardarPersonal(Request $request){
+        return 1;
     }
 }

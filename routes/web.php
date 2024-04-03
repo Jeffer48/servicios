@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/catalogos/activar', 'activar')->name('activar');
         Route::post('/catalogos/guardar', 'guardar')->name('guardar');
         Route::get('/grupos', 'grupos')->name('grupos');
+        Route::get('/personal', 'personal')->name('personal');
     });
 
     Route::controller(reportes_controller::class)->group(function () {

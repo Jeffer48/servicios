@@ -48,6 +48,21 @@ return new class extends Migration
         left join catalogos c2 on rr.id_incidente = c2.id
         left join adm_user au on rr.created_user = au.id
         left join personal p on au.id_personal = p.id;");
+
+        DB::unprepared("CREATE VIEW vw_personal as
+        select 
+            p.id,
+            p.nombre,
+            p.apellido_p,
+            p.apellido_m,
+            p.id_tipo,
+            c0.descripcion puesto,
+            p.id_turno,
+            c1.descripcion turno,
+            p.deleted_at
+        from personal p
+        left join catalogos c0 on p.id_tipo = c0.id
+        left join catalogos c1 on p.id_turno = c1.id;");
     }
 
     /**
@@ -57,5 +72,6 @@ return new class extends Migration
     {
         DB::unprepared("DROP VIEW IF EXISTS vw_reporte_radio_st;");
         DB::unprepared("DROP VIEW IF EXISTS vw_reporte_radio;");
+        DB::unprepared("DROP VIEW IF EXISTS vw_personal;");
     }
 };

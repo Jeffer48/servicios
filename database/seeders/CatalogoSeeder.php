@@ -475,7 +475,7 @@ class CatalogoSeeder extends Seeder
         (57,74,65,'RUBEN OMAR','BERNABE','GAYTAN',now(),now(),null,null,null,null),
         (58,74,65,'SAUL','LEMUS','SANTOYO',now(),now(),null,null,null,null),
         (59,74,65,'TANIA ALEXANDRA','ARELLANO','RODRIGUEZ',now(),now(),null,null,null,null),
-        (60,81,65,'TOMASA CRISTINA','DURAN','NAVA',now(),now(),null,null,null,null),
+        (60,80,65,'TOMASA CRISTINA','DURAN','NAVA',now(),now(),null,null,null,null),
         (61,73,65,'YEISI ANGELICA','CHAVEZ','CORTES',now(),now(),null,null,null,null),
         (62,73,65,'ZAIRA','DELGADO','VELAZQUEZ',now(),now(),null,null,null,null),
         (63,73,65,'ESDRAS JOAQUIN','GONZALEZ','PEREZ',now(),now(),null,null,null,null),

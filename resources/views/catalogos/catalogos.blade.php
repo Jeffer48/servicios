@@ -17,9 +17,6 @@
         <div class="col text-end">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#NuevoCatalogo">Nuevo Catálogo</button>
         </div>
-        <div class="col text-end">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#NuevoGrupo">Nuevo Grupo</button>
-        </div>
     </div>
     <table id="catalogoTable" class="table table-striped" style="width:100%">
         <thead>
