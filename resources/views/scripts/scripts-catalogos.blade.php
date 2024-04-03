@@ -59,21 +59,23 @@
             cancelButtonColor: "#d33",
             confirmButtonText: "Continuar"
         }).then((result) => {
-            $.ajax({
-                url: "{{route('eliminar')}}",
-                type: 'POST',
-                data: {id: id, tabla: tabla},
-                success: function(response){
-                    if(response == 2){
-                        Swal.fire({
-                            title: "No se pueden eliminar grupos con catalogos activos",
-                            text: "Haz click para cerrar",
-                            icon: "error"
-                        });
+            if(result.isConfirmed){
+                $.ajax({
+                    url: "{{route('eliminar')}}",
+                    type: 'POST',
+                    data: {id: id, tabla: tabla},
+                    success: function(response){
+                        if(response == 2){
+                            Swal.fire({
+                                title: "No se pueden eliminar grupos con catalogos activos",
+                                text: "Haz click para cerrar",
+                                icon: "error"
+                            });
+                        }
+                        else successMsg(response,"Datos actualizados correctamente!");
                     }
-                    else successMsg(response,"Datos actualizados correctamente!");
-                }
-            });
+                });
+            }
         });
     }
 
@@ -88,14 +90,16 @@
             cancelButtonColor: "#d33",
             confirmButtonText: "Continuar"
         }).then((result) => {
-            $.ajax({
-                url: "{{route('activar')}}",
-                type: 'POST',
-                data: {id: id,tabla: tabla},
-                success: function(response){
-                    successMsg(response,"Datos actualizados correctamente!");
-                }
-            });
+            if(result.isConfirmed){
+                $.ajax({
+                    url: "{{route('activar')}}",
+                    type: 'POST',
+                    data: {id: id,tabla: tabla},
+                    success: function(response){
+                        successMsg(response,"Datos actualizados correctamente!");
+                    }
+                });
+            }
         });
     }
 

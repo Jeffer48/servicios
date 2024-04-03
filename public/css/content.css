@@ -114,6 +114,16 @@
     background-color: unset;
 }
 
+.sub-menu{
+    list-style: inside;
+    margin: 0.3rem;
+}
+
+.sub-menu>a{
+    color: white;
+    text-decoration: unset;
+}
+
 /* Style para tablas de catalogos */
 
 .table-container{

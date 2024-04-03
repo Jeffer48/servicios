@@ -34,15 +34,9 @@ class catalogos_controller extends Controller
             ->orderBy('grupo')
             ->get();
 
-        $gruposAll = DB::table('grupos')
-            ->select('id','grupo','deleted_at')
-            ->orderBy('grupo')
-            ->get();
-
-        return view('catalogos',[
+        return view('catalogos.catalogos',[
             'catalogos' => $catalogo,
             'grupos' => $grupos,
-            'gruposAll' => $gruposAll,
             'opt' => $opt
         ]);
     }
@@ -64,6 +58,18 @@ class catalogos_controller extends Controller
         }catch(QueryException $e){
             return 0;
         }
+    }
+
+    public function grupos(){
+        $gruposAll = DB::table('grupos')
+        ->select('id','grupo','deleted_at')
+        ->orderBy('grupo')
+        ->get();
+
+        return view('catalogos.grupos', [
+            'gruposAll' => $gruposAll,
+            'opt' => 0
+        ]);
     }
 
     public function eliminar(Request $request){

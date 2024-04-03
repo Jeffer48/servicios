@@ -36,13 +36,28 @@
             </a>
         </li>
         <li>
-            <a href="{{route('catalogos')}}" class="nav-link {{request()->route()->uri == 'catalogos' ? 'active' : 'text-white'}}" class="nav-link text-white">
+            @php
+                $active = '';
+                if(request()->route()->uri == 'catalogos' || request()->route()->uri == 'grupos') $active = 'active';
+                else $active = 'text-white';
+            @endphp
+            <button class="nav-link {{$active}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width: 100%;">
                 <div class="flex-container">
                     <svg width="30" height="30" viewBox="0 0 50 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.6139 20.613H16.9823V24.3608H10.6139V29.9825H6.36835V24.3608H0V20.613H6.36835V14.9913H10.6139V20.613ZM6.36835 44.9738H16.9823V35.6042H6.36835V44.9738ZM6.36835 3.74781V9.36953H16.9823V0H10.6139C8.26824 0 6.36835 1.67715 6.36835 3.74781ZM21.2278 31.8564H31.8417V13.1173H21.2278V31.8564ZM21.2278 44.9738H31.8417V35.6042H21.2278V44.9738ZM43.8588 11.5545L33.3977 13.1436L37.1954 32.7128L47.6565 31.1237L43.8588 11.5545ZM48.3782 34.8172L37.9171 36.4063L39.5389 45L50 43.4109L48.3782 34.8172ZM42.2158 3.16503C41.8167 1.12622 39.6217 -0.243608 37.3121 0.108687L35.2212 0.427251C33.4614 0.695219 32.1474 1.88702 31.795 3.34118C31.5615 1.46539 29.7826 0.00187391 27.5962 0.00187391H21.2278V9.37141H31.8417V5.18697L32.676 9.45386L43.1349 7.86666L42.2158 3.1669V3.16503Z" fill="white" fill-opacity="0.77"/>
                     </svg> <h5 style="margin: 0rem 0.5rem; line-height: normal;">Catálogos</h5>
                 </div>
-            </a>
+            </button>
+            <div class="collapse" id="collapseExample">
+                <ul>
+                    <li class="sub-menu">
+                        <a href="{{route('catalogos')}}">Tabla de Catálogos</a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="{{route('grupos')}}">Tabla de Grupos</a>
+                    </li>
+                </ul>
+            </div>
         </li>
         <li>
             <a href="{{route('reportes')}}" class="nav-link {{request()->route()->uri == 'reportes' ? 'active' : 'text-white'}}" class="nav-link text-white">
