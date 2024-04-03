@@ -7,6 +7,7 @@ use App\Http\Controllers\login_controller;
 use App\Http\Controllers\etapas_controller;
 use App\Http\Controllers\datos_controller;
 use App\Http\Controllers\catalogos_controller;
+use App\Http\Controllers\reportes_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/catalogos/eliminar', 'eliminar')->name('eliminar');
         Route::post('/catalogos/activar', 'activar')->name('activar');
         Route::post('/catalogos/guardar', 'guardar')->name('guardar');
+    });
+
+    Route::controller(reportes_controller::class)->group(function () {
+        Route::get('/reportes', 'index')->name('reportes');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);
