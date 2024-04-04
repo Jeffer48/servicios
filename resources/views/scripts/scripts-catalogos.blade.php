@@ -3,35 +3,9 @@
     let opt = "opt-"+{{$opt}};
 
     $(document).ready(function() {
-        $('#catalogoTable').DataTable({
-            "language":{
-                "lengthMenu": "_MENU_ Filas por página",
-                "info": "Mostrando la página _PAGE_ de _PAGES_",
-                "search": "Buscar",
-                "infoEmpty": "Sin datos",
-                "emptyTable": "Este grupo no tiene nada asignado aún"
-            }
-        });
-
-        $('#gruposTable').DataTable({
-            "language":{
-                "lengthMenu": "_MENU_ Filas por página",
-                "info": "Mostrando la página _PAGE_ de _PAGES_",
-                "search": "Buscar",
-                "infoEmpty": "Sin datos",
-                "emptyTable": "Este grupo no tiene nada asignado aún"
-            }
-        });
-
-        $('#personalTable').DataTable({
-            "language":{
-                "lengthMenu": "_MENU_ Filas por página",
-                "info": "Mostrando la página _PAGE_ de _PAGES_",
-                "search": "Buscar",
-                "infoEmpty": "Sin datos",
-                "emptyTable": "Este grupo no tiene nada asignado aún"
-            }
-        });
+        $('#catalogoTable').DataTable(tableLabels);
+        $('#gruposTable').DataTable(tableLabels);
+        $('#personalTable').DataTable(tableLabels);
     });
 
     function btnEditar(id,tabla){
