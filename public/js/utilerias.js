@@ -61,3 +61,61 @@ $("#btn-show-modal").click(function(e) {
     e.preventDefault();
     $("#services-modal").modal("show");
 });
+
+function ajaxSave(ruta,datos,title,subtitle,icon,tipo,nDir){
+    $.ajax({
+        url: ruta,
+        type: 'POST',
+        data: datos,
+        success: function(response){
+            if(response == 0) message("Ha ocurrido un error!","Haz click para continuar","error",0,"");
+            if(response == 2) message("No se pueden eliminar grupos con catalogos activos","Haz click para continuar","error",0,"");
+            if(response == 1) message(title,subtitle,icon,tipo,nDir);
+            /*
+                mensaje: El mensaje en el alert
+                icon: succes, warning o question
+                tipo: 0: Modal normal, 1: Mensaje para redireccionar, 2: Mensaje de error
+                nDir: ruta para redireccionar en caso de usar el tipo 1
+            */
+        }
+    });
+}
+
+function message($title,$subtitle,$icon,tipo,nDir){
+    if(tipo == 0){
+        Swal.fire({
+            title: $title,
+            text: $subtitle,
+            icon: $icon 
+        });
+    }
+    if(tipo == 1){
+        Swal.fire({
+            title: $title,
+            text: $subtitle,
+            icon: $icon,
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Continuar"
+        }).then((result) => {
+            let dir = "/"+nDir;
+            window.location.href = dir;
+        });
+    }
+}
+
+function confirmAlert($title,$subtitle,$icon,ruta,data,title,subtitle,icon,tipo,nDir){
+    Swal.fire({
+        title: $title,
+        text: $subtitle,
+        icon: $icon,
+        cancelButtonText: "Cancelar",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Continuar"
+    }).then((result) => {
+        if(result.isConfirmed) ajaxSave(ruta,data,title,subtitle,icon,tipo,nDir);
+    });
+}

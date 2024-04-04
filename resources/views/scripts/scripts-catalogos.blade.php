@@ -46,134 +46,52 @@
             confirmButtonText: "Guardar",
             showLoaderOnConfirm: true,
             preConfirm: async (descripcion) => {
-                $.ajax({
-                    url: "{{route('editar')}}",
-                    type: 'POST',
-                    data: {id: id, nuevo: descripcion, tabla: tabla},
-                    success: function(response){
-                        successMsg(response);
-                    }
-                });
+                let datos = {id: id, nuevo: descripcion, tabla: tabla};
+                ajaxSave(
+                    "{{route('editar')}}",datos,"Datos actualizados correctamente!",
+                    "Haz click para cerrar","success",1,"catalogos"
+                );
             }
         });
     }
 
-    function btnBorrar(id,tabla){
-        Swal.fire({
-            title: "¿Esta seguro de eliminar?",
-            text: "Esta acción es reversible",
-            icon: "question",
-            cancelButtonText: "Cancelar",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Continuar"
-        }).then((result) => {
-            if(result.isConfirmed){
-                $.ajax({
-                    url: "{{route('eliminar')}}",
-                    type: 'POST',
-                    data: {id: id, tabla: tabla},
-                    success: function(response){
-                        if(response == 2){
-                            Swal.fire({
-                                title: "No se pueden eliminar grupos con catalogos activos",
-                                text: "Haz click para cerrar",
-                                icon: "error"
-                            });
-                        }
-                        else successMsg(response,"Datos actualizados correctamente!",tabla);
-                    }
-                });
-            }
-        });
+    function btnActivarBorrar(id,tabla,accion){
+        let datos = {id: id,tabla: tabla};
+        let mensaje = accion == 1 ? "¿Esta seguro de reactivar?" : "¿Esta seguro de eliminar?";
+        let ruta = accion == 1 ? "{{route('activar')}}" : "{{route('eliminar')}}";
+        
+        confirmAlert(
+            mensaje,"Esta acción es reversible","question",ruta,datos,
+            "Datos actualizados correctamente!","Haz click para cerrar","success",1,tabla
+        );
     }
 
-    function btnActivar(id,tabla){
-        Swal.fire({
-            title: "¿Esta seguro de reactivar?",
-            text: "Esta acción es reversible",
-            icon: "question",
-            cancelButtonText: "Cancelar",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Continuar"
-        }).then((result) => {
-            if(result.isConfirmed){
-                $.ajax({
-                    url: "{{route('activar')}}",
-                    type: 'POST',
-                    data: {id: id,tabla: tabla},
-                    success: function(response){
-                        successMsg(response,"Datos actualizados correctamente!",tabla);
-                    }
-                });
-            }
-        });
-    }
-
-    function successMsg(response,$respuesta,nDir){
-        if(response == 1){
-            Swal.fire({
-                title: $respuesta,
-                text: "Haz click para cerrar",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Continuar"
-            }).then((result) => {
-                let dir = "/"+nDir;
-                console.log(dir);
-                window.location.href = dir;
-            });
+    function guardar(tipo){
+        //tipo: 1 Catalogo, 2 Grupo
+        let nuevo = '';
+        let alerta = '';
+        let grupo = 0;
+        let dir = 'catalogos';
+        if(tipo == 1){
+            nuevo = document.getElementById("input-nuevoCatalogo").value;
+            alerta = document.getElementById("catalogoAlert");
+            grupo = document.getElementById("id_grupo").value;
         }
-        else{
-            Swal.fire({
-                title: "Ha ocurrido un error",
-                text: "Haz click para cerrar",
-                icon: "error"
-            });
+        if(tipo == 2){
+            nuevo = document.getElementById("input-nuevoGrupo").value;
+            alerta = document.getElementById("grupoAlert");
+            dir = 'grupos';
         }
-    }
-
-    function guardarCatalogo(){
-        let nuevo = document.getElementById("input-nuevoCatalogo").value;
-        let alerta = document.getElementById("catalogoAlert");
-        let grupo = document.getElementById("id_grupo").value;
 
         if(nuevo.value == ""){
             alerta.style.display = "block";
         }else{
             alerta.style.display = "none";
-            $.ajax({
-                url: "{{route('guardar')}}",
-                type: 'POST',
-                data: {id_grupo: grupo, nuevo: nuevo},
-                success: function(response){
-                    successMsg(response,"Datos guardados correctamente!");
-                }
-            });
-        }
-    }
-
-    function guardarGrupo(){
-        let nuevo = document.getElementById("input-nuevoGrupo").value;
-        let alerta = document.getElementById("grupoAlert");
-
-        if(nuevo.value == ""){
-            alerta.style.display = "block";
-        }else{
-            alerta.style.display = "none";
-            $.ajax({
-                url: "{{route('guardar')}}",
-                type: 'POST',
-                data: {id_grupo: 0, nuevo: nuevo},
-                success: function(response){
-                    successMsg(response,"Datos guardados correctamente!",'grupos');
-                }
-            });
+            let datos = {id_grupo: grupo, nuevo: nuevo};
+            ajaxSave(
+                "{{route('guardar')}}",datos,"Datos guardados correctamente!",
+                "Haz click para continuar","success",1,dir
+            );
         }
     }
 
@@ -197,27 +115,19 @@
     }
 
     function editarPersonal(id){
-        let nombre = document.getElementById("nombre_edit").value;
-        let apellido_p = document.getElementById("apellido_p_edit").value;
-        let apellido_m = document.getElementById("apellido_m_edit").value;
-        let puesto_id = document.getElementById("id_puesto_edit").value;
-        let turno_id = document.getElementById("id_turno_edit").value;
+        let datos = {
+            id: id,
+            nombre: document.getElementById("nombre_edit").value,
+            apellido_p: document.getElementById("apellido_p_edit").value,
+            apellido_m: document.getElementById("apellido_m_edit").value,
+            id_tipo: document.getElementById("id_puesto_edit").value,
+            id_turno: document.getElementById("id_turno_edit").value,
+            tabla: 'personal'
+        };
 
-        $.ajax({
-            url: "{{route('editar')}}",
-            type: 'POST',
-            data: {
-                id: id,
-                nombre: nombre,
-                apellido_p: apellido_p,
-                apellido_m: apellido_m,
-                id_tipo: puesto_id,
-                id_turno: turno_id,
-                tabla: 'personal'
-            },
-            success: function(response){
-                successMsg(response,"Datos actualizados correctamente!",'personal');
-            }
-        });
+        ajaxSave(
+            "{{route('editar')}}",datos,"Datos guardados correctamente!",
+            "Haz click para continuar","success",1,'personal'
+        );
     }
 </script>
