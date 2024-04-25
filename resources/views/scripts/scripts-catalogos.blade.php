@@ -124,6 +124,7 @@
             };
             ajaxMessage("{{route('nuevoPersonal')}}",datos);
             $("#nuevoPersonal").modal("hide");
+            drawDataTable("{{route('get-personal')}}");
         }
     }
 
