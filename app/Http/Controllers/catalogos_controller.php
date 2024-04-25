@@ -196,6 +196,27 @@ class catalogos_controller extends Controller
     }
 
     public function guardarPersonal(Request $request){
-        return 1;
+        $nombre = $request->nombre;
+        $apellido_p = $request->apellido_p;
+        $apellido_m = $request->apellido_m;
+        $id_puesto = $request->id_puesto;
+        $id_turno = $request->id_turno;
+
+        try{
+            if(DB::table('personal')->where('nombre', $nombre)->where('apellido_p', $apellido_p)->where('apellido_m', $apellido_m)->count() == 0){
+                DB::table('personal')->insert([
+                    'nombre' => $nombre,
+                    'apellido_p' => $apellido_p,
+                    'apellido_m' => $apellido_m,
+                    'id_tipo' => $id_puesto,
+                    'id_turno' => $id_turno,
+                    'created_user' => Auth::id()
+                ]);
+                
+                return array("El personal fue agregado!!","Haz click para cerrar","success");
+            }else return array("El personal ya existe","Haz click para cerrar","warning");
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error");
+        }
     }
 }

@@ -104,4 +104,31 @@
             "Haz click para continuar","success",1,'personal'
         );
     }
+
+    function crearPersonal(){
+        let nombre = document.getElementById("np_nombre").value;
+        let apellido_p = document.getElementById("np_apellido_p").value;
+        let apellido_m = document.getElementById("np_apellido_m").value;
+        let id_puesto = document.getElementById("np_puesto").value;
+        let id_turno = document.getElementById("np_turno").value;
+
+        if(vacios(nombre)||vacios(apellido_p)||vacios(apellido_m)||vacios(id_puesto)||vacios(id_turno)){
+            message("Complete todos los campos!!","De click para cerrar","warning",0,"");
+        }else{
+            let datos = {
+                nombre: nombre,
+                apellido_p: apellido_p,
+                apellido_m: apellido_m,
+                id_puesto: id_puesto,
+                id_turno: id_turno
+            };
+            ajaxMessage("{{route('nuevoPersonal')}}",datos);
+            $("#nuevoPersonal").modal("hide");
+        }
+    }
+
+    function vacios(revisar){
+        if(revisar=="") return true;
+        else return false;
+    }
 </script>

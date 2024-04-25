@@ -3,6 +3,11 @@
 @section('content')
 <div class="table-container">
     <h1 style="margin: 2rem; text-align: center;">PERSONAL</h1>
+    <div class="row" style="margin-bottom: 1rem;">
+        <div class="col text-start">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoPersonal">Agregar Personal</button>
+        </div>
+    </div>
     <table id="personalTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -51,7 +56,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="NuevoModalLabel">Editar</h1>
+          <h1 class="modal-title fs-5" id="NuevoPersonalModal">Editar</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -71,6 +76,39 @@
         </div>
         <div class="modal-footer">
             <button type="button" id="btn-editarP" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Nuevo Personal -->
+<div class="modal fade" id="nuevoPersonal" tabindex="-1" aria-labelledby="NuevoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="NuevoModalLabel">Agregar Personal</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="text" class="form-control modal-input" id="np_nombre" placeholder="Nombre/s">
+            <input type="text" class="form-control modal-input" id="np_apellido_p" placeholder="Apellido Paterno">
+            <input type="text" class="form-control modal-input" id="np_apellido_m" placeholder="Apellido Materno">
+            <select class="form-select modal-input" id="np_puesto">
+                <option value="" selected>Seleccione un puesto</option>
+                @foreach ($puesto as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                @endforeach
+            </select>
+            <select class="form-select modal-input" id="np_turno">
+                <option value="" selected>Seleccione un turno</option>
+                @foreach ($turno as $item)
+                    <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btn-guardarP" onclick="crearPersonal()" class="btn btn-primary">Guardar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
