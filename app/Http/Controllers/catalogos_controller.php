@@ -9,7 +9,7 @@ use App\Helpers\dataTableHelper;
 
 class catalogos_controller extends Controller
 {
-    public function index(Request $request){
+    public function catalogo(Request $request){
         $catalogo = '';
         $opt = 0;
 
@@ -68,6 +68,8 @@ class catalogos_controller extends Controller
 
         if($request->id_puesto != "" && $request->id_puesto != "0") $personal = $personal->where('id_tipo',$request->id_puesto);
         if($request->id_turno != "" && $request->id_turno != "0") $personal = $personal->where('id_turno',$request->id_turno);
+        if($request->id_estado == "1") $personal = $personal->where('deleted_at',null);
+        if($request->id_estado == "2") $personal = $personal->where('deleted_at','!=',null);
 
         $dataSet = array();
         foreach($personal as $d){

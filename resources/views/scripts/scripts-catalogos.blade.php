@@ -136,7 +136,8 @@
     function updateFiltersPersonal(){
         let datos = {
             id_puesto: document.getElementById("id_puesto").value,
-            id_turno: document.getElementById("id_turno").value
+            id_turno: document.getElementById("id_turno").value,
+            id_estado: $("#id_estado").val()
         };
 
         drawDataTable("{{route('get-personal')}}",datos);

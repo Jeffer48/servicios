@@ -6,7 +6,7 @@
     <div class="row" style="margin-bottom: 1rem;">
         <div class="col col-sm-9">
             <div class="row">
-                <div class="col col-sm-6">
+                <div class="col col-sm-4">
                     <select class="form-select" id="id_puesto" onchange="updateFiltersPersonal()" aria-label="Default select example">
                         <option value="0">Filtro de Puesto</option>
                         @foreach ($puesto as $item)
@@ -14,12 +14,19 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col col-sm-6">
+                <div class="col col-sm-4">
                     <select class="form-select" id="id_turno" onchange="updateFiltersPersonal()" aria-label="Default select example">
                         <option value="0">Filtro de Turno</option>
                         @foreach ($turno as $item)
                             <option value={{$item->id}}>{{$item->descripcion}}</option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="col col-sm-4">
+                    <select class="form-select" id="id_estado" onchange="updateFiltersPersonal()" aria-label="Default select example">
+                        <option value="0">Filtro de Estado</option>
+                        <option value="1">Activo</option>
+                        <option value="2">Inactivo</option>
                     </select>
                 </div>
             </div>
