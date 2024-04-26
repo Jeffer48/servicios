@@ -16,11 +16,13 @@
         drawDataTable(ruta);
     }
 
-    function drawDataTable(ruta){
+    function drawDataTable(ruta,datos){
         $.ajax({
             url: ruta,
             type: 'POST',
+            data: datos,
             success: function(response){
+                //console.log(response);
                 dt.clear();
                 dt.rows.add( response ).draw();
                 dt.columns.adjust().draw();

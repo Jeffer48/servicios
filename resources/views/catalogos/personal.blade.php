@@ -4,7 +4,27 @@
 <div class="table-container">
     <h1 style="margin: 2rem; text-align: center;">PERSONAL</h1>
     <div class="row" style="margin-bottom: 1rem;">
-        <div class="col text-start">
+        <div class="col col-sm-9">
+            <div class="row">
+                <div class="col col-sm-6">
+                    <select class="form-select" id="id_puesto" onchange="updateFiltersPersonal()" aria-label="Default select example">
+                        <option value="0">Filtro de Puesto</option>
+                        @foreach ($puesto as $item)
+                            <option value={{$item->id}}>{{$item->descripcion}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col col-sm-6">
+                    <select class="form-select" id="id_turno" onchange="updateFiltersPersonal()" aria-label="Default select example">
+                        <option value="0">Filtro de Turno</option>
+                        @foreach ($turno as $item)
+                            <option value={{$item->id}}>{{$item->descripcion}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col col-sm-3">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoPersonal">Agregar Personal</button>
         </div>
     </div>

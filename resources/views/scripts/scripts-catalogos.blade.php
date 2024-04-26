@@ -132,4 +132,13 @@
         if(revisar=="") return true;
         else return false;
     }
+
+    function updateFiltersPersonal(){
+        let datos = {
+            id_puesto: document.getElementById("id_puesto").value,
+            id_turno: document.getElementById("id_turno").value
+        };
+
+        drawDataTable("{{route('get-personal')}}",datos);
+    }
 </script>
