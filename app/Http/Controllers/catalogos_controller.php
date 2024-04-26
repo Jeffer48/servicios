@@ -10,25 +10,6 @@ use App\Helpers\dataTableHelper;
 class catalogos_controller extends Controller
 {
     public function catalogo(Request $request){
-        $catalogo = '';
-        $opt = 0;
-
-        if($request->id_grupo == null||$request->id_grupo == 0){
-            $catalogo = DB::table('catalogos as c')
-                ->select('c.id','g.grupo','c.descripcion','c.deleted_at')
-                ->join('grupos as g', 'c.id_grupo', '=', 'g.id')
-                ->orderBy('grupo', 'ASC')->orderBy('descripcion', 'ASC')
-                ->get();
-        }else{
-            $opt = $request->id_grupo;
-            $catalogo = DB::table('catalogos as c')
-                ->select('c.id','g.grupo','c.descripcion','c.deleted_at')
-                ->join('grupos as g', 'c.id_grupo', '=', 'g.id')
-                ->where('c.id_grupo', '=', $opt)
-                ->orderBy('grupo', 'ASC')->orderBy('descripcion', 'ASC')
-                ->get();
-        }
-
         $grupos = DB::table('grupos')
             ->select('id','grupo')
             ->where('deleted_at')
@@ -36,9 +17,7 @@ class catalogos_controller extends Controller
             ->get();
 
         return view('catalogos.catalogos',[
-            'catalogos' => $catalogo,
-            'grupos' => $grupos,
-            'opt' => $opt
+            'grupos' => $grupos
         ]);
     }
 
@@ -55,9 +34,38 @@ class catalogos_controller extends Controller
 
         return view('catalogos.personal', [
             'puesto' => $puesto,
-            'turno' => $turno,
-            'opt' => 0
+            'turno' => $turno
         ]);
+    }
+
+    public function getCatalogo(Request $request){
+        $catalogo = DB::table('catalogos as c')
+            ->select('c.id','c.id_grupo','g.grupo','c.descripcion','c.deleted_at')
+            ->join('grupos as g', 'c.id_grupo', '=', 'g.id')
+            ->orderBy('grupo', 'ASC')->orderBy('descripcion', 'ASC')
+            ->get();
+
+        if($request->id_grupo != "" && $request->id_grupo != "0") $catalogo = $catalogo->where('id_grupo',$request->id_grupo);
+        if($request->id_estado == "1") $catalogo = $catalogo->where('deleted_at',null);
+        if($request->id_estado == "2") $catalogo = $catalogo->where('deleted_at','!=',null);
+
+        $dataSet = array();
+        foreach($catalogo as $d){
+            $btnEditar = dataTableHelper::btnOptEdit("btnEditar(".$d->id.",'catalogos')");
+            $num = $d->deleted_at == null ? "0" : "1";
+            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at == null ? true : false,"btnActivarBorrar(".$d->id.",'catalogos',".$num.")");
+            $opciones = $btnEditar.$btnModEstatus;
+
+            $ds = array(
+                $d->grupo,
+                $d->descripcion,
+                $d->deleted_at == null ? 'Activo' : 'Inactivo',
+                $opciones
+            );
+            $dataSet[] = $ds;
+        }
+
+        return $dataSet;
     }
 
     public function getPersonal(Request $request){

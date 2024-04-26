@@ -1,6 +1,5 @@
 <script>
     let grupos = document.getElementById("grupos");
-    let opt = "opt-"+{{$opt}};
 
     $(document).ready(function() {
         $('#catalogoTable').DataTable(tableLabels);
@@ -67,6 +66,15 @@
                 "Haz click para continuar","success",1,dir
             );
         }
+    }
+
+    function updateFiltersCatalogo(){
+        let datos = {
+            id_grupo: document.getElementById("id_grupo").value,
+            id_estado: document.getElementById("id_estado").value
+        };
+
+        drawDataTable("{{route('get-catalogo')}}",datos);
     }
 
     //---------------------------------------- PERSONAL -----------------------------------------------
@@ -137,7 +145,7 @@
         let datos = {
             id_puesto: document.getElementById("id_puesto").value,
             id_turno: document.getElementById("id_turno").value,
-            id_estado: $("#id_estado").val()
+            id_estado: document.getElementById("id_estado").value
         };
 
         drawDataTable("{{route('get-personal')}}",datos);
