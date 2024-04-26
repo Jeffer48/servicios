@@ -179,25 +179,17 @@ class catalogos_controller extends Controller
 
     public function activar(Request $request){
         try{
-            if($request->tabla == 'catalogos'){
-                DB::table('catalogos')
-                    ->where('id', $request->id)
-                    ->update(['deleted_at' => null]);
-            }
-            if($request->tabla == 'personal'){
-                DB::table('personal')
-                    ->where('id', $request->id)
-                    ->update(['deleted_at' => null]);
-            }
-            if($request->tabla == 'grupos'){
-                DB::table('grupos')
-                    ->where('id', $request->id)
-                    ->update(['deleted_at' => null]);
-            }
+            $tabla = $request->tabla;
+            if($request->tabla == 'catalogos') $tabla = "catalogos";
+            if($request->tabla == 'grupos') $tabla = "grupos";
 
-            return 1;
+            DB::table($request->tabla)
+                ->where('id', $request->id)
+                ->update(['deleted_at' => null]);
+
+            return array("El ".$tabla." fue reactivado!!","Haz click para cerrar","success",1,"");
         }catch(QueryException $e){
-            return 0;
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
     }
 
@@ -246,10 +238,10 @@ class catalogos_controller extends Controller
                     'created_user' => Auth::id()
                 ]);
                 
-                return array("El personal fue agregado!!","Haz click para cerrar","success");
-            }else return array("El personal ya existe","Haz click para cerrar","warning");
+                return array("El personal fue agregado!!","Haz click para cerrar","success",0,"");
+            }else return array("El personal ya existe","Haz click para cerrar","warning",0,"");
         }catch(QueryException $e){
-            return array("Ha ocurrido un error","Haz click para cerrar","error");
+            return array("Ha ocurrido un error","Haz click para cerrar","error",0,"");
         }
     }
 }

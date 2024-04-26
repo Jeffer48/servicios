@@ -33,10 +33,7 @@
         let mensaje = accion == 1 ? "¿Esta seguro de reactivar?" : "¿Esta seguro de eliminar?";
         let ruta = accion == 1 ? "{{route('activar')}}" : "{{route('eliminar')}}";
         
-        confirmAlert(
-            mensaje,"Esta acción es reversible","question",ruta,datos,
-            "Datos actualizados correctamente!","Haz click para cerrar","success",1,tabla
-        );
+        confirmAlert(mensaje,"Esta acción es reversible","question",ruta,datos);
     }
 
     function guardar(tipo){
