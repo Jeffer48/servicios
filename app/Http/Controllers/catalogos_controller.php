@@ -38,6 +38,18 @@ class catalogos_controller extends Controller
         ]);
     }
 
+    public function grupos(){
+        $gruposAll = DB::table('grupos')
+            ->select('id','grupo','deleted_at')
+            ->orderBy('grupo')
+            ->get();
+
+        return view('catalogos.grupos', [
+            'gruposAll' => $gruposAll,
+            'opt' => 0
+        ]);
+    }
+
     public function getCatalogo(Request $request){
         $catalogo = DB::table('catalogos as c')
             ->select('c.id','c.id_grupo','g.grupo','c.descripcion','c.deleted_at')
@@ -53,12 +65,35 @@ class catalogos_controller extends Controller
         foreach($catalogo as $d){
             $btnEditar = dataTableHelper::btnOptEdit("btnEditar(".$d->id.",'catalogos')");
             $num = $d->deleted_at == null ? "0" : "1";
-            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at == null ? true : false,"btnActivarBorrar(".$d->id.",'catalogos',".$num.")");
+            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at,"btnActivarBorrar(".$d->id.",'catalogos',".$num.")");
             $opciones = $btnEditar.$btnModEstatus;
 
             $ds = array(
                 $d->grupo,
                 $d->descripcion,
+                $d->deleted_at == null ? 'Activo' : 'Inactivo',
+                $opciones
+            );
+            $dataSet[] = $ds;
+        }
+
+        return $dataSet;
+    }
+
+    public function getGrupos(){
+        $grupos = DB::table('grupos')
+            ->select('id','grupo','deleted_at')
+            ->orderBy('grupo')
+            ->get();
+
+        foreach($grupos as $d){
+            $btnEditar = dataTableHelper::btnOptEdit("btnEditar(".$d->id.",'grupos')");
+            $num = $d->deleted_at == null ? "0" : "1";
+            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at,"btnActivarBorrar(".$d->id.",'grupos',".$num.")");
+            $opciones = $btnEditar.$btnModEstatus;
+
+            $ds = array(
+                $d->grupo,
                 $d->deleted_at == null ? 'Activo' : 'Inactivo',
                 $opciones
             );
@@ -82,7 +117,8 @@ class catalogos_controller extends Controller
         $dataSet = array();
         foreach($personal as $d){
             $btnEditar = dataTableHelper::btnOptEdit("btnEditPersonal(".$d->id.",'".$d->nombre."','".$d->apellido_m."','".$d->apellido_p."',".$d->id_tipo.",".$d->id_turno.")");
-            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at == null ? true : false,"btnActivarBorrar(".$d->id.",'personal',0)");
+            $num = $d->deleted_at == null ? "0" : "1";
+            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at,"btnActivarBorrar(".$d->id.",'personal',".$num.")");
             $opciones = $btnEditar.$btnModEstatus;
 
             $ds = array(
@@ -96,18 +132,6 @@ class catalogos_controller extends Controller
         }
 
         return $dataSet;
-    }
-
-    public function grupos(){
-        $gruposAll = DB::table('grupos')
-            ->select('id','grupo','deleted_at')
-            ->orderBy('grupo')
-            ->get();
-
-        return view('catalogos.grupos', [
-            'gruposAll' => $gruposAll,
-            'opt' => 0
-        ]);
     }
 
     public function editar(Request $request){
@@ -134,89 +158,89 @@ class catalogos_controller extends Controller
                     ]);
             }
 
-            return 1;
+            return array("El elemento fue actualizado!!","Haz click para cerrar","success",1,"");
         }catch(QueryException $e){
-            return 0;
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
     }
 
     public function eliminar(Request $request){
         try{
-            if($request->tabla == 'catalogos'){
-                DB::table('catalogos')
-                    ->where('id', $request->id)
-                    ->update(['deleted_at' => now()]);
+            $permitir = true;
 
-                return 1;
-            }
             if($request->tabla == 'personal'){
-                DB::table('personal')
-                    ->where('id', $request->id)
-                    ->update(['deleted_at' => now()]);
+                $cantidad = DB::table('adm_user')
+                    ->where('id_personal', $request->id)
+                    ->where('deleted_at', null)->count();
 
-                return 1;
+                if($cantidad > 0) $permitir = false;
             }
             if($request->tabla == 'grupos'){
                 $cantidad = DB::table('catalogos')
-                    ->select('id')
                     ->where('id_grupo', $request->id)
-                    ->get();
+                    ->where('deleted_at', null)->count();
 
-                if(count($cantidad) > 0) return 2; //REVISAR!!!!
-                else {
-                    DB::table('grupos')
-                        ->where('id', $request->id)
-                        ->update(['deleted_at' => now()]);
-
-                    return 1;
-                }
+                if($cantidad > 0) $permitir = false;
             }
 
+            if($permitir){
+                DB::table($request->tabla)
+                    ->where('id', $request->id)
+                    ->update(['deleted_at' => now()]);
+
+                return array("El elemento fue eliminado!!","Haz click para cerrar","success",1,"");
+            }else return array("El elemento no puede ser eliminado","Hay elementos dependientes","warning",0,"");
+
         }catch(QueryException $e){
-            return 0;
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
     }
 
     public function activar(Request $request){
         try{
+            $permitir = true;
             $tabla = $request->tabla;
-            if($request->tabla == 'catalogos') $tabla = "catalogos";
+            if($request->tabla == 'catalogos'){
+                $tabla = "catalogos";
+                $cantidad = DB::table('catalogos as c')
+                    ->join('grupos as g', 'c.id_grupo', '=', 'g.id')
+                    ->where('c.id', $request->id)
+                    ->where('g.deleted_at', '!=', null)->count();
+
+                if($cantidad > 0) $permitir = false;
+            }
             if($request->tabla == 'grupos') $tabla = "grupos";
 
-            DB::table($request->tabla)
+            if($permitir){
+                DB::table($request->tabla)
                 ->where('id', $request->id)
                 ->update(['deleted_at' => null]);
 
-            return array("El ".$tabla." fue reactivado!!","Haz click para cerrar","success",1,"");
+                return array("El ".$tabla." fue reactivado!!","Haz click para cerrar","success",1,"");
+            }else return array("El grupo de este catalogo esta desactivado","Haz click para cerrar","warning",0,"");
         }catch(QueryException $e){
             return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
     }
 
     public function guardar(Request $request){
-        if($request->id_grupo == 0){
-            try{
+        try{
+            if($request->id_grupo == 0){
                 DB::table('grupos')->insert([
                     'grupo' => $request->nuevo,
                     'created_user' => Auth::id()
                 ]);
-
-                return 1;
-            }catch(QueryException $e){
-                return 0;
-            }
-        }else{
-            try{
+            }else{
                 DB::table('catalogos')->insert([
                     'descripcion' => $request->nuevo,
                     'created_user' => Auth::id(),
                     'id_grupo' => $request->id_grupo
                 ]);
-
-                return 1;
-            }catch(QueryException $e){
-                return 0;
             }
+
+            return array("Guardado correctamente!!","Haz click para cerrar","success",1,"");
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
     }
 

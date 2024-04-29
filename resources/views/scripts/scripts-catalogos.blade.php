@@ -20,10 +20,7 @@
             showLoaderOnConfirm: true,
             preConfirm: async (descripcion) => {
                 let datos = {id: id, nuevo: descripcion, tabla: tabla};
-                ajaxSave(
-                    "{{route('editar')}}",datos,"Datos actualizados correctamente!",
-                    "Haz click para cerrar","success",1,"catalogos"
-                );
+                ajaxMessage("{{route('editar')}}",datos);
             }
         });
     }
@@ -40,12 +37,12 @@
         //tipo: 1 Catalogo, 2 Grupo
         let nuevo = '';
         let alerta = '';
-        let grupo = 0;
+        let grupo;
         let dir = 'catalogos';
         if(tipo == 1){
             nuevo = document.getElementById("input-nuevoCatalogo").value;
             alerta = document.getElementById("catalogoAlert");
-            grupo = document.getElementById("id_grupo").value;
+            grupo = document.getElementById("id_grupo_nc").value;
         }
         if(tipo == 2){
             nuevo = document.getElementById("input-nuevoGrupo").value;
@@ -53,15 +50,12 @@
             dir = 'grupos';
         }
 
-        if(nuevo.value == ""){
+        if(nuevo.value == "" || grupo == 0){
             alerta.style.display = "block";
         }else{
             alerta.style.display = "none";
             let datos = {id_grupo: grupo, nuevo: nuevo};
-            ajaxSave(
-                "{{route('guardar')}}",datos,"Datos guardados correctamente!",
-                "Haz click para continuar","success",1,dir
-            );
+            ajaxMessage("{{route('guardar')}}",datos);
         }
     }
 
@@ -104,10 +98,7 @@
             tabla: 'personal'
         };
 
-        ajaxSave(
-            "{{route('editar')}}",datos,"Datos guardados correctamente!",
-            "Haz click para continuar","success",1,'personal'
-        );
+        ajaxMessage("{{route('editar')}}",datos);
     }
 
     function crearPersonal(){

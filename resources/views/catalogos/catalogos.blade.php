@@ -50,9 +50,10 @@
             </div>
             <div class="row">
                 <div class="col col-sm-4">
-                    <select class="col form-select" id="id_grupo" aria-label="Default select example" id="grupos">
+                    <select class="col form-select" id="id_grupo_nc" aria-label="Default select example" id="grupos">
+                        <option value="0">Seleccione</option>
                         @foreach ($grupos as $option)
-                            <option id="opt-{{$option->id}}" value={{$option->id}}>{{$option->grupo}}</option>
+                            <option value={{$option->id}}>{{$option->grupo}}</option>
                         @endforeach
                     </select>
                 </div>

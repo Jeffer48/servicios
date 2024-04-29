@@ -22,7 +22,7 @@
             type: 'POST',
             data: datos,
             success: function(response){
-                console.log(response);
+                //console.log(response);
                 dt.clear();
                 dt.rows.add( response ).draw();
                 dt.columns.adjust().draw();

@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/catalogos/guardar', 'guardar')->name('guardar');
         Route::post('/catalogos/nuevoPersonal', 'guardarPersonal')->name('nuevoPersonal');
         Route::get('/grupos', 'grupos')->name('grupos');
+        Route::post('/grupos/get-grupos', 'getGrupos')->name('get-grupos');
         Route::get('/personal', 'personal')->name('personal');
         Route::post('/get-personal', 'getPersonal')->name('get-personal');
     });

@@ -17,6 +17,7 @@ class dataTableHelper{
 
     public static function btnChangeStatus($activo,$callFunction){
         $btnEditar = '';
+        $activo = $activo == null ? true : false;
 
         if($activo){
             $btnEditar = '<button class="btn-no-style" onclick="'.$callFunction.'">
