@@ -45,6 +45,7 @@ class usuarios_controller extends Controller
             $ds = array(
                 $d->nombre,
                 $d->descripcion,
+                $d->email,
                 $d->deleted_at == null ? 'Activo' : 'Inactivo',
                 $opciones
             );

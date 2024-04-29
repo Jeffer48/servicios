@@ -30,7 +30,7 @@
     <table id="tabla" class="table table-striped" style="width:100%">
         <thead>
             <tr>
-                <th>Nombre</th><th>Tipo</th><th>Email</th><th>Opciones</th>
+                <th>Nombre</th><th>Tipo</th><th>Email</th><th>Estado</th><th>Opciones</th>
             </tr>
         </thead>
     </table>
