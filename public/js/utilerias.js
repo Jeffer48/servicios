@@ -1,13 +1,3 @@
-let tableLabels = {
-    "language":{
-        "lengthMenu": "_MENU_ Filas por página",
-        "info": "Mostrando la página _PAGE_ de _PAGES_",
-        "search": "Buscar",
-        "infoEmpty": "Sin datos",
-        "emptyTable": "Este grupo no tiene nada asignado aún"
-    }
-};
-
 $(document).ready(function() {
     let contenedor = document.getElementById("services-group");
     let alerta = document.getElementById("btn-show-modal");

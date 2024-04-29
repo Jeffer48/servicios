@@ -8,17 +8,7 @@ use App\Http\Controllers\etapas_controller;
 use App\Http\Controllers\datos_controller;
 use App\Http\Controllers\catalogos_controller;
 use App\Http\Controllers\reportes_controller;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\usuarios_controller;
 
 Route::get('/', function () {
     return redirect('radio');
@@ -55,6 +45,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/grupos/get-grupos', 'getGrupos')->name('get-grupos');
         Route::get('/personal', 'personal')->name('personal');
         Route::post('/get-personal', 'getPersonal')->name('get-personal');
+    });
+
+    Route::controller(usuarios_controller::class)->group(function () {
+        Route::get('/usuarios', 'index')->name('usuarios');
+        Route::post('/usuarios/getUsuarios', 'getUsuarios')->name('get-usuarios');
     });
 
     Route::controller(reportes_controller::class)->group(function () {
