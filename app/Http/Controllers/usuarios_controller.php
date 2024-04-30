@@ -15,8 +15,13 @@ class usuarios_controller extends Controller
             ->where('id_grupo',1)
             ->get();
 
+        $personal = DB::table('personal')
+            ->select('id',DB::raw('concat(nombre," ",apellido_p," ",apellido_m) as nombre'))
+            ->where('deleted_at', null)->orderBy('nombre')->get();
+
         return view('usuarios',[
-            'tipo' => $tipo
+            'tipo' => $tipo,
+            'personal' => $personal
         ]);
     }
 

@@ -31,8 +31,14 @@
 }
 
 .input-label{
-    font-size: x-large;
+    font-size: large;
     font-weight: 600;
+}
+
+.modal-body .input-label{
+    font-size: medium;
+    font-weight: 600;
+    align-self: center;
 }
 
 .active_services{
