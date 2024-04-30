@@ -27,7 +27,7 @@ class usuarios_controller extends Controller
 
     public function getUsuarios(Request $request){
         $usuarios = DB::table('adm_user as au')
-            ->select(DB::raw('case 
+            ->select('au.id',DB::raw('case 
                     when au.id_personal is null 
                     then concat(au.nombre," ",au.apellido_p," ",au.apellido_m)
                     else concat(p.nombre," ",p.apellido_p," ",p.apellido_m)
@@ -42,9 +42,9 @@ class usuarios_controller extends Controller
 
         $dataSet = array();
         foreach($usuarios as $d){
-            $btnEditar = dataTableHelper::btnOptEdit("");
+            $btnEditar = dataTableHelper::btnOptEdit("updateUser(".$d->id.")");
             $num = $d->deleted_at == null ? "0" : "1";
-            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at,"");
+            $btnModEstatus = dataTableHelper::btnChangeStatus($d->deleted_at,"changeEstate(".$d->id.")");
             $opciones = $btnEditar.$btnModEstatus;
 
             $ds = array(
@@ -99,5 +99,32 @@ class usuarios_controller extends Controller
         }catch(QueryException $e){
             return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
+    }
+
+    public function changeEstate(Request $request){
+        try{
+            $id = $request->id;
+            $fecha = null;
+            $usuario = null;
+            if(DB::table('adm_user')->where('id',$id)->where('deleted_at', null)->count() > 0){
+                $fecha = now();
+                $usuario = Auth::id();
+            }
+
+            DB::table('adm_user')
+                ->where('id',$id)
+                ->update([
+                    'deleted_at' => $fecha,
+                    'deleted_user' => $usuario
+                ]);
+
+            return array("Usuario actualizado correctamente","Haz click para cerrar","success",1,"");
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
+        }
+    }
+
+    public function updateUser(Request $request){
+        //
     }
 }

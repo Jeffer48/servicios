@@ -116,4 +116,14 @@
 
         confirmAlert("¿Esta seguro de crear el usuario?","Haga click para cerrar","question","{{route('save-user')}}",datos);
     }
+
+    function changeEstate(id){
+        let datos = {id: id};
+
+        confirmAlert("¿Esta seguro de desactivar el usuario?","Esta acción es reversible","question","{{route('changeEstate')}}",datos);
+    }
+
+    function updateUser(id){
+        //
+    }
 </script>
