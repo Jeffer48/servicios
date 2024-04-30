@@ -15,6 +15,22 @@
         drawDataTable("{{route('get-usuarios')}}",datos);
     }
 
+    function limpiarModal(){
+        nombre.value = "";
+        nombre.disabled = false;
+        apellido_p.value = "";
+        apellido_p.disabled = false;
+        apellido_m.value = "";
+        apellido_m.disabled = false;
+        email.value = "";
+        email.disabled = false;
+        withEmail.checked = true;
+        usuario.value = "";
+        document.getElementById("input-pass").value = "";
+        document.getElementById("nu_id_tipo").value = 0;
+        document.getElementById("input-personal").value = 0;
+    }
+
     function useExistentUser(){
         let user = document.getElementById("input-personal");
         
@@ -51,8 +67,8 @@
         else password.setAttribute("class","form-control");
         if(rol.value == "0"){rol.setAttribute("class","form-select is-invalid");completo = false;}
         else rol.setAttribute("class","form-select");
-        if(usuario.value == ""){usuario.setAttribute("class","form-select is-invalid");completo = false;}
-        else usuario.setAttribute("class","form-select");
+        if(usuario.value == ""){usuario.setAttribute("class","form-control is-invalid");completo = false;}
+        else usuario.setAttribute("class","form-control");
         if(withEmail.checked){
             if(!validateEmail(email.value)){
                 email.setAttribute("class","form-control is-invalid");
@@ -97,5 +113,7 @@
                 };
             }
         }
+
+        confirmAlert("¿Esta seguro de crear el usuario?","Haga click para cerrar","question","{{route('save-user')}}",datos);
     }
 </script>

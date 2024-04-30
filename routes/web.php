@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(usuarios_controller::class)->group(function () {
         Route::get('/usuarios', 'index')->name('usuarios');
         Route::post('/usuarios/getUsuarios', 'getUsuarios')->name('get-usuarios');
+        Route::post('/usuarios/saveUser', 'saveUser')->name('save-user');
     });
 
     Route::controller(reportes_controller::class)->group(function () {

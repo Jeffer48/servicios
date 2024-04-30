@@ -59,4 +59,45 @@ class usuarios_controller extends Controller
 
         return $dataSet;
     }
+
+    public function saveUser(Request $request){
+        try{
+            $userExists = DB::table('adm_user')->where('username',$request->usuario)->where('deleted_at',null)->count();
+            $emailExists = DB::table('adm_user')->where('email',$request->email)->where('deleted_at',null)->count();
+
+            if($userExists > 0) return array("El nombre de usuario ya esta en uso","Haz click para cerrar","error",0,"");
+            else if($emailExists > 0) return array("El correo ya esta en uso","Haz click para cerrar","error",0,"");
+            else{
+                if($request->id_personal == ""){
+                    DB::table('adm_user')->insert([
+                        'id_tipo' => $request->id_rol,
+                        'id_personal' => null,
+                        'nombre' => $request->nombre,
+                        'apellido_p' => $request->apellido_p,
+                        'apellido_m' => $request->apellido_m,
+                        'username' => $request->usuario,
+                        'email' => $request->email == "" ? null : $request->email,
+                        'password' => $request->password,
+                        'created_user' => Auth::id()
+                    ]);
+                }else{
+                    DB::table('adm_user')->insert([
+                        'id_tipo' => $request->id_rol,
+                        'id_personal' => $request->id_personal,
+                        'nombre' => null,
+                        'apellido_p' => null,
+                        'apellido_m' => null,
+                        'username' => $request->usuario,
+                        'email' => $request->email == "" ? null : $request->email,
+                        'password' => bcrypt($request->password),
+                        'created_user' => Auth::id()
+                    ]);
+                }
+
+                return array("Usuario creado correctamente","Haz click para cerrar","success",1,"");
+            }
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
+        }
+    }
 }

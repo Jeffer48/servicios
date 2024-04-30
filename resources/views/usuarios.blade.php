@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="col col-sm-3">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#NuevoUsuario">Nuevo Usuario</button>
+            <button type="button" onclick="limpiarModal()" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#NuevoUsuario">Nuevo Usuario</button>
         </div>
     </div>
     <table id="tabla" class="table table-striped" style="width:100%">
