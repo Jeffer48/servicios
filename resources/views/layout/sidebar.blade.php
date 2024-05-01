@@ -78,7 +78,7 @@
         </ul>
         <hr class="hr_side">
         <div style="align-self: center;">
-            <a href="{{'logout'}}" class="nav-link {{request()->route()->uri == 'reportes' ? 'active' : 'text-white'}}" class="nav-link text-white">
+            <a href="{{'logout'}}" class="nav-link text-white" class="nav-link text-white">
                 <div class="flex-container">
                     <svg width="40" height="40" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M45 10.5469L40.77 14.2646L48.51 21.0938H18V26.3672H48.51L40.77 33.1699L45 36.9141L60 23.7305L45 10.5469ZM6 5.27344H30V0H6C2.7 0 0 2.37305 0 5.27344V42.1875C0 45.0879 2.7 47.4609 6 47.4609H30V42.1875H6V5.27344Z" fill="white" fill-opacity="0.77"/>
