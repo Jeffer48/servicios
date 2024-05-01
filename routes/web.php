@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(reportes_controller::class)->group(function () {
         Route::get('/reportes', 'index')->name('reportes');
+        Route::post('/reportes/getReportes', 'getReportes')->name('get-reportes');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);
