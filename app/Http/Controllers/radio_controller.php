@@ -56,15 +56,7 @@ class radio_controller extends Controller
             if($request->incidente == 35){
                 return redirect('/')->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
             }else{
-                return redirect()->route('etapas', [
-                    'fecha' => $request->fecha,
-                    'id_area' => $request->area,
-                    'id_unidad' => $request->unidad,
-                    'id_incidente' => $request->incidente,
-                    'ubicacion' => $request->ubicacion,
-                    'id_reporte_radio' => $id
-                ])
-                ->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
+                return redirect()->route('etapas', ['id_reporte_radio' => $id])->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
             }
         }catch(QueryException $e){
             return redirect('/')->with(['error' => 'Ocurrio un error al guardar'])->withInput();

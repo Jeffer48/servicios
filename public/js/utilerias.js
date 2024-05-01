@@ -1,3 +1,4 @@
+// MODAL DE REPORTES DE RADIO ACTIVOS
 $(document).ready(function() {
     let contenedor = document.getElementById("services-group");
     let alerta = document.getElementById("btn-show-modal");
@@ -9,11 +10,15 @@ $(document).ready(function() {
             if(response.length > 0) alerta.style.display = "inline";
             else alerta.style.display = "none";
             $.each(response, function(i, item){
-                let tarjeta = document.createElement("button");
+                //let tarjeta = document.createElement("button");
+                let tarjeta = document.createElement("a");
                 tarjeta.setAttribute('class','service-target');
                 tarjeta.setAttribute('id','btn-service-target-'+item.id);
-                tarjeta.setAttribute('onClick',"continuarEtapas("+item.id+")");
+                //tarjeta.setAttribute('onClick',"continuarEtapas("+item.id+")");
+                tarjeta.setAttribute('href',"/etapas?id_reporte_radio="+item.id);
 
+                tarjeta.setAttribute('style',"border-color: black; color: black;");
+                
                 contenedor.appendChild(tarjeta);
                 let lb_maquina = document.createElement("div");
                 lb_maquina.setAttribute('class','maquina-target');
@@ -36,8 +41,9 @@ $(document).ready(function() {
 });
 
 function continuarEtapas(id){
-    console.log(id);
+    ajaxRedirect("/etapas?id_reporte_radio="+id,{id_reporte_radio: id},'GET');
 }
+// FIN DE MODAL DE REPORTES DE RADIO ACTIVOS
 
 $.ajaxSetup({
     headers: {
@@ -61,6 +67,17 @@ $("#btn-show-modal").click(function(e) {
     e.preventDefault();
     $("#services-modal").modal("show");
 });
+
+function ajaxRedirect(ruta,datos,method){
+    $.ajax({
+        url: ruta,
+        type: method,
+        data: datos,
+        success: function(response){
+            //console.log(response);
+        }
+    });
+}
 
 function ajaxMessage(ruta,datos){
     $.ajax({

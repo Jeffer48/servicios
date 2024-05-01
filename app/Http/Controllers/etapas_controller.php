@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 class etapas_controller extends Controller
 {
     public function index(Request $request){
+        $radio = DB::table('reporte_radio')
+            ->select('id as id_reporte_radio','fecha','id_area','id_unidad','id_incidente','ubicacion')
+            ->where('id', $request->id_reporte_radio)->first();
+
         $personal = DB::table('personal')
             ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
             ->where('deleted_at', null)
@@ -28,13 +32,13 @@ class etapas_controller extends Controller
 
         $area = DB::table('catalogos')
             ->select('id','descripcion')
-            ->where('id',$request->id_area)
+            ->where('id',$radio->id_area)
             ->where('deleted_at', null)
             ->get();
 
         $unidad = DB::table('catalogos')
             ->select('id','descripcion')
-            ->where('id',$request->id_unidad)
+            ->where('id',$radio->id_unidad)
             ->where('deleted_at', null)
             ->get();
 
@@ -94,7 +98,7 @@ class etapas_controller extends Controller
 
         $folio_num = DB::table('folios')
             ->select('actual_num')
-            ->where('id_area',$request->id_area)
+            ->where('id_area',$radio->id_area)
             ->get();
 
         if(count($folio_num) == 0) $folio_num = 1;
@@ -108,7 +112,7 @@ class etapas_controller extends Controller
         
         return view('etapas',[
             'personal' => $personal,
-            'fecha' => $request->fecha,
+            'fecha' => $radio->fecha,
             'reportante' => $reportante,
             'id_area' => $area[0]->id,
             'area' => $area[0]->descripcion,
@@ -125,7 +129,7 @@ class etapas_controller extends Controller
             'apoyo' => $apoyo,
             'destino' => $destino,
             'hospital' => $hospital,
-            'id_reporte_radio' => $request->id_reporte_radio
+            'id_reporte_radio' => $radio->id_reporte_radio
         ]);
     }
 
