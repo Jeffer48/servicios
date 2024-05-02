@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/usuarios/saveUser', 'saveUser')->name('save-user');
         Route::post('/usuarios/change', 'changeEstate')->name('changeEstate');
         Route::post('/usuarios/update', 'updateUser')->name('updateUser');
+        Route::post('/usuarios/getUser', 'userToUpdate')->name('userToUpdate');
     });
 
     Route::controller(reportes_controller::class)->group(function () {
