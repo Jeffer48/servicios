@@ -124,7 +124,59 @@ class usuarios_controller extends Controller
         }
     }
 
+    public function userToUpdate(Request $request){
+        $usuarios = DB::table('adm_user')
+            ->select('id_personal','id_tipo','username','nombre','apellido_p','apellido_m','email')
+            ->where('id', $request->id)
+            ->first();
+
+        $dataSet = array(
+            $usuarios->id_personal,
+            $usuarios->id_tipo,
+            $usuarios->username,
+            $usuarios->nombre == null ? "" : $usuarios->nombre,
+            $usuarios->apellido_p == null ? "" : $usuarios->apellido_p,
+            $usuarios->apellido_m == null ? "" : $usuarios->apellido_m,
+            $usuarios->email
+        );
+    
+        return $dataSet;
+    }
+
     public function updateUser(Request $request){
-        //
+        try{
+            $query = 'call existent_user_conflict('.$request->id.','.$request->id_personal.',"'.$request->email.'","'.$request->username.'")';
+            $result = DB::select($query);
+
+            if(count($result) > 0) return array($result[0]->error,"Haga click para cerrar","warning",0,"");
+            else{
+                if($request->id_personal > 0){
+                    DB::table('adm_user')
+                        ->where('id', $request->id)
+                        ->update([
+                            'id_personal' => $request->id_personal,
+                            'username' => $request->username,
+                            'email' => $request->email,
+                            'id_tipo' => $request->id_tipo
+                        ]);
+                }
+                else{
+                    DB::table('adm_user')
+                        ->where('id', $request->id)
+                        ->update([
+                            'nombre' => $request->nombre == null ? '' : $request->nombre,
+                            'apellido_p' => $request->apellido_p == null ? '' : $request->apellido_p,
+                            'apellido_m' => $request->apellido_m == null ? '' : $request->apellido_m,
+                            'username' => $request->username,
+                            'email' => $request->email,
+                            'id_tipo' => $request->id_tipo
+                        ]);
+                }
+
+                return array("Usuario actualizado!","Haz click para cerrar","success",1,"");
+            }
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
+        }
     }
 }
