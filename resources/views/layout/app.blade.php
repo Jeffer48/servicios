@@ -53,8 +53,9 @@
             </div>
         </div>
 
-        @include('layout.services')
+        @include('modal.modal-servicios')
     </body>
 
    <script src="js/utilerias.js"></script>
+   <script src="js/servicios.js"></script>
 </html>
