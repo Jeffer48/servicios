@@ -87,7 +87,7 @@ class radio_controller extends Controller
                     'created_user' => Auth::id()
                 ]);
 
-                return redirect()->route('etapas', ['id_etapa' => $id])->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
+                return redirect()->route('etapas', ['etapa' => $id])->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
             }
         }catch(QueryException $e){
             return redirect('/')->with(['error' => 'Ocurrio un error al guardar'])->withInput();

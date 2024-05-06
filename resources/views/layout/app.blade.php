@@ -41,9 +41,12 @@
                     </script>
                 @endif
                 @if(session()->has('error'))
+                    @php
+                        $mensaje = Session::get('error');
+                    @endphp
                     <script>
                         Swal.fire({
-                            title: "Ha ocurrido un error",
+                            title: "{{session::get('error')}}",
                             text: "Haz click para cerrar",
                             icon: "error"
                         });

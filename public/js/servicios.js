@@ -1,10 +1,14 @@
 function modalServicios(){
+    let contenedor = document.getElementById("listaTarjetas");
+    contenedor.innerHTML = "";
+
     $.ajax({
         url: '/datos',
         type: 'GET',
         success: function(response){
             $.each(response, function(i, item){
-                $('#listaTarjetas').append(createButtons(
+                $id = item.id;
+                contenedor.append(createButtons(
                     item.id,
                     item.unidad,
                     item.folio,
@@ -19,7 +23,9 @@ function modalServicios(){
 }
 
 function createButtons(id,unidad,folio,area,incidente,fecha){
-    let tarjeta = document.createElement('div');
+    let ruta = "/etapas?etapa="+id;
+    let tarjeta = document.createElement('a');
+    tarjeta.setAttribute('href',ruta);
     tarjeta.setAttribute('class','service-target');
 
     let contenedor = document.createElement('div');
