@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared("CREATE VIEW vw_reporte_radio_st as
+        DB::unprepared("CREATE VIEW vw_radio_x_etapas as
         select 
-            rr.id,c0.descripcion unidad,
-            c1.descripcion incidente,
-            c2.descripcion area
-        from reporte_radio rr 
-        left join catalogos c0 on rr.id_unidad = c0.id
-        left join catalogos c1 on rr.id_incidente = c1.id 
-        left join catalogos c2 on rr.id_area = c2.id
-        where rr.deleted_at is null 
-        and rr.id_incidente != 35
-        and rr.id not in (
-            select id_reporte_radio
-            from etapas
-            where deleted_at is null
-        );");
+            e.id,
+            c1.descripcion as unidad,
+            f.folio,
+            c0.descripcion as area,
+            c2.descripcion as incidente,
+            rr.fecha,
+            e.status,
+            e.deleted_at
+        from etapas e
+        join reporte_radio rr on e.id_reporte_radio = rr.id
+        join folios f on e.id_folio = f.id 
+        join catalogos c0 on rr.id_area = c0.id
+        join catalogos c1 on rr.id_unidad = c1.id
+        join catalogos c2 on rr.id_incidente = c2.id;");
 
         DB::unprepared("CREATE VIEW vw_reporte_radio as
         select 
