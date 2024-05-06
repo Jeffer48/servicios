@@ -50,10 +50,15 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(usuarios_controller::class)->group(function () {
         Route::get('/usuarios', 'index')->name('usuarios');
         Route::post('/usuarios/getUsuarios', 'getUsuarios')->name('get-usuarios');
+        Route::post('/usuarios/saveUser', 'saveUser')->name('save-user');
+        Route::post('/usuarios/change', 'changeEstate')->name('changeEstate');
+        Route::post('/usuarios/update', 'updateUser')->name('updateUser');
+        Route::post('/usuarios/getUser', 'userToUpdate')->name('userToUpdate');
     });
 
     Route::controller(reportes_controller::class)->group(function () {
         Route::get('/reportes', 'index')->name('reportes');
+        Route::post('/reportes/getReportes', 'getReportes')->name('get-reportes');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);

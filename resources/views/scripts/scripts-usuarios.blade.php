@@ -15,17 +15,33 @@
         drawDataTable("{{route('get-usuarios')}}",datos);
     }
 
-    function useExistentUser(){
-        let user = document.getElementById("input-personal");
+    function limpiarModal(){
+        nombre.value = "";
+        nombre.disabled = false;
+        apellido_p.value = "";
+        apellido_p.disabled = false;
+        apellido_m.value = "";
+        apellido_m.disabled = false;
+        email.value = "";
+        email.disabled = false;
+        withEmail.checked = true;
+        usuario.value = "";
+        document.getElementById("input-pass").value = "";
+        document.getElementById("nu_id_tipo").value = 0;
+        document.getElementById("input-personal").value = 0;
+    }
+
+    function useExistentUser(id_select,id_nombre,id_apellido_p,id_apellido_m){
+        let user = document.getElementById(id_select);
         
         if(user.value == "0"){
-            nombre.disabled = false;
-            apellido_p.disabled = false;
-            apellido_m.disabled = false;
+            document.getElementById(id_nombre).disabled = false;
+            document.getElementById(id_apellido_p).disabled = false;
+            document.getElementById(id_apellido_m).disabled = false;
         }else{
-            nombre.disabled = true;
-            apellido_p.disabled = true;
-            apellido_m.disabled = true;
+            document.getElementById(id_nombre).disabled = true;
+            document.getElementById(id_apellido_p).disabled = true;
+            document.getElementById(id_apellido_m).disabled = true;
         }
     }
 
@@ -51,8 +67,8 @@
         else password.setAttribute("class","form-control");
         if(rol.value == "0"){rol.setAttribute("class","form-select is-invalid");completo = false;}
         else rol.setAttribute("class","form-select");
-        if(usuario.value == ""){usuario.setAttribute("class","form-select is-invalid");completo = false;}
-        else usuario.setAttribute("class","form-select");
+        if(usuario.value == ""){usuario.setAttribute("class","form-control is-invalid");completo = false;}
+        else usuario.setAttribute("class","form-control");
         if(withEmail.checked){
             if(!validateEmail(email.value)){
                 email.setAttribute("class","form-control is-invalid");
@@ -97,5 +113,82 @@
                 };
             }
         }
+
+        confirmAlert("¿Esta seguro de crear el usuario?","Haga click para cerrar","question","{{route('save-user')}}",datos);
+    }
+
+    function changeEstate(id){
+        let datos = {id: id};
+
+        confirmAlert("¿Esta seguro de desactivar el usuario?","Esta acción es reversible","question","{{route('changeEstate')}}",datos);
+    }
+
+    let id_to_edit = 0;
+    function updateUser(id){
+        let personal = document.getElementById("eu_input-personal");
+        let nombre = document.getElementById("eu_input-nombre");
+        let apellido_p = document.getElementById("eu_input-apellido-p");
+        let apellido_m = document.getElementById("eu_input-apellido-m");
+        let email = document.getElementById("eu_input-email");
+        let usuario = document.getElementById("eu_input-usuario");
+        let rol = document.getElementById("eu_id_tipo");
+        usuario.value = "";
+        nombre.value = "";
+        apellido_p.value = "";
+        apellido_m.value = "";
+        email.value = "";
+        id_to_edit = id;
+
+        $.ajax({
+            url: "{{route('userToUpdate')}}",
+            type: 'POST',
+            data: {id: id},
+            success: function(response){
+                if(response[0] != null){
+                    personal.value = response[0];
+                    nombre.disabled = true;
+                    apellido_p.disabled = true;
+                    apellido_m.disabled = true;
+                }
+                else{
+                    personal.value = 0;
+                    nombre.value = response[3];
+                    apellido_p.value = response[4];
+                    apellido_m.value = response[5];
+                }
+
+                usuario.value = response[2];
+                email.value = response[6];
+                rol.value = response[1];
+            }
+        });
+    }
+
+    function saveUpdate(){
+        let personal = document.getElementById("eu_input-personal");
+        let nombre = document.getElementById("eu_input-nombre");
+        let apellido_p = document.getElementById("eu_input-apellido-p");
+        let apellido_m = document.getElementById("eu_input-apellido-m");
+        let email = document.getElementById("eu_input-email");
+        let usuario = document.getElementById("eu_input-usuario");
+        let rol = document.getElementById("eu_id_tipo");
+
+        let datos = {
+            id: id_to_edit,
+            id_personal: personal.value,
+            id_tipo: rol.value,
+            nombre: nombre.value,
+            apellido_p: apellido_p.value,
+            apellido_m: apellido_m.value,
+            username: usuario.value,
+            email: email.value
+        };
+
+        confirmAlert(
+            "¿Esta seguro de actualizar el usuario?",
+            "Haga click para continuar","question",
+            "{{route('updateUser')}}",datos
+        );
+        $("#editarPersonal").modal("hide");
     }
 </script>
