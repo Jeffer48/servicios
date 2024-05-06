@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class etapas_controller extends Controller
 {
     public function index(Request $request){
-        $radio = DB::table('reporte_radio')
-            ->select('id as id_reporte_radio','fecha','id_area','id_unidad','id_incidente','ubicacion')
-            ->where('id', $request->id_reporte_radio)->first();
-
+        $radio = DB::table('reporte_radio as rr')
+            ->select('rr.id as id_reporte_radio', 'e.id_folio','rr.fecha','rr.id_area','rr.id_unidad','rr.id_incidente','rr.ubicacion')
+            ->join('etapas as e', 'e.id_reporte_radio', 'rr.id')
+            ->where('e.id', $request->id_etapa)->first();
+        
         $personal = DB::table('personal')
             ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
             ->where('deleted_at', null)
@@ -96,19 +97,10 @@ class etapas_controller extends Controller
             ->where('deleted_at', null)
             ->get();
 
-        $folio_num = DB::table('folios')
-            ->select('actual_num')
-            ->where('id_area',$radio->id_area)
-            ->get();
-
-        if(count($folio_num) == 0) $folio_num = 1;
-        else $folio_num = $folio_num[0]->actual_num + 1;
-
-        $folio = substr($area[0]->descripcion,0,1);
-        if($folio_num > 0 && $folio_num < 10) $folio = $folio.'000'.$folio_num;
-        else if($folio_num > 9 && $folio_num < 100) $folio = $folio.'00'.$folio_num;
-        else if($folio_num > 99 && $folio_num < 1000) $folio = $folio.'0'.$folio_num;
-        else $folio = $folio.$folio_num;
+        $folio = DB::table('folios')
+            ->select('folio','actual_num')
+            ->where('id',$radio->id_folio)
+            ->first();
         
         return view('etapas',[
             'personal' => $personal,
@@ -116,8 +108,8 @@ class etapas_controller extends Controller
             'reportante' => $reportante,
             'id_area' => $area[0]->id,
             'area' => $area[0]->descripcion,
-            'folio_num' => $folio_num,
-            'folio' => $folio,
+            'folio_num' => $folio->actual_num,
+            'folio' => $folio->folio,
             'turno' => $turno,
             'unidad' => $unidad[0]->descripcion,
             'jefe' => $jefe,
