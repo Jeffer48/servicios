@@ -185,6 +185,29 @@ return new class extends Migration
             $table->foreign('id_hospital')->references('id')->on('catalogos');
             $table->foreign('id_folio')->references('id')->on('folios');
         });
+
+        Schema::create('carga_gasolina', function(Blueprint $table) {
+            $table->increments('id');
+            $table->timestamp('fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->integer('id_jefe')->unsigned()->nullable(true);
+            $table->integer('id_operador')->unsigned()->nullable(true);
+            $table->integer('id_unidad')->unsigned()->nullable(false);
+            $table->integer('kilometraje')->unsigned()->nullable(false);
+            $table->float('importe')->unsigned()->nullable(false);
+            $table->float('litros')->unsigned()->nullable(false);
+            $table->string('folio',50)->nullable(true);
+            $table->string('observaciones',255)->nullable(true);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->softDeletes();
+            $table->integer('created_user')->unsigned()->nullable(true);
+            $table->integer('updated_user')->unsigned()->nullable(true);
+            $table->integer('deleted_user')->unsigned()->nullable(true);
+
+            $table->foreign('id_jefe')->references('id')->on('personal');
+            $table->foreign('id_operador')->references('id')->on('personal');
+            $table->foreign('id_unidad')->references('id')->on('catalogos');
+        });
     }
 
     public function down(): void
@@ -196,5 +219,6 @@ return new class extends Migration
         Schema::dropIfExists('grupos');
         Schema::dropIfExists('catalogos');
         Schema::dropIfExists('personal');
+        Schema::dropIfExists('carga_gasolina');
     }
 };

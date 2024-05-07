@@ -13,7 +13,7 @@ class radio_controller extends Controller
 
     public function index(){
         date_default_timezone_set('America/Mexico_City');
-        $date = date('Y-m-d h:i', time());
+        $date = date('Y-m-d H:i', time());
 
         $area = DB::table('catalogos')
             ->select('id','descripcion')
