@@ -27,7 +27,7 @@ function ajaxRedirect(ruta,datos,method){
         type: method,
         data: datos,
         success: function(response){
-            //console.log(response);
+            console.log(response);
         }
     });
 }

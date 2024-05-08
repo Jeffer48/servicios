@@ -10,7 +10,7 @@ class combustible_controller extends Controller
 {
     public function index(){
         date_default_timezone_set('America/Mexico_City');
-        $fecha = date('Y-m-d H:i', time());
+        $fecha = date('Y-m-d H:i:s', time());
 
         $personal = DB::table('personal')
             ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
@@ -30,7 +30,24 @@ class combustible_controller extends Controller
         ]);
     }
 
-    public function guardar(){
-        //
+    public function guardar(Request $request){
+        try{
+            $id_rr = DB::table('carga_gasolina')->insertGetId([
+                'fecha' => $request->fecha,
+                'id_jefe' => $request->jefe,
+                'id_operador' => $request->operador,
+                'id_unidad' => $request->unidad,
+                'kilometraje' => $request->kilometraje,
+                'importe' => $request->importe,
+                'litros' => $request->litros,
+                'folio' => $request->folio,
+                'observaciones' => $request->observaciones,
+                'created_user' => Auth::id()
+            ]);
+
+            return array("Carga de combustible registrada","Haz click para cerrar","success",1,"");
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
+        }
     }
 }

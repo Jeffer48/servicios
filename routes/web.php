@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(combustible_controller::class)->group(function () {
         Route::get('/cargar-combustible', 'index')->name('combustible');
-        Route::get('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
+        Route::post('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);
