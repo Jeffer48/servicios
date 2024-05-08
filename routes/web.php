@@ -9,6 +9,7 @@ use App\Http\Controllers\datos_controller;
 use App\Http\Controllers\catalogos_controller;
 use App\Http\Controllers\reportes_controller;
 use App\Http\Controllers\usuarios_controller;
+use App\Http\Controllers\combustible_controller;
 
 Route::get('/', function () {
     return redirect('radio');
@@ -59,6 +60,11 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(reportes_controller::class)->group(function () {
         Route::get('/reportes', 'index')->name('reportes');
         Route::post('/reportes/getReportes', 'getReportes')->name('get-reportes');
+    });
+
+    Route::controller(combustible_controller::class)->group(function () {
+        Route::get('/cargar-combustible', 'index')->name('combustible');
+        Route::post('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);
