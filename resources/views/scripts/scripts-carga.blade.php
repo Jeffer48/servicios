@@ -1,5 +1,5 @@
 <script>
-    let fecha = document.getElementById("input-fecha");
+    let fecha = "{{$fecha}}";
     let jefe = document.getElementById("input-jefe");
     let operador = document.getElementById("input-operador");
     let unidad = document.getElementById("input-unidad");

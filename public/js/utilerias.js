@@ -21,17 +21,6 @@ $("#btn-show-modal").click(function(e) {
     $("#services-modal").modal("show");
 });
 
-function ajaxRedirect(ruta,datos,method){
-    $.ajax({
-        url: ruta,
-        type: method,
-        data: datos,
-        success: function(response){
-            console.log(response);
-        }
-    });
-}
-
 function ajaxMessage(ruta,datos){
     $.ajax({
         url: ruta,
