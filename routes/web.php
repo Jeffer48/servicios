@@ -67,7 +67,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
     });
 
-    Route::get('/datos', [datos_controller::class, 'index']);
+    Route::controller(datos_controller::class)->group(function () {
+        Route::post('/datos/reportes', 'reportes')->name('reportes');
+        Route::post('/datos/desplazamiento', 'desplazamiento')->name('desplazamiento');
+        Route::post('/datos/desplazamiento/terminar', 'terminarDesplazamiento')->name('terminar');
+    });
 
     Route::controller(login_controller::class)->group(function () {
         Route::get('/logout', 'logout')->name('logout');

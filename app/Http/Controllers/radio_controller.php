@@ -44,12 +44,14 @@ class radio_controller extends Controller
 
     public function registrar(Request $request){
         try{
+            $estatus = $request->incidente == 35 ? 0 : 1;
             $id_rr = DB::table('reporte_radio')->insertGetId([
                 'fecha' => $request->fecha,
                 'id_area' => $request->area,
                 'id_unidad' => $request->unidad,
                 'id_incidente' => $request->incidente,
                 'ubicacion' => $request->ubicacion,
+                'status' => $estatus,
                 'created_user' => Auth::id()
             ]);
 
