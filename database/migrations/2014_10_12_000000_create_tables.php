@@ -174,6 +174,7 @@ return new class extends Migration
             $table->foreign('id_personal_1')->references('id')->on('personal');
             $table->foreign('id_personal_2')->references('id')->on('personal');
             $table->foreign('id_personal_3')->references('id')->on('personal');
+            $table->foreign('id_personal_4')->references('id')->on('personal');
             $table->foreign('id_reportante')->references('id')->on('catalogos');
             $table->foreign('id_turno')->references('id')->on('catalogos');
             $table->foreign('id_tipo_servicio')->references('id')->on('catalogos');
