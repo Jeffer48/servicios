@@ -18,7 +18,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link text-white" style="padding-right: 0;">
+            <a href="{{route('combustible')}}" class="nav-link {{request()->route()->uri == 'cargar-combustible' ? 'active' : 'text-white'}}" style="padding-right: 0;">
                 <div class="flex-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-fuel-pump-fill" viewBox="0 0 16 16">
                         <path d="M1 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8a2 2 0 0 1 2 2v.5a.5.5 0 0 0 1 0V8h-.5a.5.5 0 0 1-.5-.5V4.375a.5.5 0 0 1 .5-.5h1.495c-.011-.476-.053-.894-.201-1.222a.97.97 0 0 0-.394-.458c-.184-.11-.464-.195-.9-.195a.5.5 0 0 1 0-1q.846-.002 1.412.336c.383.228.634.551.794.907.295.655.294 1.465.294 2.081V7.5a.5.5 0 0 1-.5.5H15v4.5a1.5 1.5 0 0 1-3 0V12a1 1 0 0 0-1-1v4h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1zm2.5 0a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5z" fill="white" fill-opacity="0.77"/>
@@ -27,7 +27,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-white" style="padding-right: 0;">
+            <a href="{{route('usuarios')}}" class="nav-link {{request()->route()->uri == 'usuarios' ? 'active' : 'text-white'}}" style="padding-right: 0;">
                 <div class="flex-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
                         <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" fill="white" fill-opacity="0.77"/>
@@ -78,11 +78,12 @@
         </ul>
         <hr class="hr_side">
         <div style="align-self: center;">
-            <a href="{{'logout'}}" class="d-flex align-items-center text-white" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg width="40" height="40" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M45 10.5469L40.77 14.2646L48.51 21.0938H18V26.3672H48.51L40.77 33.1699L45 36.9141L60 23.7305L45 10.5469ZM6 5.27344H30V0H6C2.7 0 0 2.37305 0 5.27344V42.1875C0 45.0879 2.7 47.4609 6 47.4609H30V42.1875H6V5.27344Z" fill="white" fill-opacity="0.77"/>
-                </svg>                        
-                <h5 style="margin-left: 0.5rem;">Cerrar Sesión</h5>
+            <a href="{{'logout'}}" class="nav-link text-white" class="nav-link text-white">
+                <div class="flex-container">
+                    <svg width="40" height="40" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M45 10.5469L40.77 14.2646L48.51 21.0938H18V26.3672H48.51L40.77 33.1699L45 36.9141L60 23.7305L45 10.5469ZM6 5.27344H30V0H6C2.7 0 0 2.37305 0 5.27344V42.1875C0 45.0879 2.7 47.4609 6 47.4609H30V42.1875H6V5.27344Z" fill="white" fill-opacity="0.77"/>
+                    </svg><h5 style="margin-left: 0.5rem; margin-bottom: 0; align-self: center;">Cerrar Sesión</h5>
+                </div>
             </a>
         </div>
     </div>

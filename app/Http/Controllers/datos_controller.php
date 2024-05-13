@@ -9,8 +9,9 @@ class datos_controller extends Controller
 {
     public function index()
     {
-        $reportes =DB::table('vw_reporte_radio_st')
-            ->select('id','unidad','incidente','area')
+        $reportes =DB::table('vw_radio_x_etapas')
+            ->where('status', 0)
+            ->where('deleted_at', null)
             ->get();
 
         return $reportes;

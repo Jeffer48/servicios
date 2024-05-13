@@ -1,6 +1,5 @@
 <script>
     let grupos = document.getElementById("grupos");
-    let opt = "opt-"+{{$opt}};
 
     $(document).ready(function() {
         $('#catalogoTable').DataTable(tableLabels);
@@ -21,10 +20,7 @@
             showLoaderOnConfirm: true,
             preConfirm: async (descripcion) => {
                 let datos = {id: id, nuevo: descripcion, tabla: tabla};
-                ajaxSave(
-                    "{{route('editar')}}",datos,"Datos actualizados correctamente!",
-                    "Haz click para cerrar","success",1,"catalogos"
-                );
+                ajaxMessage("{{route('editar')}}",datos);
             }
         });
     }
@@ -34,22 +30,19 @@
         let mensaje = accion == 1 ? "¿Esta seguro de reactivar?" : "¿Esta seguro de eliminar?";
         let ruta = accion == 1 ? "{{route('activar')}}" : "{{route('eliminar')}}";
         
-        confirmAlert(
-            mensaje,"Esta acción es reversible","question",ruta,datos,
-            "Datos actualizados correctamente!","Haz click para cerrar","success",1,tabla
-        );
+        confirmAlert(mensaje,"Esta acción es reversible","question",ruta,datos);
     }
 
     function guardar(tipo){
         //tipo: 1 Catalogo, 2 Grupo
         let nuevo = '';
         let alerta = '';
-        let grupo = 0;
+        let grupo;
         let dir = 'catalogos';
         if(tipo == 1){
             nuevo = document.getElementById("input-nuevoCatalogo").value;
             alerta = document.getElementById("catalogoAlert");
-            grupo = document.getElementById("id_grupo").value;
+            grupo = document.getElementById("id_grupo_nc").value;
         }
         if(tipo == 2){
             nuevo = document.getElementById("input-nuevoGrupo").value;
@@ -57,16 +50,22 @@
             dir = 'grupos';
         }
 
-        if(nuevo.value == ""){
+        if(nuevo.value == "" || grupo == 0){
             alerta.style.display = "block";
         }else{
             alerta.style.display = "none";
             let datos = {id_grupo: grupo, nuevo: nuevo};
-            ajaxSave(
-                "{{route('guardar')}}",datos,"Datos guardados correctamente!",
-                "Haz click para continuar","success",1,dir
-            );
+            ajaxMessage("{{route('guardar')}}",datos);
         }
+    }
+
+    function updateFiltersCatalogo(){
+        let datos = {
+            id_grupo: document.getElementById("id_grupo").value,
+            id_estado: document.getElementById("id_estado").value
+        };
+
+        drawDataTable("{{route('get-catalogo')}}",datos);
     }
 
     //---------------------------------------- PERSONAL -----------------------------------------------
@@ -99,9 +98,44 @@
             tabla: 'personal'
         };
 
-        ajaxSave(
-            "{{route('editar')}}",datos,"Datos guardados correctamente!",
-            "Haz click para continuar","success",1,'personal'
-        );
+        ajaxMessage("{{route('editar')}}",datos);
+    }
+
+    function crearPersonal(){
+        let nombre = document.getElementById("np_nombre").value;
+        let apellido_p = document.getElementById("np_apellido_p").value;
+        let apellido_m = document.getElementById("np_apellido_m").value;
+        let id_puesto = document.getElementById("np_puesto").value;
+        let id_turno = document.getElementById("np_turno").value;
+
+        if(vacios(nombre)||vacios(apellido_p)||vacios(apellido_m)||vacios(id_puesto)||vacios(id_turno)){
+            message("Complete todos los campos!!","De click para cerrar","warning",0,"");
+        }else{
+            let datos = {
+                nombre: nombre,
+                apellido_p: apellido_p,
+                apellido_m: apellido_m,
+                id_puesto: id_puesto,
+                id_turno: id_turno
+            };
+            ajaxMessage("{{route('nuevoPersonal')}}",datos);
+            $("#nuevoPersonal").modal("hide");
+            drawDataTable("{{route('get-personal')}}");
+        }
+    }
+
+    function vacios(revisar){
+        if(revisar=="") return true;
+        else return false;
+    }
+
+    function updateFiltersPersonal(){
+        let datos = {
+            id_puesto: document.getElementById("id_puesto").value,
+            id_turno: document.getElementById("id_turno").value,
+            id_estado: document.getElementById("id_estado").value
+        };
+
+        drawDataTable("{{route('get-personal')}}",datos);
     }
 </script>

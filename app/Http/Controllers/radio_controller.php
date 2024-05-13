@@ -13,7 +13,7 @@ class radio_controller extends Controller
 
     public function index(){
         date_default_timezone_set('America/Mexico_City');
-        $date = date('Y-m-d h:i', time());
+        $date = date('Y-m-d H:i:s', time());
 
         $area = DB::table('catalogos')
             ->select('id','descripcion')
@@ -44,7 +44,7 @@ class radio_controller extends Controller
 
     public function registrar(Request $request){
         try{
-            $id = DB::table('reporte_radio')->insertGetId([
+            $id_rr = DB::table('reporte_radio')->insertGetId([
                 'fecha' => $request->fecha,
                 'id_area' => $request->area,
                 'id_unidad' => $request->unidad,
@@ -56,15 +56,38 @@ class radio_controller extends Controller
             if($request->incidente == 35){
                 return redirect('/')->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
             }else{
-                return redirect()->route('etapas', [
-                    'fecha' => $request->fecha,
+                $folio_num = DB::table('folios')
+                    ->select(DB::raw('max(actual_num) as actual_num'))
+                    ->where('id_area',$request->area)->get();
+
+                $area = DB::table('catalogos')
+                    ->select('id','descripcion')
+                    ->where('id',$request->area)
+                    ->first();
+                
+                if($folio_num == null) $folio_num = 1;
+                else $folio_num = $folio_num[0]->actual_num + 1;
+
+                $folio = substr($area->descripcion,0,1);
+                if($folio_num > 0 && $folio_num < 10) $folio = $folio.'000'.$folio_num;
+                else if($folio_num > 9 && $folio_num < 100) $folio = $folio.'00'.$folio_num;
+                else if($folio_num > 99 && $folio_num < 1000) $folio = $folio.'0'.$folio_num;
+                else $folio = $folio.$folio_num;
+
+                $id_folio = DB::table('folios')->insertGetId([
                     'id_area' => $request->area,
-                    'id_unidad' => $request->unidad,
-                    'id_incidente' => $request->incidente,
-                    'ubicacion' => $request->ubicacion,
-                    'id_reporte_radio' => $id
-                ])
-                ->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
+                    'actual_num' => $folio_num,
+                    'folio' => $folio
+                ]);
+
+                $id = DB::table('etapas')->insertGetId([
+                    'id_reporte_radio' => $id_rr,
+                    'id_folio' => $id_folio,
+                    'status' => 0,
+                    'created_user' => Auth::id()
+                ]);
+
+                return redirect()->route('etapas', ['etapa' => $id])->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
             }
         }catch(QueryException $e){
             return redirect('/')->with(['error' => 'Ocurrio un error al guardar'])->withInput();

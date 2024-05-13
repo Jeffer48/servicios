@@ -8,17 +8,8 @@ use App\Http\Controllers\etapas_controller;
 use App\Http\Controllers\datos_controller;
 use App\Http\Controllers\catalogos_controller;
 use App\Http\Controllers\reportes_controller;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\usuarios_controller;
+use App\Http\Controllers\combustible_controller;
 
 Route::get('/', function () {
     return redirect('radio');
@@ -44,17 +35,36 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::controller(catalogos_controller::class)->group(function () {
-        Route::get('/catalogos', 'index')->name('catalogos');
+        Route::get('/catalogos', 'catalogo')->name('catalogos');
+        Route::post('/catalogos/get-catalogo', 'getCatalogo')->name('get-catalogo');
         Route::post('/catalogos/editar', 'editar')->name('editar');
         Route::post('/catalogos/eliminar', 'eliminar')->name('eliminar');
         Route::post('/catalogos/activar', 'activar')->name('activar');
         Route::post('/catalogos/guardar', 'guardar')->name('guardar');
+        Route::post('/catalogos/nuevoPersonal', 'guardarPersonal')->name('nuevoPersonal');
         Route::get('/grupos', 'grupos')->name('grupos');
+        Route::post('/grupos/get-grupos', 'getGrupos')->name('get-grupos');
         Route::get('/personal', 'personal')->name('personal');
+        Route::post('/get-personal', 'getPersonal')->name('get-personal');
+    });
+
+    Route::controller(usuarios_controller::class)->group(function () {
+        Route::get('/usuarios', 'index')->name('usuarios');
+        Route::post('/usuarios/getUsuarios', 'getUsuarios')->name('get-usuarios');
+        Route::post('/usuarios/saveUser', 'saveUser')->name('save-user');
+        Route::post('/usuarios/change', 'changeEstate')->name('changeEstate');
+        Route::post('/usuarios/update', 'updateUser')->name('updateUser');
+        Route::post('/usuarios/getUser', 'userToUpdate')->name('userToUpdate');
     });
 
     Route::controller(reportes_controller::class)->group(function () {
         Route::get('/reportes', 'index')->name('reportes');
+        Route::post('/reportes/getReportes', 'getReportes')->name('get-reportes');
+    });
+
+    Route::controller(combustible_controller::class)->group(function () {
+        Route::get('/cargar-combustible', 'index')->name('combustible');
+        Route::post('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
     });
 
     Route::get('/datos', [datos_controller::class, 'index']);
