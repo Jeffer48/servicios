@@ -143,6 +143,7 @@ return new class extends Migration
             $table->integer('id_personal_1')->unsigned()->nullable(true);
             $table->integer('id_personal_2')->unsigned()->nullable(true);
             $table->integer('id_personal_3')->unsigned()->nullable(true);
+            $table->integer('id_personal_4')->unsigned()->nullable(true);
             $table->integer('id_tipo_servicio')->unsigned()->nullable(true);
             $table->integer('id_localidad')->unsigned()->nullable(true);
             $table->integer('id_lugar')->unsigned()->nullable(true);
@@ -173,6 +174,7 @@ return new class extends Migration
             $table->foreign('id_personal_1')->references('id')->on('personal');
             $table->foreign('id_personal_2')->references('id')->on('personal');
             $table->foreign('id_personal_3')->references('id')->on('personal');
+            $table->foreign('id_personal_4')->references('id')->on('personal');
             $table->foreign('id_reportante')->references('id')->on('catalogos');
             $table->foreign('id_turno')->references('id')->on('catalogos');
             $table->foreign('id_tipo_servicio')->references('id')->on('catalogos');
