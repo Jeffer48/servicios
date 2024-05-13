@@ -2,6 +2,7 @@ function modalServicios(){
     let contenedor = document.getElementById("listaTarjetas");
     contenedor.innerHTML = "";
 
+    let cantidad = 0;
     $.ajax({
         url: '/datos',
         type: 'GET',
@@ -17,9 +18,11 @@ function modalServicios(){
                     item.fecha
                 ));
             });
+            cantidad = response.length;
         }
     });
-    $('#listaServicios').modal('show');
+    if(cantidad > 0) $('#listaServicios').modal('show');
+    else message("No hay ningún servicio en activo","Haga click para cerrar","info",0,"");
 }
 
 function createButtons(id,unidad,folio,area,incidente,fecha){
