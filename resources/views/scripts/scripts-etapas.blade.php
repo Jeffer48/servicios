@@ -39,6 +39,7 @@
     let personal1 = document.getElementById("input-personal1");
     let personal2 = document.getElementById("input-personal2");
     let personal3 = document.getElementById("input-personal3");
+    let personal4 = document.getElementById("input-personal4");
     //Valores de la Tercera Etapa
     let prioridad = document.getElementById("input-prioridad");
     let nombreP = document.getElementById("input-nombreP");
@@ -71,7 +72,6 @@
         terminado = vacio(terminado,r_operador,"select");
         terminado = vacio(terminado,reportante,"select");
         terminado = vacio(terminado,turno,"select");
-        terminado = vacio(terminado,jefe,"select");
         terminado = vacio(terminado,servicio,"select");
         terminado = vacio(terminado,localidad,"select");
         terminado = vacio(terminado,lugar,"select");
@@ -83,21 +83,25 @@
         let alertO1 = document.getElementById("alert-personalUno");
         let alertO2 = document.getElementById("alert-personalDos");
         let alertO3 = document.getElementById("alert-personalTres");
+        let alertO4 = document.getElementById("alert-personalCuatro");
+        let alertJe = document.getElementById("alert-jefe");
 
         if(r_operador.value == "") terminado = personalVacio(r_operador,alertRO);
-        else terminado = personalRepetido(r_operador,operador,personal1,personal2,personal3,alertRO,terminado);
+        else terminado = personalRepetido(r_operador,operador,personal1,personal2,personal3,personal4,jefe,alertRO,terminado);
 
         if(operador.value == "") terminado = personalVacio(operador,alertOP); 
-        else terminado = personalRepetido(operador,r_operador,personal1,personal2,personal3,alertOP,terminado);
+        else terminado = personalRepetido(operador,r_operador,personal1,personal2,personal3,personal4,jefe,alertOP,terminado);
 
-        if(personal1.value == "") terminado = personalVacio(personal1,alertO1); 
-        else terminado = personalRepetido(personal1,operador,r_operador,personal2,personal3,alertO1,terminado);
+        if(!personal1.value == "") personalRepetido(personal1,operador,r_operador,personal2,personal3,personal4,jefe,alertO1,terminado);
 
-        if(personal2.value == "") terminado = personalVacio(personal2,alertO2);
-        else terminado = personalRepetido(personal2,operador,personal1,r_operador,personal3,alertO2,terminado);
+        if(!personal2.value == "") personalRepetido(personal2,operador,personal1,r_operador,personal3,personal4,jefe,alertO2,terminado);
 
-        if(personal3.value == "") terminado = personalVacio(personal3,alertO3);
-        else terminado = personalRepetido(personal3,operador,personal1,personal2,r_operador,alertO3,terminado);
+        if(!personal3.value == "") personalRepetido(personal3,operador,personal1,personal2,r_operador,personal4,jefe,alertO3,terminado);
+
+        if(!personal4.value == "") personalRepetido(personal4,personal3,operador,personal1,personal2,r_operador,jefe,alertO4,terminado);
+
+        if(jefe.value == "") terminado = personalVacio(jefe,alertJe);
+        else terminado = personalRepetido(jefe,personal3,operador,personal1,personal2,personal4,r_operador,alertJe,terminado);
         
         if(terminado) terminadoE1 = 2;
         else terminadoE1 = 1;
@@ -162,6 +166,7 @@
             id_personal_1: personal1.value,
             id_personal_2: personal2.value,
             id_personal_3: personal3.value,
+            id_personal_4: personal4.value,
             id_tipo_servicio: servicio.value,
             id_localidad: localidad.value,
             id_lugar: lugar.value,
@@ -288,8 +293,8 @@
         return false;
     }
 
-    function personalRepetido(p,p2,p3,p4,p5,alert,terminado){
-        if(p.value==p2.value||p.value==p3.value||p.value==p4.value||p.value==p5.value){
+    function personalRepetido(p,p2,p3,p4,p5,p6,p7,alert,terminado){
+        if(p.value==p2.value||p.value==p3.value||p.value==p4.value||p.value==p5.value||p.value==p6.value||p.value==p7.value){
             alert.innerHTML = "Personal repetido";
             p.setAttribute("class","form-select is-invalid");
             terminado = false;

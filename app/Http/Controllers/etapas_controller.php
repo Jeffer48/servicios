@@ -51,12 +51,6 @@ class etapas_controller extends Controller
                 ->where('deleted_at', null)
                 ->get();
 
-            $jefe = DB::table('personal')
-                ->select(DB::raw('id, concat(nombre," ",apellido_p," ",apellido_m) as descripcion'))
-                ->where('id_tipo',75)
-                ->where('deleted_at', null)
-                ->get();
-
             $servicio = DB::table('catalogos')
                 ->select('id','descripcion')
                 ->where('id_grupo',5)
@@ -120,7 +114,6 @@ class etapas_controller extends Controller
                 'folio' => $folio->folio,
                 'turno' => $turno,
                 'unidad' => $unidad[0]->descripcion,
-                'jefe' => $jefe,
                 'servicio' => $servicio,
                 'localidad' => $localidad,
                 'lugares' => $lugares,
@@ -153,6 +146,7 @@ class etapas_controller extends Controller
             'id_personal_1' => $request->id_personal_1,
             'id_personal_2' => $request->id_personal_2,
             'id_personal_3' => $request->id_personal_3,
+            'id_personal_4' => $request->id_personal_4,
             'id_tipo_servicio' => $request->id_tipo_servicio,
             'id_localidad' => $request->id_localidad,
             'id_lugar' => $request->id_lugar,
