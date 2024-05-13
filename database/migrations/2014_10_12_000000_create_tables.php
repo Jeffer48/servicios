@@ -143,6 +143,7 @@ return new class extends Migration
             $table->integer('id_personal_1')->unsigned()->nullable(true);
             $table->integer('id_personal_2')->unsigned()->nullable(true);
             $table->integer('id_personal_3')->unsigned()->nullable(true);
+            $table->integer('id_personal_4')->unsigned()->nullable(true);
             $table->integer('id_tipo_servicio')->unsigned()->nullable(true);
             $table->integer('id_localidad')->unsigned()->nullable(true);
             $table->integer('id_lugar')->unsigned()->nullable(true);
