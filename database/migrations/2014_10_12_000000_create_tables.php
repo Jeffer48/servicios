@@ -140,6 +140,7 @@ return new class extends Migration
             $table->integer('id_reportante')->unsigned()->nullable(true);
             $table->integer('id_turno')->unsigned()->nullable(true);
             $table->timestamp('fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('fecha_finalizado')->nullable(true)->default(null);
             $table->integer('id_operador')->unsigned()->nullable(true);
             $table->integer('id_jefe')->unsigned()->nullable(true);
             $table->integer('id_personal_1')->unsigned()->nullable(true);
