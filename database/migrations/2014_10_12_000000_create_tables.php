@@ -103,10 +103,12 @@ return new class extends Migration
         Schema::create('reporte_radio', function(Blueprint $table) {
             $table->increments('id');
             $table->timestamp('fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('fecha_terminado')->default(null)->nullable(true);
             $table->integer('id_area')->unsigned()->nullable(false);
             $table->integer('id_unidad')->unsigned()->nullable(false);
             $table->integer('id_incidente')->unsigned()->nullable(false);
             $table->string('ubicacion',255)->nullable(true);
+            $table->tinyInteger('status')->unsigned()->default(1);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -138,6 +140,7 @@ return new class extends Migration
             $table->integer('id_reportante')->unsigned()->nullable(true);
             $table->integer('id_turno')->unsigned()->nullable(true);
             $table->timestamp('fecha')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('fecha_finalizado')->nullable(true)->default(null);
             $table->integer('id_operador')->unsigned()->nullable(true);
             $table->integer('id_jefe')->unsigned()->nullable(true);
             $table->integer('id_personal_1')->unsigned()->nullable(true);
