@@ -70,17 +70,22 @@
                 <x-input label="Folio CRUM" name="crum" type="text" text="Ingrese el folio CRUM" id="input-crum" size="3" placeh=""></x-input>
                 <x-input label="Folio C5i" name="C5i" type="text" text="Ingrese el folio C5i" id="input-c5i" size="3" placeh=""></x-input>
                 <div class="text-center" style="margin: 2rem;">
-                    <button type="submit" id="btn-guardar-etapas" onclick="validarTodo()" class="btn btn-success">Guardar</button>
+                    <button type="submit" id="btn-guardar-etapas" onclick="guardar()" class="btn btn-success">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="estatus_etapas" style="grid-column: 2;">
-        <button onclick="siguiente(1)" id="E1">E1</button>
-        <button onclick="siguiente(2)" id="E2">E2</button>
-        <button onclick="siguiente(3)" id="E3">E3</button>
-        <button onclick="siguiente(4)" id="E4">E4</button>
-        <button onclick="siguiente(5)" id="E5">E5</button>
+    <div style="grid-column: 2; margin-top: 20%;">
+        <div style="padding-left: 40%;">
+            <button class="btn btn-success" onclick="guardarCambios()">Guardar Avance</button>
+        </div>
+        <div class="estatus_etapas">
+            <button onclick="siguiente(1)" id="E1">E1</button>
+            <button onclick="siguiente(2)" id="E2">E2</button>
+            <button onclick="siguiente(3)" id="E3">E3</button>
+            <button onclick="siguiente(4)" id="E4">E4</button>
+            <button onclick="siguiente(5)" id="E5">E5</button>
+        </div>
     </div>
 </div>
 

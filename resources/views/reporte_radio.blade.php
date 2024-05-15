@@ -25,11 +25,6 @@
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     });
 
-    $('#btn-registar-radio').click(function(e) {
-        e.preventDefault();
-        $('#form-radio-create').submit();
-    });
-
     function envioReporte(){
         document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
         let area = document.getElementById("input-area");
@@ -37,17 +32,20 @@
         let incidente = document.getElementById("input-incidente");
         let ubicacion = document.getElementById("input-ubicacion");
 
-        if(area.value == "") area.setAttribute("class","form-select is-invalid");
+        let terminado = true;
+        if(area.value == ""){area.setAttribute("class","form-select is-invalid"); terminado = false;}
         else area.setAttribute("class","form-select");
 
-        if(unidad.value == "") unidad.setAttribute("class","form-select is-invalid");
+        if(unidad.value == ""){unidad.setAttribute("class","form-select is-invalid"); terminado = false;}
         else unidad.setAttribute("class","form-select");
 
-        if(incidente.value == "") incidente.setAttribute("class","form-select is-invalid");
+        if(incidente.value == ""){incidente.setAttribute("class","form-select is-invalid"); terminado = false;}
         else incidente.setAttribute("class","form-select");
 
-        if(ubicacion.value == "") ubicacion.setAttribute("class","form-control is-invalid");
+        if(ubicacion.value == ""){ubicacion.setAttribute("class","form-control is-invalid"); terminado = false;}
         else ubicacion.setAttribute("class","form-control");
+
+        if(terminado) $('#form-radio-create').submit();
     }
 </script>
 @stop

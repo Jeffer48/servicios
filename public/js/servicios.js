@@ -35,7 +35,6 @@ function modalServicios(){
                     item.fecha
                 ));
             });
-            console.log(response);
             cantidad += response.length;
         }
     });
@@ -48,6 +47,7 @@ function reportesButtons(id,unidad,folio,area,incidente,fecha){
     let ruta = "/etapas?etapa="+id;
     let tarjeta = document.createElement('a');
     tarjeta.setAttribute('href',ruta);
+    tarjeta.setAttribute('id','ST-'+id);
     tarjeta.setAttribute('class','service-target');
 
     let contenedor = document.createElement('div');

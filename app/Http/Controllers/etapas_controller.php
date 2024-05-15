@@ -103,8 +103,14 @@ class etapas_controller extends Controller
                 ->select('folio','actual_num')
                 ->where('id',$radio->id_folio)
                 ->first();
+
+            $avance = DB::table('etapas')
+                ->select(DB::raw('case when created_at = updated_at then 0 else 1 end avance'))
+                ->where('id', $request->etapa)
+                ->first();
             
             return view('etapas',[
+                'id' => $request->etapa,
                 'personal' => $personal,
                 'fecha' => $radio->fecha,
                 'reportante' => $reportante,
@@ -122,48 +128,69 @@ class etapas_controller extends Controller
                 'apoyo' => $apoyo,
                 'destino' => $destino,
                 'hospital' => $hospital,
-                'id_reporte_radio' => $radio->id_reporte_radio
+                'id_reporte_radio' => $radio->id_reporte_radio,
+                'avance' => $avance->avance
             ]);
         }
     }
 
-    public function guardar(Request $request){
-        //YA NO SIRVE ESTO, AHORA SERÁ UN UPDATE Y DEBE VERIFICARSE QUE EL STATUS DE LA ETAPA SEA 0
-        $id_folio = DB::table('folios')->insertGetId([
-            'id_area' => $request->id_tipo,
-            'actual_num' => $request->folio_num,
-            'folio' => $request->folio
-        ]);
+    public function obtenerAvance(Request $request){
+        $etapa = DB::table('etapas')
+            ->where('id',$request->id)
+            ->first();
 
-        DB::table('etapas')->insert([
-            'id_reporte_radio' => $request->id_reporte_radio,
-            'id_radio_operador' => $request->id_radio_operador,
-            'id_reportante' => $request->id_reportante,
-            'id_turno' => $request->id_turno,
-            'fecha' => $request->fecha,
-            'id_operador' => $request->id_operador,
-            'id_jefe' => $request->id_jefe,
-            'id_personal_1' => $request->id_personal_1,
-            'id_personal_2' => $request->id_personal_2,
-            'id_personal_3' => $request->id_personal_3,
-            'id_personal_4' => $request->id_personal_4,
-            'id_tipo_servicio' => $request->id_tipo_servicio,
-            'id_localidad' => $request->id_localidad,
-            'id_lugar' => $request->id_lugar,
-            'ubicacion' => $request->ubicacion,
-            'id_folio' => $id_folio,
-            'id_prioridad' => $request->id_prioridad,
-            'nombre' => $request->nombre,
-            'id_sexo' => $request->id_sexo,
-            'edad' => $request->edad,
-            'id_apoyo' => $request->id_apoyo,
-            'id_destino' => $request->id_destino,
-            'id_hospital' => $request->id_hospital,
-            'desc_evento' => $request->desc_evento,
-            'incorporacion' => $request->incorporacion,
-            'folio_crum' => $request->folio_crum,
-            'folio_c5i' => $request->folio_c5i,
-            'created_user' => Auth::id()
-        ]);
+        return $etapa;
+    }
+
+    public function guardar(Request $request){
+        date_default_timezone_set('America/Mexico_City');
+        $date = date('Y-m-d H:i:s', time());
+
+        try{
+            $etapas = DB::table('etapas')
+                ->where('id',$request->id)
+                ->where('status',0)
+                ->count();
+
+            if($etapas > 0){
+                DB::table('etapas')
+                    ->where('id',$request->id)
+                    ->update([
+                    'id_reportante' => $request->id_reportante,
+                    'id_turno' => $request->id_turno,
+                    'fecha' => $request->fecha,
+                    'id_radio_operador' => $request->id_radio_operador,
+                    'id_operador' => $request->id_operador,
+                    'id_jefe' => $request->id_jefe,
+                    'id_personal_1' => $request->id_personal_1,
+                    'id_personal_2' => $request->id_personal_2,
+                    'id_personal_3' => $request->id_personal_3,
+                    'id_personal_4' => $request->id_personal_4,
+                    'id_tipo_servicio' => $request->id_tipo_servicio,
+                    'id_localidad' => $request->id_localidad,
+                    'id_lugar' => $request->id_lugar,
+                    'ubicacion' => $request->ubicacion,
+                    'id_prioridad' => $request->id_prioridad,
+                    'nombre' => $request->nombre,
+                    'id_sexo' => $request->id_sexo,
+                    'edad' => $request->edad,
+                    'id_apoyo' => $request->id_apoyo,
+                    'id_destino' => $request->id_destino,
+                    'id_hospital' => $request->id_hospital,
+                    'desc_evento' => $request->desc_evento,
+                    'incorporacion' => $request->incorporacion,
+                    'folio_crum' => $request->folio_crum,
+                    'folio_c5i' => $request->folio_c5i,
+                    'status' => $request->status,
+                    'updated_user' => Auth::id(),
+                    'updated_at' => $date
+                ]);
+
+                if($request->status == 0) return array("Datos actualizados correctamente!","Haz click para cerrar","success",0,"");
+                else return array("Datos guardados correctamente!","Haz click para cerrar","success",1,"");
+            }else return array("El servicio ya fue terminado","Haz click para cerrar","error",1,"");
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
+        }
     }
 }
