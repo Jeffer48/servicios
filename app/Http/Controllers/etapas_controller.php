@@ -159,6 +159,7 @@ class etapas_controller extends Controller
                     'id_reportante' => $request->id_reportante,
                     'id_turno' => $request->id_turno,
                     'fecha' => $request->fecha,
+                    'fecha_finalizado' => $request->status == 1 ? $date : null,
                     'id_radio_operador' => $request->id_radio_operador,
                     'id_operador' => $request->id_operador,
                     'id_jefe' => $request->id_jefe,
@@ -185,10 +186,13 @@ class etapas_controller extends Controller
                     'updated_user' => Auth::id(),
                     'updated_at' => $date
                 ]);
-
+                
                 if($request->status == 0) return array("Datos actualizados correctamente!","Haz click para cerrar","success",0,"");
-                else return array("Datos guardados correctamente!","Haz click para cerrar","success",1,"");
-            }else return array("El servicio ya fue terminado","Haz click para cerrar","error",1,"");
+                else return array("Datos guardados correctamente!","Haz click para cerrar","success",1," ");
+            }
+            else{
+                return array("El servicio ya fue terminado","Haz click para cerrar","error",1,"");
+            }
         }catch(QueryException $e){
             return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }

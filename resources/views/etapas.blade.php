@@ -40,15 +40,15 @@
         </div>
         <div id="tercera_etapa" style="display: none;">
             <h1 class="title_form">Tercera Etapa</h1>
-            <h5 class="subtitle_form">Datos del Paciente</h5>
+            <h5 id="etapa-3-sub" class="subtitle_form">Datos del Paciente</h5>
             <div class="principal_form">
-                <x-select label="Prioridad" name="prioridad" text="Seleccione la Prioridad" :options="$prioridad" id="input-prioridad" size="3"></x-select>
+                <div id="div-prioridad"><x-select label="Prioridad" name="prioridad" text="Seleccione la Prioridad" :options="$prioridad" id="input-prioridad" size="3"></x-select></div>
                 <x-input label="Nombre" name="nombreP" type="text" text="Ingrese el nombre del paciente" id="input-nombreP" size="3" placeh=""></x-input>
                 <x-select label="Sexo" name="sexoP" text="Seleccione el sexo del paciente" :options="$sexo" id="input-sexoP" size="3"></x-select>
                 <x-input label="Edad" name="edadP" type="number" text="Ingrese una edad valida" id="input-edadP" size="3" placeh=""></x-input>
                 <x-select label="Apoyo Brindado" name="apoyo" text="Seleccione el tipo de apoyo brindado" :options="$apoyo" id="input-apoyo" size="3"></x-select>
-                <x-select label="Destino" name="destino" text="Seleccione el destino" :options="$destino" id="input-destino" size="3"></x-select>
-                <x-select label="Hospital" name="hospital" text="Seleccione el hospital" :options="$hospital" id="input-hospital" size="3"></x-select>
+                <div id="div-destino"><x-select label="Destino" name="destino" text="Seleccione el destino" :options="$destino" id="input-destino" size="3"></x-select></div>
+                <div id="div-hospital"><x-select label="Hospital" name="hospital" text="Seleccione el hospital" :options="$hospital" id="input-hospital" size="3"></x-select></div>
                 <div class="text-center" style="margin: 2rem;">
                     <button type="submit" onclick="siguiente(4)" class="btn btn-success">Siguiente</button>
                 </div>

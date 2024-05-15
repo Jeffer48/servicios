@@ -1,12 +1,14 @@
 <script>
     var now = 0;
     let id_reporte = {{$id}};
+    let id_area = {{$id_area}};
 
     $(document).ready(function() {
         now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
         document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
         document.getElementById('input-horaI').value = now.toISOString().slice(0,16);
+        if(id_area == 1) etapa3Bomberos();
         if({{$avance}} > 0) obtenerAvance();
     });
 
@@ -79,7 +81,7 @@
             type: 'POST',
             data: {id: id_reporte},
             success: function(response){
-                console.log(response);
+                //ETAPA 1
                 if(response.id_radio_operador != null) r_operador.value = response.id_radio_operador;
                 if(response.id_reportante != null) reportante.value = response.id_reportante;
                 if(response.id_turno != null) turno.value = response.id_turno;
@@ -94,6 +96,22 @@
                 if(response.id_localidad != null) localidad.value = response.id_localidad;
                 if(response.id_lugar != null) lugar.value = response.id_lugar;
                 if(response.ubicacion != null) ubicacion.value = response.ubicacion;
+                //ETAPA 3
+                if(id_area != 1){
+                    if(response.id_prioridad != null) prioridad.value = response.id_prioridad;
+                    if(response.id_hospital != null) hospital.value = response.id_hospital;
+                    if(response.id_destino != null) destino.value = response.id_destino;
+                }
+                if(response.nombre != null) nombreP.value = response.nombre;
+                if(response.id_sexo != null) sexoP.value = response.id_sexo;
+                if(response.edad != null) edadP.value = response.edad;
+                if(response.id_apoyo != null) apoyo.value = response.id_apoyo;
+                //ETAPA 4
+                if(response.desc_evento != null) descripcion.value = response.desc_evento;
+                horaIB.value = response.incorporacion;
+                //ETAPA 5
+                if(response.folio_c5i != null) c5i.value = response.folio_c5i;
+                if(response.folio_crum != null) crum.value = response.folio_crum;
             }
         });
 
@@ -143,14 +161,21 @@
         else terminadoE1 = 1;
     }
 
+    function etapa3Bomberos(){
+        document.getElementById("etapa-3-sub").innerHTML = "Datos del afectado";
+        document.getElementById("div-prioridad").style = "display:none";
+        document.getElementById("div-destino").style = "display:none";
+        document.getElementById("div-hospital").style = "display:none";
+    }
+
     function validarE3(){
         let terminado = true;
-        terminado = vacio(terminado,prioridad,"select");
+        if(id_area != 1) terminado = vacio(terminado,prioridad,"select");
         terminado = vacio(terminado,nombreP,"control");
         terminado = vacio(terminado,sexoP,"select");
         terminado = vacio(terminado,apoyo,"select");
-        terminado = vacio(terminado,destino,"select");
-        terminado = vacio(terminado,hospital,"select");
+        if(id_area != 1) terminado = vacio(terminado,destino,"select");
+        if(id_area != 1) terminado = vacio(terminado,hospital,"select");
         let edadEntero = edadP.value % 1;
         if(edadP.value >= 0 && edadP.value <= 130 && edadEntero == 0 && edadP.value != '')edadP.setAttribute("class","form-control");
         else{
@@ -211,13 +236,13 @@
             id_localidad: localidad.value,
             id_lugar: lugar.value,
             ubicacion: ubicacion.value,
-            id_prioridad: prioridad.value,
+            id_prioridad: id_area == 1 ? null : prioridad.value,
             nombre: nombreP.value,
             id_sexo: sexoP.value,
             edad: edadP.value,
             id_apoyo: apoyo.value,
-            id_destino: destino.value,
-            id_hospital: hospital.value,
+            id_destino: id_area == 1 ? null : destino.value,
+            id_hospital: id_area == 1 ? null : hospital.value,
             desc_evento: descripcion.value,
             incorporacion: horaIB.value,
             folio_crum: crum.value,
@@ -330,6 +355,14 @@
     }
 
     function guardarCambios(){
+        let prioridadF = prioridad.value;
+        let destinoF = destino.value;
+        let hospitalF = hospital.value;
+
+        if(prioridadF == "" || id_area == 1) prioridadF = null;
+        if(destinoF == "" || id_area == 1) destinoF = null;
+        if(hospitalF == "" || id_area == 1) hospitalF = null;
+
         let package = {
             id: id_reporte,
             id_radio_operador: r_operador.value == "" ? null : r_operador.value,
@@ -346,13 +379,13 @@
             id_localidad: localidad.value == "" ? null : localidad.value,
             id_lugar: lugar.value == "" ? null : lugar.value,
             ubicacion: ubicacion.value == "" ? null : ubicacion.value,
-            id_prioridad: prioridad.value == "" ? null : prioridad.value,
+            id_prioridad: prioridadF,
             nombre: nombreP.value == "" ? null : nombreP.value,
             id_sexo: sexoP.value == "" ? null : sexoP.value,
             edad: edadP.value == "" ? null : edadP.value,
             id_apoyo: apoyo.value == "" ? null : apoyo.value,
-            id_destino: destino.value == "" ? null : destino.value,
-            id_hospital: hospital.value == "" ? null : hospital.value,
+            id_destino: destinoF,
+            id_hospital: hospitalF,
             desc_evento: descripcion.value == "" ? null : descripcion.value,
             incorporacion: horaIB.value,
             folio_crum: crum.value == "" ? null : crum.value,
