@@ -1,13 +1,24 @@
 <script>
     var now = 0;
-    let id_reporte = {{$id_reporte_radio}};
+    let id_reporte = {{$id}};
+    let id_area = {{$id_area}};
 
     $(document).ready(function() {
         now = new Date();
         now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
         document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
         document.getElementById('input-horaI').value = now.toISOString().slice(0,16);
+        if(id_area == 1) etapa3Bomberos();
+        if({{$avance}} > 0) obtenerAvance();
     });
+
+    $('#btn-show-modal').on("click", function() {
+        let id_tarjeta = 'ST-'+id_reporte;
+        let tarjeta = document.getElementById(id_tarjeta);
+        
+        tarjeta.removeAttribute('href');
+        tarjeta.setAttribute('style','background-color: lightgrey; !important')
+    } );
 
     //Estatus de las etapas
     let terminadoE1 = 0;
@@ -64,6 +75,49 @@
     let btnActual = bE1;
     let actual = 1;
 
+    function obtenerAvance(){
+        $.ajax({
+            url: "{{route('avance')}}",
+            type: 'POST',
+            data: {id: id_reporte},
+            success: function(response){
+                //ETAPA 1
+                if(response.id_radio_operador != null) r_operador.value = response.id_radio_operador;
+                if(response.id_reportante != null) reportante.value = response.id_reportante;
+                if(response.id_turno != null) turno.value = response.id_turno;
+                if(response.fecha != null) fecha.value = response.fecha;
+                if(response.id_operador != null) operador.value = response.id_operador;
+                if(response.id_jefe != null) jefe.value = response.id_jefe;
+                if(response.id_personal_1 != null) personal1.value = response.id_personal_1;
+                if(response.id_personal_2 != null) personal2.value = response.id_personal_2;
+                if(response.id_personal_3 != null) personal3.value = response.id_personal_3;
+                if(response.id_personal_4 != null) personal4.value = response.id_personal_4;
+                if(response.id_tipo_servicio != null) servicio.value = response.id_tipo_servicio;
+                if(response.id_localidad != null) localidad.value = response.id_localidad;
+                if(response.id_lugar != null) lugar.value = response.id_lugar;
+                if(response.ubicacion != null) ubicacion.value = response.ubicacion;
+                //ETAPA 3
+                if(id_area != 1){
+                    if(response.id_prioridad != null) prioridad.value = response.id_prioridad;
+                    if(response.id_hospital != null) hospital.value = response.id_hospital;
+                    if(response.id_destino != null) destino.value = response.id_destino;
+                }
+                if(response.nombre != null) nombreP.value = response.nombre;
+                if(response.id_sexo != null) sexoP.value = response.id_sexo;
+                if(response.edad != null) edadP.value = response.edad;
+                if(response.id_apoyo != null) apoyo.value = response.id_apoyo;
+                //ETAPA 4
+                if(response.desc_evento != null) descripcion.value = response.desc_evento;
+                horaIB.value = response.incorporacion;
+                //ETAPA 5
+                if(response.folio_c5i != null) c5i.value = response.folio_c5i;
+                if(response.folio_crum != null) crum.value = response.folio_crum;
+            }
+        });
+
+        validarTodo();
+    }
+
     function validarE1(){
         let terminado = true;
 
@@ -107,14 +161,21 @@
         else terminadoE1 = 1;
     }
 
+    function etapa3Bomberos(){
+        document.getElementById("etapa-3-sub").innerHTML = "Datos del afectado";
+        document.getElementById("div-prioridad").style = "display:none";
+        document.getElementById("div-destino").style = "display:none";
+        document.getElementById("div-hospital").style = "display:none";
+    }
+
     function validarE3(){
         let terminado = true;
-        terminado = vacio(terminado,prioridad,"select");
+        if(id_area != 1) terminado = vacio(terminado,prioridad,"select");
         terminado = vacio(terminado,nombreP,"control");
         terminado = vacio(terminado,sexoP,"select");
         terminado = vacio(terminado,apoyo,"select");
-        terminado = vacio(terminado,destino,"select");
-        terminado = vacio(terminado,hospital,"select");
+        if(id_area != 1) terminado = vacio(terminado,destino,"select");
+        if(id_area != 1) terminado = vacio(terminado,hospital,"select");
         let edadEntero = edadP.value % 1;
         if(edadP.value >= 0 && edadP.value <= 130 && edadEntero == 0 && edadP.value != '')edadP.setAttribute("class","form-control");
         else{
@@ -151,12 +212,16 @@
     }
 
     function validarTodo(){
-        validarE5();
+        validarE1(); colorearBotones(bE1,terminadoE1);
+        validarE3(); colorearBotones(bE3,terminadoE3);
+        validarE4(); colorearBotones(bE4,terminadoE4);
+        validarE5(); colorearBotones(bE5,terminadoE5);
+    }
+
+    function guardar(){
+        validarTodo();
         let package = {
-            id_reporte_radio: id_reporte,
-            id_tipo: {{$id_area}},
-            folio_num: {{$folio_num}},
-            folio: '{{$folio}}',
+            id: id_reporte,
             id_radio_operador: r_operador.value,
             id_reportante: reportante.value,
             id_turno: turno.value,
@@ -171,17 +236,18 @@
             id_localidad: localidad.value,
             id_lugar: lugar.value,
             ubicacion: ubicacion.value,
-            id_prioridad: prioridad.value,
+            id_prioridad: id_area == 1 ? null : prioridad.value,
             nombre: nombreP.value,
             id_sexo: sexoP.value,
             edad: edadP.value,
             id_apoyo: apoyo.value,
-            id_destino: destino.value,
-            id_hospital: hospital.value,
+            id_destino: id_area == 1 ? null : destino.value,
+            id_hospital: id_area == 1 ? null : hospital.value,
             desc_evento: descripcion.value,
             incorporacion: horaIB.value,
             folio_crum: crum.value,
-            folio_c5i: c5i.value
+            folio_c5i: c5i.value,
+            status: 1
         };
 
         if(terminadoE1 != 2||terminadoE2 != 2||terminadoE3 != 2||terminadoE4 != 2){
@@ -192,24 +258,7 @@
             });
         }
         else if(terminadoE5 == 2){
-            $.ajax({
-                url: "{{route('guardarEtapas')}}",
-                type: 'POST',
-                data: package,
-                success: function(response){
-                    Swal.fire({
-                        title: "Datos guardados correctamente!",
-                        text: "Haz click para cerrar",
-                        icon: "success",
-                        showCancelButton: false,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Continuar"
-                    }).then((result) => {
-                        window.location.href = "/";
-                    });
-                }
-            });
+            ajaxMessage("{{route('guardarEtapas')}}",package);
         }
     }
 
@@ -303,5 +352,47 @@
             p.setAttribute("class","form-select");
             return terminado;
         }
+    }
+
+    function guardarCambios(){
+        let prioridadF = prioridad.value;
+        let destinoF = destino.value;
+        let hospitalF = hospital.value;
+
+        if(prioridadF == "" || id_area == 1) prioridadF = null;
+        if(destinoF == "" || id_area == 1) destinoF = null;
+        if(hospitalF == "" || id_area == 1) hospitalF = null;
+
+        let package = {
+            id: id_reporte,
+            id_radio_operador: r_operador.value == "" ? null : r_operador.value,
+            id_reportante: reportante.value == "" ? null : reportante.value,
+            id_turno: turno.value == "" ? null : turno.value,
+            fecha: fecha.value,
+            id_operador: operador.value == "" ? null : operador.value,
+            id_jefe: jefe.value == "" ? null : jefe.value,
+            id_personal_1: personal1.value == "" ? null : personal1.value,
+            id_personal_2: personal2.value == "" ? null : personal2.value,
+            id_personal_3: personal3.value == "" ? null : personal3.value,
+            id_personal_4: personal4.value == "" ? null : personal4.value,
+            id_tipo_servicio: servicio.value == "" ? null : servicio.value,
+            id_localidad: localidad.value == "" ? null : localidad.value,
+            id_lugar: lugar.value == "" ? null : lugar.value,
+            ubicacion: ubicacion.value == "" ? null : ubicacion.value,
+            id_prioridad: prioridadF,
+            nombre: nombreP.value == "" ? null : nombreP.value,
+            id_sexo: sexoP.value == "" ? null : sexoP.value,
+            edad: edadP.value == "" ? null : edadP.value,
+            id_apoyo: apoyo.value == "" ? null : apoyo.value,
+            id_destino: destinoF,
+            id_hospital: hospitalF,
+            desc_evento: descripcion.value == "" ? null : descripcion.value,
+            incorporacion: horaIB.value,
+            folio_crum: crum.value == "" ? null : crum.value,
+            folio_c5i: c5i.value == "" ? null : c5i.value,
+            status: 0
+        };
+
+        ajaxMessage("{{route('guardarEtapas')}}",package);
     }
 </script>
