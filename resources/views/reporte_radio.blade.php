@@ -26,7 +26,7 @@
     });
 
     function envioReporte(){
-        document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
+        document.getElementById('input-fecha').value = "{{$fecha}}";
         let area = document.getElementById("input-area");
         let unidad = document.getElementById("input-unidad");
         let incidente = document.getElementById("input-incidente");
