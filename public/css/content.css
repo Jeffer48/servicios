@@ -96,7 +96,7 @@
 .service-target{
     margin-bottom: 0.5rem;
     width: 100%;
-    height: 5rem;
+    height: auto;
     border-style: solid;
     display: flex;
     border-radius: 0.5rem;
@@ -111,8 +111,8 @@
     font-size: larger;
     font-weight: 500;
     padding-left: 10%;
-    height: 74%;
-    margin: 7% 0%;
+    height: auto;
+    margin: 0;
 }
 
 .info-target{
@@ -120,6 +120,11 @@
     text-align: left;
     list-style: none;
     padding-left: 5%;
+    margin: 0 !important;
+}
+
+.identificadores{
+    align-content: center;
 }
 
 .btn-no-style{

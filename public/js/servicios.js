@@ -55,7 +55,7 @@ function reportesButtons(id,unidad,folio,area,incidente,fecha){
     contenedor.setAttribute('style', 'width: 100%;');
 
     let identificadores = document.createElement('div');
-    identificadores.setAttribute('class', 'col col-sm-4');
+    identificadores.setAttribute('class', 'col col-sm-4 identificadores');
 
         let listaIdent = document.createElement('ul');
         listaIdent.setAttribute('class', 'maquina-target');
@@ -95,7 +95,7 @@ function desplazamientoButtons(id,area,unidad,fecha){
     contenedor.setAttribute('style', 'width: 100%;');
 
     let identificadores = document.createElement('div');
-    identificadores.setAttribute('class', 'col col-sm-4');
+    identificadores.setAttribute('class', 'col col-sm-4 identificadores');
 
     let listaIdent = document.createElement('ul');
     listaIdent.setAttribute('class', 'maquina-target');
