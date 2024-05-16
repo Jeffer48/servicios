@@ -125,6 +125,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('id_area')->unsigned()->nullable(false);
             $table->integer('actual_num')->nullable(false);
+            $table->integer('anio')->nullable(false);
             $table->string('folio',255)->nullable(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -220,10 +221,12 @@ return new class extends Migration
         Schema::dropIfExists('adm_user');
         Schema::dropIfExists('adm_catalogos');
         Schema::dropIfExists('adm_grupos');
+        Schema::dropIfExists('etapas');
         Schema::dropIfExists('reporte_radio');
-        Schema::dropIfExists('grupos');
-        Schema::dropIfExists('catalogos');
-        Schema::dropIfExists('personal');
         Schema::dropIfExists('carga_gasolina');
+        Schema::dropIfExists('personal');
+        Schema::dropIfExists('folios');
+        Schema::dropIfExists('catalogos');
+        Schema::dropIfExists('grupos');
     }
 };

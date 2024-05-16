@@ -70,7 +70,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared("DROP VIEW IF EXISTS vw_reporte_radio_st;");
+        DB::unprepared("DROP VIEW IF EXISTS vw_radio_x_etapas;");
         DB::unprepared("DROP VIEW IF EXISTS vw_reporte_radio;");
         DB::unprepared("DROP VIEW IF EXISTS vw_personal;");
     }
