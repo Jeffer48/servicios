@@ -17,7 +17,7 @@ class etapas_controller extends Controller
         date_default_timezone_set('America/Mexico_City');
         $date = date('Y-m-d H:i:s', time());
 
-        if($status->status > 0){
+        if($status->status > 0 && auth()->user()->id_tipo != 1){
             return redirect('/')->with(['error' => 'El servicio ya esta terminado'])->withInput();
         }else{
             $radio = DB::table('reporte_radio as rr')
@@ -156,7 +156,7 @@ class etapas_controller extends Controller
                 ->where('status',0)
                 ->count();
 
-            if($etapas > 0){
+            if($etapas > 0 || auth()->user()->id_tipo == 1){
                 DB::table('etapas')
                     ->where('id',$request->id)
                     ->update([
