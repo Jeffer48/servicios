@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(reportes_controller::class)->group(function () {
         Route::get('/reportes', 'index')->name('reportes-vista');
         Route::post('/reportes/getReportes', 'getReportes')->name('get-reportes');
+        Route::post('/reportes/getViewServices', 'getViewServices')->name('getViewServices');
     });
 
     Route::controller(combustible_controller::class)->group(function () {
