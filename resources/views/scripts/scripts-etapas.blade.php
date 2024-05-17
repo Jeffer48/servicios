@@ -4,10 +4,8 @@
     let id_area = {{$id_area}};
 
     $(document).ready(function() {
-        now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('input-fecha').value = now.toISOString().slice(0,16);
-        document.getElementById('input-horaI').value = now.toISOString().slice(0,16);
+        document.getElementById('input-fecha').value = "{{$date}}";
+        document.getElementById('input-horaI').value = "{{$date}}";
         if(id_area == 1) etapa3Bomberos();
         if({{$avance}} > 0) obtenerAvance();
     });
