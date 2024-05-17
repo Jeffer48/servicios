@@ -14,6 +14,9 @@ class etapas_controller extends Controller
             ->where('id', $request->etapa)
             ->first();
 
+        date_default_timezone_set('America/Mexico_City');
+        $date = date('Y-m-d H:i:s', time());
+
         if($status->status > 0){
             return redirect('/')->with(['error' => 'El servicio ya esta terminado'])->withInput();
         }else{
@@ -129,7 +132,8 @@ class etapas_controller extends Controller
                 'destino' => $destino,
                 'hospital' => $hospital,
                 'id_reporte_radio' => $radio->id_reporte_radio,
-                'avance' => $avance->avance
+                'avance' => $avance->avance,
+                'date' => $date
             ]);
         }
     }
