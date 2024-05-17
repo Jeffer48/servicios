@@ -9,7 +9,6 @@
             type: 'POST',
             data: {id: id},
             success: function(response){
-                console.log(response);
                 if(response.id_area == 1){
                     document.getElementById('CPrioridad').style = "display: none;";
                     document.getElementById('CDestino').style = "display: none;";
