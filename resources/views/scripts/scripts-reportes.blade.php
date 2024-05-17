@@ -61,8 +61,4 @@
         });
         $("#VerModificarServicio").modal("show");
     }
-
-    function editarModalServicios(id){
-        //
-    }
 </script>
