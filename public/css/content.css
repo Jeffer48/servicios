@@ -132,6 +132,11 @@
     background-color: unset;
 }
 
+.labelPrincipal{
+    font-size: medium;
+    font-weight: 500;
+}
+
 .sub-menu{
     list-style: inside;
     margin: 0.3rem;
