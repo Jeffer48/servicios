@@ -64,7 +64,8 @@ class radio_controller extends Controller
                     'id_reporte_radio' => $id_rr,
                     'id_folio' => $folio[0]->id,
                     'status' => 0,
-                    'created_user' => Auth::id()
+                    'created_user' => Auth::id(),
+                    'updated_user' => Auth::id()
                 ]);
                 
                 return redirect()->route('etapas', ['etapa' => $id])->with(['success' => 'Los datos se guardaron exitosamente'])->withInput();
