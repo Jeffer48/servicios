@@ -26,6 +26,7 @@
                 </div>
             </a>
         </li>
+        @if (auth()->user()->id_tipo == 1)
         <li>
             <a href="{{route('usuarios')}}" class="nav-link {{request()->route()->uri == 'usuarios' ? 'active' : 'text-white'}}" style="padding-right: 0;">
                 <div class="flex-container">
@@ -35,6 +36,7 @@
                 </div>
             </a>
         </li>
+        @endif
         <li>
             @php
                 $active = '';

@@ -21,18 +21,37 @@ Route::controller(login_controller::class)->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/', function () {return view('dashboard');})->name('dashboard');
 
-    Route::controller(radio_controller::class)->group(function () {
-        Route::get('/radio', 'index')->name('reporte');
-        Route::post('/radio/registrar', 'registrar')->name('registrar');
+    Route::group(["middleware" => "roles:operador"], function () {
+        Route::controller(radio_controller::class)->group(function () {
+            Route::get('/radio', 'index')->name('reporte');
+            Route::post('/radio/registrar', 'registrar')->name('registrar');
+        });
+
+        Route::controller(etapas_controller::class)->group(function () {
+            Route::get('/etapas', 'index')->name('etapas');
+            Route::post('/etapas/avance', 'obtenerAvance')->name('avance');
+            Route::post('/etapas/registrar', 'guardar')->name('guardarEtapas');
+            Route::get('/sinTerminar', 'sinTerminar')->name('sinTerminar');
+        });
+
+        Route::controller(combustible_controller::class)->group(function () {
+            Route::get('/cargar-combustible', 'index')->name('combustible');
+            Route::post('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
+        });
     });
 
-    Route::controller(etapas_controller::class)->group(function () {
-        Route::get('/etapas', 'index')->name('etapas');
-        Route::post('/etapas/avance', 'obtenerAvance')->name('avance');
-        Route::post('/etapas/registrar', 'guardar')->name('guardarEtapas');
-        Route::get('/sinTerminar', 'sinTerminar')->name('sinTerminar');
+    Route::group(["middleware" => "roles:admin"], function () {
+        Route::controller(usuarios_controller::class)->group(function () {
+            Route::get('/usuarios', 'index')->name('usuarios');
+            Route::post('/usuarios/getUsuarios', 'getUsuarios')->name('get-usuarios');
+            Route::post('/usuarios/saveUser', 'saveUser')->name('save-user');
+            Route::post('/usuarios/change', 'changeEstate')->name('changeEstate');
+            Route::post('/usuarios/update', 'updateUser')->name('updateUser');
+            Route::post('/usuarios/getUser', 'userToUpdate')->name('userToUpdate');
+        });
     });
 
     Route::controller(catalogos_controller::class)->group(function () {
@@ -49,24 +68,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/get-personal', 'getPersonal')->name('get-personal');
     });
 
-    Route::controller(usuarios_controller::class)->group(function () {
-        Route::get('/usuarios', 'index')->name('usuarios');
-        Route::post('/usuarios/getUsuarios', 'getUsuarios')->name('get-usuarios');
-        Route::post('/usuarios/saveUser', 'saveUser')->name('save-user');
-        Route::post('/usuarios/change', 'changeEstate')->name('changeEstate');
-        Route::post('/usuarios/update', 'updateUser')->name('updateUser');
-        Route::post('/usuarios/getUser', 'userToUpdate')->name('userToUpdate');
-    });
-
     Route::controller(reportes_controller::class)->group(function () {
         Route::get('/reportes', 'index')->name('reportes-vista');
         Route::post('/reportes/getReportes', 'getReportes')->name('get-reportes');
         Route::post('/reportes/getViewServices', 'getViewServices')->name('getViewServices');
-    });
-
-    Route::controller(combustible_controller::class)->group(function () {
-        Route::get('/cargar-combustible', 'index')->name('combustible');
-        Route::post('/cargar-combustible/guardar', 'guardar')->name('guardarCarga');
     });
 
     Route::controller(datos_controller::class)->group(function () {
