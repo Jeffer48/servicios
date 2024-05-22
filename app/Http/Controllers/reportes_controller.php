@@ -22,7 +22,7 @@ class reportes_controller extends Controller
         $dataSet = array();
         foreach($radio as $d){
             $btnView = dataTableHelper::btnViewServicio($d->id);
-            $btnEdit = dataTableHelper::btnEditServicio($d->id);
+            $btnEdit = auth()->user()->id_tipo == 1 ? dataTableHelper::btnEditServicio($d->id) : '';
             $opciones = $btnView.$btnEdit;
 
             $ds = array(
