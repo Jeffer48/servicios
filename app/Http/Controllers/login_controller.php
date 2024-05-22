@@ -22,7 +22,7 @@ class login_controller extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('radio');
+            return redirect('/');
         }
  
         return redirect('login')->withErrors(['email' => 'Datos de sesión invalidos!'])->withInput();
