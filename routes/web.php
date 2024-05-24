@@ -78,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/datos/reportes', 'reportes')->name('reportes');
         Route::post('/datos/desplazamiento', 'desplazamiento')->name('desplazamiento');
         Route::post('/datos/desplazamiento/terminar', 'terminarDesplazamiento')->name('terminar');
+        Route::post('/datos/datosUsuario', 'datosUsuario')->name('datosUsuario');
     });
 
     Route::controller(login_controller::class)->group(function () {

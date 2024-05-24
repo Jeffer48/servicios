@@ -47,4 +47,24 @@ class datos_controller extends Controller
             return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
         }
     }
+
+    public function datosUsuario(){
+        $rol = DB::table('adm_catalogos')
+            ->select('descripcion')
+            ->where('id', auth()->user()->id_tipo)
+            ->first();
+
+        $user = DB::table('adm_user')
+            ->select('username','email')
+            ->where('id', auth()->user()->id)
+            ->first();
+
+        $dataSet = array(
+            $rol->descripcion,
+            $user->username,
+            $user->email
+        );
+
+        return $dataSet;
+    }
 }
