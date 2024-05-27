@@ -78,7 +78,7 @@ class usuarios_controller extends Controller
                         'apellido_m' => $request->apellido_m,
                         'username' => $request->usuario,
                         'email' => $request->email == "" ? null : $request->email,
-                        'password' => $request->password,
+                        'password' => bcrypt($request->password),
                         'created_user' => Auth::id()
                     ]);
                 }else{

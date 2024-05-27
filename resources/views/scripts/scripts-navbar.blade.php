@@ -59,12 +59,13 @@
 
         if(terminado){
             let datos = {
+                id: {{auth()->user()->id}},
                 usuario: modal_user.value,
                 email: modal_email.value,
                 password: modal_pass.disabled ? null : modal_pass.value
             }
 
-            console.log(datos);
+            ajaxMessage("{{route('actualizarUsuario')}}",datos);
         }
     }
 

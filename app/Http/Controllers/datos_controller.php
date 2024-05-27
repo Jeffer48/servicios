@@ -67,4 +67,43 @@ class datos_controller extends Controller
 
         return $dataSet;
     }
+
+    public function actualizarUsuario(Request $request){
+        try{
+            $usuario = DB::table('adm_user')
+                ->where('id', $request->id);
+
+            $correo = DB::table('adm_user')
+                ->where('id', '!=', $request->id)
+                ->where('email', $request->email);
+
+            $user = DB::table('adm_user')
+                ->where('id', '!=', $request->id)
+                ->where('username', $request->usuario);
+
+            if($correo->count() > 0) return array("Correo en uso","Haz click para cerrar","warning",0,"");
+            else if($user->count() > 0) return array("Nombre de usuario en uso","Haz click para cerrar","warning",0,"");
+            else{
+                if($usuario->count() > 0){
+                    if($request->password == null){
+                        $usuario->update([
+                            'username' => $request->usuario,
+                            'email' => $request->email
+                        ]);
+                    }
+                    else{
+                        $usuario->update([
+                            'username' => $request->usuario,
+                            'email' => $request->email,
+                            'password' => bcrypt($request->password)
+                        ]);
+                    }
+
+                    return array("Usuario actualizado","Haz click para cerrar","success",1," ");
+                }else return array("Usuario no encontrado","Haz click para cerrar","warning",0,"");
+            }
+        }catch(QueryException $e){
+            return array("Ha ocurrido un error","Haz click para cerrar","error",1,"");
+        }
+    }
 }
