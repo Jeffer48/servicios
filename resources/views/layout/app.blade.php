@@ -55,7 +55,7 @@
                 @yield('content')
             </div>
         </div>
-
+        @include('modal.modal-edit-self-user')
         @include('modal.modal-servicios')
     </body>
 

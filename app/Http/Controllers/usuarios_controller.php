@@ -34,6 +34,7 @@ class usuarios_controller extends Controller
                 end as nombre'),'ac.descripcion','au.email','au.deleted_at','au.id_tipo')
             ->leftjoin('personal as p', 'au.id_personal', 'p.id')
             ->leftjoin('adm_catalogos as ac', 'au.id_tipo', 'ac.id')
+            ->where('au.id', '!=', '1')
             ->get();
         
         if($request->id_tipo != "" && $request->id_tipo != "0") $usuarios = $usuarios->where('id_tipo',$request->id_tipo);
@@ -77,7 +78,7 @@ class usuarios_controller extends Controller
                         'apellido_m' => $request->apellido_m,
                         'username' => $request->usuario,
                         'email' => $request->email == "" ? null : $request->email,
-                        'password' => $request->password,
+                        'password' => bcrypt($request->password),
                         'created_user' => Auth::id()
                     ]);
                 }else{
