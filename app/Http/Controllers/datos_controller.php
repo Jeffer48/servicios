@@ -9,7 +9,8 @@ class datos_controller extends Controller
 {
     public function reportes()
     {
-        $reportes = DB::table('vw_radio_x_etapas')
+        $reportes = DB::table('vw_reporte_radio')
+            ->select('id','unidad','folio','area','incidente','fecha','status','deleted_at')
             ->where('status', 0)
             ->where('deleted_at', null)
             ->get();
