@@ -11,29 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared("CREATE VIEW vw_radio_x_etapas as
-        select 
-            e.id,
-            c1.descripcion as unidad,
-            f.folio,
-            c0.descripcion as area,
-            c2.descripcion as incidente,
-            rr.fecha,
-            e.status,
-            e.deleted_at
-        from etapas e
-        join reporte_radio rr on e.id_reporte_radio = rr.id
-        join folios f on e.id_folio = f.id 
-        join catalogos c0 on rr.id_area = c0.id
-        join catalogos c1 on rr.id_unidad = c1.id
-        join catalogos c2 on rr.id_incidente = c2.id;");
-
         DB::unprepared("CREATE VIEW vw_reporte_radio AS
         select 
             rr.id,
             f.folio,
             c0.descripcion unidad,
             c1.descripcion incidente,
+            c2.descripcion as area,
             rr.fecha,
             case 
                 when au.id_personal is null then concat(au.nombre,' ',au.apellido_p)
@@ -43,6 +27,7 @@ return new class extends Migration
                 when e.status = 0 then 'ACTIVO'
                 else 'TERMINADO'
             end estado,
+            e.status,
             rr.deleted_at
         from reporte_radio rr 
         join etapas e on rr.id = e.id_reporte_radio 
@@ -50,6 +35,7 @@ return new class extends Migration
         join adm_user au on rr.created_user = au.id
         join catalogos c0 on rr.id_unidad = c0.id 
         join catalogos c1 on rr.id_incidente = c1.id
+        join catalogos c2 on rr.id_area = c2.id
         left join personal p on au.id_personal = p.id;");
 
         DB::unprepared("CREATE VIEW vw_personal as
@@ -138,7 +124,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared("DROP VIEW IF EXISTS vw_radio_x_etapas;");
         DB::unprepared("DROP VIEW IF EXISTS vw_reporte_radio;");
         DB::unprepared("DROP VIEW IF EXISTS vw_personal;");
         DB::unprepared("DROP VIEW IF EXISTS vw_etapas;");
