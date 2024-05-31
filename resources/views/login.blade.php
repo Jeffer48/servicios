@@ -43,6 +43,9 @@
                 </div>
                 <button id="btnLogin" onclick="enviarDatos()" type="button" class="btn btn-success">Ingresar</button>
             </form>
+            <div class="forgotPass">
+                <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+            </div>
         </div>
     </body>
 </html>

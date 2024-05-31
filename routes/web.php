@@ -10,6 +10,7 @@ use App\Http\Controllers\catalogos_controller;
 use App\Http\Controllers\reportes_controller;
 use App\Http\Controllers\usuarios_controller;
 use App\Http\Controllers\combustible_controller;
+use App\Http\Controllers\reset_password;
 
 Route::get('/', function () {
     return redirect('radio');
@@ -18,6 +19,11 @@ Route::get('/', function () {
 Route::controller(login_controller::class)->group(function () {
     Route::get('/login', 'index')->name('login');
     Route::post('/login/data', 'getData')->name('getData');
+});
+
+Route::controller(reset_password::class)->group(function () {
+    Route::get('/forgot-password', 'forgotPass')->name('forgotPass');
+    Route::get('/reset-password', 'resetPass')->name('resetPass');
 });
 
 Route::middleware(['auth'])->group(function () {

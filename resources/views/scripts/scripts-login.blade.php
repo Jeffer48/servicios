@@ -16,6 +16,15 @@
                 type: 'POST',
                 data: datos,
                 success: function(response){
+                    Swal.fire({
+                        title: 'Iniciando Sesión!',
+                        html: 'Cargando...',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+
                     if(response == 0){
                         Swal.fire({
                             title: "Datos de sesión incorrectos",

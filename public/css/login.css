@@ -7,7 +7,7 @@
 }
 
 .form_login{
-    margin: 2rem;
+    margin: 2rem 2rem 1rem 2rem;
 }
 
 input{
@@ -27,5 +27,14 @@ input{
 }
 
 button{
-    margin: 2rem;
+    margin-top: 1rem;
+}
+
+.forgotPass{
+    padding-bottom: 1rem;
+}
+
+.reset{
+    width: 60% !important;
+    margin-left: 20%;
 }
