@@ -14,18 +14,26 @@ class login_controller extends Controller
     }
 
     public function getData(Request $request){
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = null;
+        if($request->email != null){
+            $credentials = $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required'],
+            ]);
+        }else{
+            $credentials = $request->validate([
+                'username' => ['required', 'string'],
+                'password' => ['required'],
+            ]);
+        }
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect('/');
+            return 1;
         }
  
-        return redirect('login')->withErrors(['email' => 'Datos de sesión invalidos!'])->withInput();
+        return 0;
     }
 
     public function logout() {

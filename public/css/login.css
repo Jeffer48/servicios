@@ -1,7 +1,7 @@
 .login_container{
     background-color: #152733;
     border-radius: 15px;
-    height: 30rem;
+    height: auto;
     width: 30rem;
     margin-top: 3%;
 }
