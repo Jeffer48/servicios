@@ -28,6 +28,9 @@ function ajaxMessage(ruta,datos){
         data: datos,
         success: function(response){
             message(response[0],response[1],response[2],response[3],response[4]);
+
+            if(response[0] = 0) console.log("Se guardo con exito el cliente");
+            else console.log("Ocurrio un error");
         }
     });
 }

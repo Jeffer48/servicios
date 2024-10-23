@@ -10,9 +10,15 @@ use App\Http\Controllers\catalogos_controller;
 use App\Http\Controllers\reportes_controller;
 use App\Http\Controllers\usuarios_controller;
 use App\Http\Controllers\combustible_controller;
+use App\Http\Controllers\ClienteController;
 
 Route::get('/', function () {
     return redirect('radio');
+});
+
+Route::controller(ClienteController::class)->group(function () {
+    Route::get('/clientes', 'index')->name('view_cliente');
+    Route::post('/clientes/save', 'registrar')->name('save_cliente');
 });
 
 Route::controller(login_controller::class)->group(function () {
